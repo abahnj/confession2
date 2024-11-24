@@ -78,8 +78,7 @@ class AppDatabase extends _$AppDatabase {
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final extension = p.extension(file.path);
       final nameWithoutExtension = p.basenameWithoutExtension(file.path);
-      final backupPath =
-          '${p.dirname(file.path)}/backup_${timestamp}_$nameWithoutExtension$extension';
+      final backupPath = '${p.dirname(file.path)}/backup_${timestamp}_$nameWithoutExtension$extension';
 
       await file.copy(backupPath);
     } catch (e) {

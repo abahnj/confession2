@@ -1,6 +1,5 @@
 import 'package:confession/core/di/env_config.dart';
-import 'package:confession/core/di/modules/core_module.dart';
-import 'package:confession/core/di/modules/database_module.dart';
+import 'package:confession/core/di/modules/module.dart';
 import 'package:get_it/get_it.dart';
 
 final GetIt sl = GetIt.instance;
@@ -21,8 +20,9 @@ class ServiceLocator {
   }
 
   static void _initializeModules() {
-    CoreModule.init();
-    DatabaseModule.init();
+    CoreModule().init();
+    DatabaseModule().init();
+    UserModule().init();
   }
 
   static Future<void> reset() async {

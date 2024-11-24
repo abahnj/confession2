@@ -3,97 +3,74 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class $CommandmentsTable extends Commandments
-    with TableInfo<$CommandmentsTable, Commandment> {
+class $CommandmentsTable extends Commandments with TableInfo<$CommandmentsTable, Commandment> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $CommandmentsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      '_id', aliasedName, false,
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('_id', aliasedName, false,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+      defaultConstraints: GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _numberMeta = const VerificationMeta('number');
   @override
-  late final GeneratedColumn<int> number = GeneratedColumn<int>(
-      'NUMBER', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _commandmentTextMeta =
-      const VerificationMeta('commandmentText');
+  late final GeneratedColumn<int> number =
+      GeneratedColumn<int>('NUMBER', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _commandmentTextMeta = const VerificationMeta('commandmentText');
   @override
-  late final GeneratedColumn<String> commandmentText = GeneratedColumn<String>(
-      'TEXT', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _categoryMeta =
-      const VerificationMeta('category');
+  late final GeneratedColumn<String> commandmentText =
+      GeneratedColumn<String>('TEXT', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _categoryMeta = const VerificationMeta('category');
   @override
-  late final GeneratedColumn<String> category = GeneratedColumn<String>(
-      'CATEGORY', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _commandmentMeta =
-      const VerificationMeta('commandment');
+  late final GeneratedColumn<String> category =
+      GeneratedColumn<String>('CATEGORY', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _commandmentMeta = const VerificationMeta('commandment');
   @override
-  late final GeneratedColumn<String> commandment = GeneratedColumn<String>(
-      'COMMANDMENT', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _customIdMeta =
-      const VerificationMeta('customId');
+  late final GeneratedColumn<String> commandment =
+      GeneratedColumn<String>('COMMANDMENT', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _customIdMeta = const VerificationMeta('customId');
   @override
-  late final GeneratedColumn<int> customId = GeneratedColumn<int>(
-      'CUSTOM_ID', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+  late final GeneratedColumn<int> customId =
+      GeneratedColumn<int>('CUSTOM_ID', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, number, commandmentText, category, commandment, customId];
+  List<GeneratedColumn> get $columns => [id, number, commandmentText, category, commandment, customId];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
   static const String $name = 'COMMANDMENTS';
   @override
-  VerificationContext validateIntegrity(Insertable<Commandment> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(Insertable<Commandment> instance, {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('_id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id']!, _idMeta));
     }
     if (data.containsKey('NUMBER')) {
-      context.handle(_numberMeta,
-          number.isAcceptableOrUnknown(data['NUMBER']!, _numberMeta));
+      context.handle(_numberMeta, number.isAcceptableOrUnknown(data['NUMBER']!, _numberMeta));
     } else if (isInserting) {
       context.missing(_numberMeta);
     }
     if (data.containsKey('TEXT')) {
-      context.handle(
-          _commandmentTextMeta,
-          commandmentText.isAcceptableOrUnknown(
-              data['TEXT']!, _commandmentTextMeta));
+      context.handle(_commandmentTextMeta, commandmentText.isAcceptableOrUnknown(data['TEXT']!, _commandmentTextMeta));
     } else if (isInserting) {
       context.missing(_commandmentTextMeta);
     }
     if (data.containsKey('CATEGORY')) {
-      context.handle(_categoryMeta,
-          category.isAcceptableOrUnknown(data['CATEGORY']!, _categoryMeta));
+      context.handle(_categoryMeta, category.isAcceptableOrUnknown(data['CATEGORY']!, _categoryMeta));
     } else if (isInserting) {
       context.missing(_categoryMeta);
     }
     if (data.containsKey('COMMANDMENT')) {
-      context.handle(
-          _commandmentMeta,
-          commandment.isAcceptableOrUnknown(
-              data['COMMANDMENT']!, _commandmentMeta));
+      context.handle(_commandmentMeta, commandment.isAcceptableOrUnknown(data['COMMANDMENT']!, _commandmentMeta));
     } else if (isInserting) {
       context.missing(_commandmentMeta);
     }
     if (data.containsKey('CUSTOM_ID')) {
-      context.handle(_customIdMeta,
-          customId.isAcceptableOrUnknown(data['CUSTOM_ID']!, _customIdMeta));
+      context.handle(_customIdMeta, customId.isAcceptableOrUnknown(data['CUSTOM_ID']!, _customIdMeta));
     }
     return context;
   }
@@ -104,18 +81,12 @@ class $CommandmentsTable extends Commandments
   Commandment map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Commandment(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
-      number: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}NUMBER'])!,
-      commandmentText: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}TEXT'])!,
-      category: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}CATEGORY'])!,
-      commandment: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}COMMANDMENT'])!,
-      customId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}CUSTOM_ID']),
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
+      number: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}NUMBER'])!,
+      commandmentText: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}TEXT'])!,
+      category: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}CATEGORY'])!,
+      commandment: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}COMMANDMENT'])!,
+      customId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}CUSTOM_ID']),
     );
   }
 
@@ -160,14 +131,11 @@ class Commandment extends DataClass implements Insertable<Commandment> {
       commandmentText: Value(commandmentText),
       category: Value(category),
       commandment: Value(commandment),
-      customId: customId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(customId),
+      customId: customId == null && nullToAbsent ? const Value.absent() : Value(customId),
     );
   }
 
-  factory Commandment.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory Commandment.fromJson(Map<String, dynamic> json, {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Commandment(
       id: serializer.fromJson<int>(json['id']),
@@ -210,12 +178,9 @@ class Commandment extends DataClass implements Insertable<Commandment> {
     return Commandment(
       id: data.id.present ? data.id.value : this.id,
       number: data.number.present ? data.number.value : this.number,
-      commandmentText: data.commandmentText.present
-          ? data.commandmentText.value
-          : this.commandmentText,
+      commandmentText: data.commandmentText.present ? data.commandmentText.value : this.commandmentText,
       category: data.category.present ? data.category.value : this.category,
-      commandment:
-          data.commandment.present ? data.commandment.value : this.commandment,
+      commandment: data.commandment.present ? data.commandment.value : this.commandment,
       customId: data.customId.present ? data.customId.value : this.customId,
     );
   }
@@ -234,8 +199,7 @@ class Commandment extends DataClass implements Insertable<Commandment> {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, number, commandmentText, category, commandment, customId);
+  int get hashCode => Object.hash(id, number, commandmentText, category, commandment, customId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -347,126 +311,92 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
   }
 }
 
-class $ExaminationsTable extends Examinations
-    with TableInfo<$ExaminationsTable, Examination> {
+class $ExaminationsTable extends Examinations with TableInfo<$ExaminationsTable, Examination> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ExaminationsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      '_id', aliasedName, false,
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('_id', aliasedName, false,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _commandmentIdMeta =
-      const VerificationMeta('commandmentId');
+      defaultConstraints: GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _commandmentIdMeta = const VerificationMeta('commandmentId');
   @override
-  late final GeneratedColumn<int> commandmentId = GeneratedColumn<int>(
-      'COMMANDMENT_ID', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+  late final GeneratedColumn<int> commandmentId =
+      GeneratedColumn<int>('COMMANDMENT_ID', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _adultMeta = const VerificationMeta('adult');
   @override
-  late final GeneratedColumn<bool> adult = GeneratedColumn<bool>(
-      'ADULT', aliasedName, false,
+  late final GeneratedColumn<bool> adult = GeneratedColumn<bool>('ADULT', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("ADULT" IN (0, 1))'));
+      defaultConstraints: GeneratedColumn.constraintIsAlways('CHECK ("ADULT" IN (0, 1))'));
   static const VerificationMeta _singleMeta = const VerificationMeta('single');
   @override
-  late final GeneratedColumn<bool> single = GeneratedColumn<bool>(
-      'SINGLE', aliasedName, false,
+  late final GeneratedColumn<bool> single = GeneratedColumn<bool>('SINGLE', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("SINGLE" IN (0, 1))'));
-  static const VerificationMeta _marriedMeta =
-      const VerificationMeta('married');
+      defaultConstraints: GeneratedColumn.constraintIsAlways('CHECK ("SINGLE" IN (0, 1))'));
+  static const VerificationMeta _marriedMeta = const VerificationMeta('married');
   @override
-  late final GeneratedColumn<bool> married = GeneratedColumn<bool>(
-      'MARRIED', aliasedName, false,
+  late final GeneratedColumn<bool> married = GeneratedColumn<bool>('MARRIED', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("MARRIED" IN (0, 1))'));
-  static const VerificationMeta _religiousMeta =
-      const VerificationMeta('religious');
+      defaultConstraints: GeneratedColumn.constraintIsAlways('CHECK ("MARRIED" IN (0, 1))'));
+  static const VerificationMeta _religiousMeta = const VerificationMeta('religious');
   @override
-  late final GeneratedColumn<bool> religious = GeneratedColumn<bool>(
-      'RELIGIOUS', aliasedName, false,
+  late final GeneratedColumn<bool> religious = GeneratedColumn<bool>('RELIGIOUS', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("RELIGIOUS" IN (0, 1))'));
+      defaultConstraints: GeneratedColumn.constraintIsAlways('CHECK ("RELIGIOUS" IN (0, 1))'));
   static const VerificationMeta _priestMeta = const VerificationMeta('priest');
   @override
-  late final GeneratedColumn<bool> priest = GeneratedColumn<bool>(
-      'PRIEST', aliasedName, false,
+  late final GeneratedColumn<bool> priest = GeneratedColumn<bool>('PRIEST', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("PRIEST" IN (0, 1))'));
+      defaultConstraints: GeneratedColumn.constraintIsAlways('CHECK ("PRIEST" IN (0, 1))'));
   static const VerificationMeta _teenMeta = const VerificationMeta('teen');
   @override
-  late final GeneratedColumn<bool> teen = GeneratedColumn<bool>(
-      'TEEN', aliasedName, false,
+  late final GeneratedColumn<bool> teen = GeneratedColumn<bool>('TEEN', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("TEEN" IN (0, 1))'));
+      defaultConstraints: GeneratedColumn.constraintIsAlways('CHECK ("TEEN" IN (0, 1))'));
   static const VerificationMeta _femaleMeta = const VerificationMeta('female');
   @override
-  late final GeneratedColumn<bool> female = GeneratedColumn<bool>(
-      'FEMALE', aliasedName, false,
+  late final GeneratedColumn<bool> female = GeneratedColumn<bool>('FEMALE', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("FEMALE" IN (0, 1))'));
+      defaultConstraints: GeneratedColumn.constraintIsAlways('CHECK ("FEMALE" IN (0, 1))'));
   static const VerificationMeta _maleMeta = const VerificationMeta('male');
   @override
-  late final GeneratedColumn<bool> male = GeneratedColumn<bool>(
-      'MALE', aliasedName, false,
+  late final GeneratedColumn<bool> male = GeneratedColumn<bool>('MALE', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("MALE" IN (0, 1))'));
+      defaultConstraints: GeneratedColumn.constraintIsAlways('CHECK ("MALE" IN (0, 1))'));
   static const VerificationMeta _childMeta = const VerificationMeta('child');
   @override
-  late final GeneratedColumn<bool> child = GeneratedColumn<bool>(
-      'CHILD', aliasedName, false,
+  late final GeneratedColumn<bool> child = GeneratedColumn<bool>('CHILD', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("CHILD" IN (0, 1))'));
-  static const VerificationMeta _customIdMeta =
-      const VerificationMeta('customId');
+      defaultConstraints: GeneratedColumn.constraintIsAlways('CHECK ("CHILD" IN (0, 1))'));
+  static const VerificationMeta _customIdMeta = const VerificationMeta('customId');
   @override
-  late final GeneratedColumn<int> customId = GeneratedColumn<int>(
-      'CUSTOM_ID', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
+  late final GeneratedColumn<int> customId =
+      GeneratedColumn<int>('CUSTOM_ID', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _descriptionMeta = const VerificationMeta('description');
   @override
-  late final GeneratedColumn<String> description = GeneratedColumn<String>(
-      'DESCRIPTION', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _activeTextMeta =
-      const VerificationMeta('activeText');
+  late final GeneratedColumn<String> description =
+      GeneratedColumn<String>('DESCRIPTION', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _activeTextMeta = const VerificationMeta('activeText');
   @override
-  late final GeneratedColumn<String> activeText = GeneratedColumn<String>(
-      'DESCRIPTION_ACTIVE', aliasedName, false,
+  late final GeneratedColumn<String> activeText = GeneratedColumn<String>('DESCRIPTION_ACTIVE', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _countMeta = const VerificationMeta('count');
   @override
-  late final GeneratedColumn<int> count = GeneratedColumn<int>(
-      'COUNT', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultValue: const Constant(0));
+  late final GeneratedColumn<int> count = GeneratedColumn<int>('COUNT', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false, defaultValue: const Constant(0));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -491,8 +421,7 @@ class $ExaminationsTable extends Examinations
   String get actualTableName => $name;
   static const String $name = 'SIN';
   @override
-  VerificationContext validateIntegrity(Insertable<Examination> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(Insertable<Examination> instance, {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('_id')) {
@@ -500,89 +429,70 @@ class $ExaminationsTable extends Examinations
     }
     if (data.containsKey('COMMANDMENT_ID')) {
       context.handle(
-          _commandmentIdMeta,
-          commandmentId.isAcceptableOrUnknown(
-              data['COMMANDMENT_ID']!, _commandmentIdMeta));
+          _commandmentIdMeta, commandmentId.isAcceptableOrUnknown(data['COMMANDMENT_ID']!, _commandmentIdMeta));
     } else if (isInserting) {
       context.missing(_commandmentIdMeta);
     }
     if (data.containsKey('ADULT')) {
-      context.handle(
-          _adultMeta, adult.isAcceptableOrUnknown(data['ADULT']!, _adultMeta));
+      context.handle(_adultMeta, adult.isAcceptableOrUnknown(data['ADULT']!, _adultMeta));
     } else if (isInserting) {
       context.missing(_adultMeta);
     }
     if (data.containsKey('SINGLE')) {
-      context.handle(_singleMeta,
-          single.isAcceptableOrUnknown(data['SINGLE']!, _singleMeta));
+      context.handle(_singleMeta, single.isAcceptableOrUnknown(data['SINGLE']!, _singleMeta));
     } else if (isInserting) {
       context.missing(_singleMeta);
     }
     if (data.containsKey('MARRIED')) {
-      context.handle(_marriedMeta,
-          married.isAcceptableOrUnknown(data['MARRIED']!, _marriedMeta));
+      context.handle(_marriedMeta, married.isAcceptableOrUnknown(data['MARRIED']!, _marriedMeta));
     } else if (isInserting) {
       context.missing(_marriedMeta);
     }
     if (data.containsKey('RELIGIOUS')) {
-      context.handle(_religiousMeta,
-          religious.isAcceptableOrUnknown(data['RELIGIOUS']!, _religiousMeta));
+      context.handle(_religiousMeta, religious.isAcceptableOrUnknown(data['RELIGIOUS']!, _religiousMeta));
     } else if (isInserting) {
       context.missing(_religiousMeta);
     }
     if (data.containsKey('PRIEST')) {
-      context.handle(_priestMeta,
-          priest.isAcceptableOrUnknown(data['PRIEST']!, _priestMeta));
+      context.handle(_priestMeta, priest.isAcceptableOrUnknown(data['PRIEST']!, _priestMeta));
     } else if (isInserting) {
       context.missing(_priestMeta);
     }
     if (data.containsKey('TEEN')) {
-      context.handle(
-          _teenMeta, teen.isAcceptableOrUnknown(data['TEEN']!, _teenMeta));
+      context.handle(_teenMeta, teen.isAcceptableOrUnknown(data['TEEN']!, _teenMeta));
     } else if (isInserting) {
       context.missing(_teenMeta);
     }
     if (data.containsKey('FEMALE')) {
-      context.handle(_femaleMeta,
-          female.isAcceptableOrUnknown(data['FEMALE']!, _femaleMeta));
+      context.handle(_femaleMeta, female.isAcceptableOrUnknown(data['FEMALE']!, _femaleMeta));
     } else if (isInserting) {
       context.missing(_femaleMeta);
     }
     if (data.containsKey('MALE')) {
-      context.handle(
-          _maleMeta, male.isAcceptableOrUnknown(data['MALE']!, _maleMeta));
+      context.handle(_maleMeta, male.isAcceptableOrUnknown(data['MALE']!, _maleMeta));
     } else if (isInserting) {
       context.missing(_maleMeta);
     }
     if (data.containsKey('CHILD')) {
-      context.handle(
-          _childMeta, child.isAcceptableOrUnknown(data['CHILD']!, _childMeta));
+      context.handle(_childMeta, child.isAcceptableOrUnknown(data['CHILD']!, _childMeta));
     } else if (isInserting) {
       context.missing(_childMeta);
     }
     if (data.containsKey('CUSTOM_ID')) {
-      context.handle(_customIdMeta,
-          customId.isAcceptableOrUnknown(data['CUSTOM_ID']!, _customIdMeta));
+      context.handle(_customIdMeta, customId.isAcceptableOrUnknown(data['CUSTOM_ID']!, _customIdMeta));
     }
     if (data.containsKey('DESCRIPTION')) {
-      context.handle(
-          _descriptionMeta,
-          description.isAcceptableOrUnknown(
-              data['DESCRIPTION']!, _descriptionMeta));
+      context.handle(_descriptionMeta, description.isAcceptableOrUnknown(data['DESCRIPTION']!, _descriptionMeta));
     } else if (isInserting) {
       context.missing(_descriptionMeta);
     }
     if (data.containsKey('DESCRIPTION_ACTIVE')) {
-      context.handle(
-          _activeTextMeta,
-          activeText.isAcceptableOrUnknown(
-              data['DESCRIPTION_ACTIVE']!, _activeTextMeta));
+      context.handle(_activeTextMeta, activeText.isAcceptableOrUnknown(data['DESCRIPTION_ACTIVE']!, _activeTextMeta));
     } else if (isInserting) {
       context.missing(_activeTextMeta);
     }
     if (data.containsKey('COUNT')) {
-      context.handle(
-          _countMeta, count.isAcceptableOrUnknown(data['COUNT']!, _countMeta));
+      context.handle(_countMeta, count.isAcceptableOrUnknown(data['COUNT']!, _countMeta));
     }
     return context;
   }
@@ -593,36 +503,21 @@ class $ExaminationsTable extends Examinations
   Examination map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Examination(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
-      commandmentId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}COMMANDMENT_ID'])!,
-      adult: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}ADULT'])!,
-      single: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}SINGLE'])!,
-      married: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}MARRIED'])!,
-      religious: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}RELIGIOUS'])!,
-      priest: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}PRIEST'])!,
-      teen: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}TEEN'])!,
-      female: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}FEMALE'])!,
-      male: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}MALE'])!,
-      child: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}CHILD'])!,
-      customId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}CUSTOM_ID']),
-      description: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}DESCRIPTION'])!,
-      activeText: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}DESCRIPTION_ACTIVE'])!,
-      count: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}COUNT'])!,
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
+      commandmentId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}COMMANDMENT_ID'])!,
+      adult: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}ADULT'])!,
+      single: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}SINGLE'])!,
+      married: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}MARRIED'])!,
+      religious: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}RELIGIOUS'])!,
+      priest: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}PRIEST'])!,
+      teen: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}TEEN'])!,
+      female: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}FEMALE'])!,
+      male: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}MALE'])!,
+      child: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}CHILD'])!,
+      customId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}CUSTOM_ID']),
+      description: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}DESCRIPTION'])!,
+      activeText: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}DESCRIPTION_ACTIVE'])!,
+      count: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}COUNT'])!,
     );
   }
 
@@ -700,17 +595,14 @@ class Examination extends DataClass implements Insertable<Examination> {
       female: Value(female),
       male: Value(male),
       child: Value(child),
-      customId: customId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(customId),
+      customId: customId == null && nullToAbsent ? const Value.absent() : Value(customId),
       description: Value(description),
       activeText: Value(activeText),
       count: Value(count),
     );
   }
 
-  factory Examination.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory Examination.fromJson(Map<String, dynamic> json, {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Examination(
       id: serializer.fromJson<int>(json['id']),
@@ -788,9 +680,7 @@ class Examination extends DataClass implements Insertable<Examination> {
   Examination copyWithCompanion(ExaminationsCompanion data) {
     return Examination(
       id: data.id.present ? data.id.value : this.id,
-      commandmentId: data.commandmentId.present
-          ? data.commandmentId.value
-          : this.commandmentId,
+      commandmentId: data.commandmentId.present ? data.commandmentId.value : this.commandmentId,
       adult: data.adult.present ? data.adult.value : this.adult,
       single: data.single.present ? data.single.value : this.single,
       married: data.married.present ? data.married.value : this.married,
@@ -801,10 +691,8 @@ class Examination extends DataClass implements Insertable<Examination> {
       male: data.male.present ? data.male.value : this.male,
       child: data.child.present ? data.child.value : this.child,
       customId: data.customId.present ? data.customId.value : this.customId,
-      description:
-          data.description.present ? data.description.value : this.description,
-      activeText:
-          data.activeText.present ? data.activeText.value : this.activeText,
+      description: data.description.present ? data.description.value : this.description,
+      activeText: data.activeText.present ? data.activeText.value : this.activeText,
       count: data.count.present ? data.count.value : this.count,
     );
   }
@@ -832,22 +720,8 @@ class Examination extends DataClass implements Insertable<Examination> {
   }
 
   @override
-  int get hashCode => Object.hash(
-      id,
-      commandmentId,
-      adult,
-      single,
-      married,
-      religious,
-      priest,
-      teen,
-      female,
-      male,
-      child,
-      customId,
-      description,
-      activeText,
-      count);
+  int get hashCode => Object.hash(id, commandmentId, adult, single, married, religious, priest, teen, female, male,
+      child, customId, description, activeText, count);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1082,31 +956,23 @@ class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
   $GuidesTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      '_id', aliasedName, false,
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('_id', aliasedName, false,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _guideTitleMeta =
-      const VerificationMeta('guideTitle');
+      defaultConstraints: GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _guideTitleMeta = const VerificationMeta('guideTitle');
   @override
-  late final GeneratedColumn<String> guideTitle = GeneratedColumn<String>(
-      'g_title', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _guideTextMeta =
-      const VerificationMeta('guideText');
+  late final GeneratedColumn<String> guideTitle =
+      GeneratedColumn<String>('g_title', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _guideTextMeta = const VerificationMeta('guideText');
   @override
-  late final GeneratedColumn<String> guideText = GeneratedColumn<String>(
-      'text', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _headerIdMeta =
-      const VerificationMeta('headerId');
+  late final GeneratedColumn<String> guideText =
+      GeneratedColumn<String>('text', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _headerIdMeta = const VerificationMeta('headerId');
   @override
-  late final GeneratedColumn<int> headerId = GeneratedColumn<int>(
-      'h_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+  late final GeneratedColumn<int> headerId =
+      GeneratedColumn<int>('h_id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, guideTitle, guideText, headerId];
   @override
@@ -1115,28 +981,24 @@ class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
   String get actualTableName => $name;
   static const String $name = 'guide_main';
   @override
-  VerificationContext validateIntegrity(Insertable<Guide> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(Insertable<Guide> instance, {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('_id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id']!, _idMeta));
     }
     if (data.containsKey('g_title')) {
-      context.handle(_guideTitleMeta,
-          guideTitle.isAcceptableOrUnknown(data['g_title']!, _guideTitleMeta));
+      context.handle(_guideTitleMeta, guideTitle.isAcceptableOrUnknown(data['g_title']!, _guideTitleMeta));
     } else if (isInserting) {
       context.missing(_guideTitleMeta);
     }
     if (data.containsKey('text')) {
-      context.handle(_guideTextMeta,
-          guideText.isAcceptableOrUnknown(data['text']!, _guideTextMeta));
+      context.handle(_guideTextMeta, guideText.isAcceptableOrUnknown(data['text']!, _guideTextMeta));
     } else if (isInserting) {
       context.missing(_guideTextMeta);
     }
     if (data.containsKey('h_id')) {
-      context.handle(_headerIdMeta,
-          headerId.isAcceptableOrUnknown(data['h_id']!, _headerIdMeta));
+      context.handle(_headerIdMeta, headerId.isAcceptableOrUnknown(data['h_id']!, _headerIdMeta));
     } else if (isInserting) {
       context.missing(_headerIdMeta);
     }
@@ -1149,14 +1011,10 @@ class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
   Guide map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Guide(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
-      guideTitle: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}g_title'])!,
-      guideText: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}text'])!,
-      headerId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}h_id'])!,
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
+      guideTitle: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}g_title'])!,
+      guideText: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}text'])!,
+      headerId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}h_id'])!,
     );
   }
 
@@ -1171,11 +1029,7 @@ class Guide extends DataClass implements Insertable<Guide> {
   final String guideTitle;
   final String guideText;
   final int headerId;
-  const Guide(
-      {required this.id,
-      required this.guideTitle,
-      required this.guideText,
-      required this.headerId});
+  const Guide({required this.id, required this.guideTitle, required this.guideText, required this.headerId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1195,8 +1049,7 @@ class Guide extends DataClass implements Insertable<Guide> {
     );
   }
 
-  factory Guide.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory Guide.fromJson(Map<String, dynamic> json, {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Guide(
       id: serializer.fromJson<int>(json['id']),
@@ -1216,9 +1069,7 @@ class Guide extends DataClass implements Insertable<Guide> {
     };
   }
 
-  Guide copyWith(
-          {int? id, String? guideTitle, String? guideText, int? headerId}) =>
-      Guide(
+  Guide copyWith({int? id, String? guideTitle, String? guideText, int? headerId}) => Guide(
         id: id ?? this.id,
         guideTitle: guideTitle ?? this.guideTitle,
         guideText: guideText ?? this.guideText,
@@ -1227,8 +1078,7 @@ class Guide extends DataClass implements Insertable<Guide> {
   Guide copyWithCompanion(GuidesCompanion data) {
     return Guide(
       id: data.id.present ? data.id.value : this.id,
-      guideTitle:
-          data.guideTitle.present ? data.guideTitle.value : this.guideTitle,
+      guideTitle: data.guideTitle.present ? data.guideTitle.value : this.guideTitle,
       guideText: data.guideText.present ? data.guideText.value : this.guideText,
       headerId: data.headerId.present ? data.headerId.value : this.headerId,
     );
@@ -1291,10 +1141,7 @@ class GuidesCompanion extends UpdateCompanion<Guide> {
   }
 
   GuidesCompanion copyWith(
-      {Value<int>? id,
-      Value<String>? guideTitle,
-      Value<String>? guideText,
-      Value<int>? headerId}) {
+      {Value<int>? id, Value<String>? guideTitle, Value<String>? guideText, Value<int>? headerId}) {
     return GuidesCompanion(
       id: id ?? this.id,
       guideTitle: guideTitle ?? this.guideTitle,
@@ -1340,31 +1187,23 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   $PrayersTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      '_id', aliasedName, false,
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('_id', aliasedName, false,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _prayerNameMeta =
-      const VerificationMeta('prayerName');
+      defaultConstraints: GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _prayerNameMeta = const VerificationMeta('prayerName');
   @override
-  late final GeneratedColumn<String> prayerName = GeneratedColumn<String>(
-      'PRAYERNAME', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _prayerTextMeta =
-      const VerificationMeta('prayerText');
+  late final GeneratedColumn<String> prayerName =
+      GeneratedColumn<String>('PRAYERNAME', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _prayerTextMeta = const VerificationMeta('prayerText');
   @override
-  late final GeneratedColumn<String> prayerText = GeneratedColumn<String>(
-      'PRAYERTEXT', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _groupNameMeta =
-      const VerificationMeta('groupName');
+  late final GeneratedColumn<String> prayerText =
+      GeneratedColumn<String>('PRAYERTEXT', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _groupNameMeta = const VerificationMeta('groupName');
   @override
-  late final GeneratedColumn<String> groupName = GeneratedColumn<String>(
-      'GROUPNAME', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+  late final GeneratedColumn<String> groupName =
+      GeneratedColumn<String>('GROUPNAME', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, prayerName, prayerText, groupName];
   @override
@@ -1373,32 +1212,24 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   String get actualTableName => $name;
   static const String $name = 'PRAYERS';
   @override
-  VerificationContext validateIntegrity(Insertable<Prayer> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(Insertable<Prayer> instance, {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('_id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id']!, _idMeta));
     }
     if (data.containsKey('PRAYERNAME')) {
-      context.handle(
-          _prayerNameMeta,
-          prayerName.isAcceptableOrUnknown(
-              data['PRAYERNAME']!, _prayerNameMeta));
+      context.handle(_prayerNameMeta, prayerName.isAcceptableOrUnknown(data['PRAYERNAME']!, _prayerNameMeta));
     } else if (isInserting) {
       context.missing(_prayerNameMeta);
     }
     if (data.containsKey('PRAYERTEXT')) {
-      context.handle(
-          _prayerTextMeta,
-          prayerText.isAcceptableOrUnknown(
-              data['PRAYERTEXT']!, _prayerTextMeta));
+      context.handle(_prayerTextMeta, prayerText.isAcceptableOrUnknown(data['PRAYERTEXT']!, _prayerTextMeta));
     } else if (isInserting) {
       context.missing(_prayerTextMeta);
     }
     if (data.containsKey('GROUPNAME')) {
-      context.handle(_groupNameMeta,
-          groupName.isAcceptableOrUnknown(data['GROUPNAME']!, _groupNameMeta));
+      context.handle(_groupNameMeta, groupName.isAcceptableOrUnknown(data['GROUPNAME']!, _groupNameMeta));
     } else if (isInserting) {
       context.missing(_groupNameMeta);
     }
@@ -1411,14 +1242,10 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   Prayer map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Prayer(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
-      prayerName: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}PRAYERNAME'])!,
-      prayerText: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}PRAYERTEXT'])!,
-      groupName: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}GROUPNAME'])!,
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
+      prayerName: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}PRAYERNAME'])!,
+      prayerText: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}PRAYERTEXT'])!,
+      groupName: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}GROUPNAME'])!,
     );
   }
 
@@ -1433,11 +1260,7 @@ class Prayer extends DataClass implements Insertable<Prayer> {
   final String prayerName;
   final String prayerText;
   final String groupName;
-  const Prayer(
-      {required this.id,
-      required this.prayerName,
-      required this.prayerText,
-      required this.groupName});
+  const Prayer({required this.id, required this.prayerName, required this.prayerText, required this.groupName});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1457,8 +1280,7 @@ class Prayer extends DataClass implements Insertable<Prayer> {
     );
   }
 
-  factory Prayer.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory Prayer.fromJson(Map<String, dynamic> json, {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Prayer(
       id: serializer.fromJson<int>(json['id']),
@@ -1478,12 +1300,7 @@ class Prayer extends DataClass implements Insertable<Prayer> {
     };
   }
 
-  Prayer copyWith(
-          {int? id,
-          String? prayerName,
-          String? prayerText,
-          String? groupName}) =>
-      Prayer(
+  Prayer copyWith({int? id, String? prayerName, String? prayerText, String? groupName}) => Prayer(
         id: id ?? this.id,
         prayerName: prayerName ?? this.prayerName,
         prayerText: prayerText ?? this.prayerText,
@@ -1492,10 +1309,8 @@ class Prayer extends DataClass implements Insertable<Prayer> {
   Prayer copyWithCompanion(PrayersCompanion data) {
     return Prayer(
       id: data.id.present ? data.id.value : this.id,
-      prayerName:
-          data.prayerName.present ? data.prayerName.value : this.prayerName,
-      prayerText:
-          data.prayerText.present ? data.prayerText.value : this.prayerText,
+      prayerName: data.prayerName.present ? data.prayerName.value : this.prayerName,
+      prayerText: data.prayerText.present ? data.prayerText.value : this.prayerText,
       groupName: data.groupName.present ? data.groupName.value : this.groupName,
     );
   }
@@ -1557,10 +1372,7 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
   }
 
   PrayersCompanion copyWith(
-      {Value<int>? id,
-      Value<String>? prayerName,
-      Value<String>? prayerText,
-      Value<String>? groupName}) {
+      {Value<int>? id, Value<String>? prayerName, Value<String>? prayerText, Value<String>? groupName}) {
     return PrayersCompanion(
       id: id ?? this.id,
       prayerName: prayerName ?? this.prayerName,
@@ -1599,31 +1411,26 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
   }
 }
 
-class $InspirationsTable extends Inspirations
-    with TableInfo<$InspirationsTable, Inspiration> {
+class $InspirationsTable extends Inspirations with TableInfo<$InspirationsTable, Inspiration> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $InspirationsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      '_id', aliasedName, false,
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('_id', aliasedName, false,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+      defaultConstraints: GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _authorMeta = const VerificationMeta('author');
   @override
-  late final GeneratedColumn<String> author = GeneratedColumn<String>(
-      'AUTHOR', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+  late final GeneratedColumn<String> author =
+      GeneratedColumn<String>('AUTHOR', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _quoteMeta = const VerificationMeta('quote');
   @override
-  late final GeneratedColumn<String> quote = GeneratedColumn<String>(
-      'QUOTE', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+  late final GeneratedColumn<String> quote =
+      GeneratedColumn<String>('QUOTE', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, author, quote];
   @override
@@ -1632,22 +1439,19 @@ class $InspirationsTable extends Inspirations
   String get actualTableName => $name;
   static const String $name = 'INSPIRATION';
   @override
-  VerificationContext validateIntegrity(Insertable<Inspiration> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(Insertable<Inspiration> instance, {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('_id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['_id']!, _idMeta));
     }
     if (data.containsKey('AUTHOR')) {
-      context.handle(_authorMeta,
-          author.isAcceptableOrUnknown(data['AUTHOR']!, _authorMeta));
+      context.handle(_authorMeta, author.isAcceptableOrUnknown(data['AUTHOR']!, _authorMeta));
     } else if (isInserting) {
       context.missing(_authorMeta);
     }
     if (data.containsKey('QUOTE')) {
-      context.handle(
-          _quoteMeta, quote.isAcceptableOrUnknown(data['QUOTE']!, _quoteMeta));
+      context.handle(_quoteMeta, quote.isAcceptableOrUnknown(data['QUOTE']!, _quoteMeta));
     } else if (isInserting) {
       context.missing(_quoteMeta);
     }
@@ -1660,12 +1464,9 @@ class $InspirationsTable extends Inspirations
   Inspiration map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Inspiration(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
-      author: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}AUTHOR'])!,
-      quote: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}QUOTE'])!,
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
+      author: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}AUTHOR'])!,
+      quote: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}QUOTE'])!,
     );
   }
 
@@ -1679,8 +1480,7 @@ class Inspiration extends DataClass implements Insertable<Inspiration> {
   final int id;
   final String author;
   final String quote;
-  const Inspiration(
-      {required this.id, required this.author, required this.quote});
+  const Inspiration({required this.id, required this.author, required this.quote});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1698,8 +1498,7 @@ class Inspiration extends DataClass implements Insertable<Inspiration> {
     );
   }
 
-  factory Inspiration.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory Inspiration.fromJson(Map<String, dynamic> json, {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Inspiration(
       id: serializer.fromJson<int>(json['id']),
@@ -1745,10 +1544,7 @@ class Inspiration extends DataClass implements Insertable<Inspiration> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Inspiration &&
-          other.id == this.id &&
-          other.author == this.author &&
-          other.quote == this.quote);
+      (other is Inspiration && other.id == this.id && other.author == this.author && other.quote == this.quote);
 }
 
 class InspirationsCompanion extends UpdateCompanion<Inspiration> {
@@ -1778,8 +1574,7 @@ class InspirationsCompanion extends UpdateCompanion<Inspiration> {
     });
   }
 
-  InspirationsCompanion copyWith(
-      {Value<int>? id, Value<String>? author, Value<String>? quote}) {
+  InspirationsCompanion copyWith({Value<int>? id, Value<String>? author, Value<String>? quote}) {
     return InspirationsCompanion(
       id: id ?? this.id,
       author: author ?? this.author,
@@ -1821,22 +1616,17 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $GuidesTable guides = $GuidesTable(this);
   late final $PrayersTable prayers = $PrayersTable(this);
   late final $InspirationsTable inspirations = $InspirationsTable(this);
-  late final CommandmentsDao commandmentsDao =
-      CommandmentsDao(this as AppDatabase);
-  late final ExaminationsDao examinationsDao =
-      ExaminationsDao(this as AppDatabase);
+  late final CommandmentsDao commandmentsDao = CommandmentsDao(this as AppDatabase);
+  late final ExaminationsDao examinationsDao = ExaminationsDao(this as AppDatabase);
   late final PrayersDao prayersDao = PrayersDao(this as AppDatabase);
   late final GuidesDao guidesDao = GuidesDao(this as AppDatabase);
   @override
-  Iterable<TableInfo<Table, Object?>> get allTables =>
-      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
+  Iterable<TableInfo<Table, Object?>> get allTables => allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [commandments, examinations, guides, prayers, inspirations];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [commandments, examinations, guides, prayers, inspirations];
 }
 
-typedef $$CommandmentsTableCreateCompanionBuilder = CommandmentsCompanion
-    Function({
+typedef $$CommandmentsTableCreateCompanionBuilder = CommandmentsCompanion Function({
   Value<int> id,
   required int number,
   required String commandmentText,
@@ -1844,8 +1634,7 @@ typedef $$CommandmentsTableCreateCompanionBuilder = CommandmentsCompanion
   required String commandment,
   Value<int?> customId,
 });
-typedef $$CommandmentsTableUpdateCompanionBuilder = CommandmentsCompanion
-    Function({
+typedef $$CommandmentsTableUpdateCompanionBuilder = CommandmentsCompanion Function({
   Value<int> id,
   Value<int> number,
   Value<String> commandmentText,
@@ -1854,8 +1643,7 @@ typedef $$CommandmentsTableUpdateCompanionBuilder = CommandmentsCompanion
   Value<int?> customId,
 });
 
-class $$CommandmentsTableFilterComposer
-    extends Composer<_$AppDatabase, $CommandmentsTable> {
+class $$CommandmentsTableFilterComposer extends Composer<_$AppDatabase, $CommandmentsTable> {
   $$CommandmentsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -1863,28 +1651,25 @@ class $$CommandmentsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get id => $composableBuilder(column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get number => $composableBuilder(
-      column: $table.number, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get number =>
+      $composableBuilder(column: $table.number, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get commandmentText => $composableBuilder(
-      column: $table.commandmentText,
-      builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get commandmentText =>
+      $composableBuilder(column: $table.commandmentText, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get category => $composableBuilder(
-      column: $table.category, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get commandment => $composableBuilder(
-      column: $table.commandment, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get commandment =>
+      $composableBuilder(column: $table.commandment, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get customId => $composableBuilder(
-      column: $table.customId, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get customId =>
+      $composableBuilder(column: $table.customId, builder: (column) => ColumnFilters(column));
 }
 
-class $$CommandmentsTableOrderingComposer
-    extends Composer<_$AppDatabase, $CommandmentsTable> {
+class $$CommandmentsTableOrderingComposer extends Composer<_$AppDatabase, $CommandmentsTable> {
   $$CommandmentsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -1892,28 +1677,25 @@ class $$CommandmentsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get id => $composableBuilder(column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get number => $composableBuilder(
-      column: $table.number, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get number =>
+      $composableBuilder(column: $table.number, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get commandmentText => $composableBuilder(
-      column: $table.commandmentText,
-      builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get commandmentText =>
+      $composableBuilder(column: $table.commandmentText, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get category => $composableBuilder(
-      column: $table.category, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get commandment => $composableBuilder(
-      column: $table.commandment, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get commandment =>
+      $composableBuilder(column: $table.commandment, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get customId => $composableBuilder(
-      column: $table.customId, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get customId =>
+      $composableBuilder(column: $table.customId, builder: (column) => ColumnOrderings(column));
 }
 
-class $$CommandmentsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $CommandmentsTable> {
+class $$CommandmentsTableAnnotationComposer extends Composer<_$AppDatabase, $CommandmentsTable> {
   $$CommandmentsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -1921,23 +1703,19 @@ class $$CommandmentsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
+  GeneratedColumn<int> get id => $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get number =>
-      $composableBuilder(column: $table.number, builder: (column) => column);
+  GeneratedColumn<int> get number => $composableBuilder(column: $table.number, builder: (column) => column);
 
-  GeneratedColumn<String> get commandmentText => $composableBuilder(
-      column: $table.commandmentText, builder: (column) => column);
+  GeneratedColumn<String> get commandmentText =>
+      $composableBuilder(column: $table.commandmentText, builder: (column) => column);
 
-  GeneratedColumn<String> get category =>
-      $composableBuilder(column: $table.category, builder: (column) => column);
+  GeneratedColumn<String> get category => $composableBuilder(column: $table.category, builder: (column) => column);
 
-  GeneratedColumn<String> get commandment => $composableBuilder(
-      column: $table.commandment, builder: (column) => column);
+  GeneratedColumn<String> get commandment =>
+      $composableBuilder(column: $table.commandment, builder: (column) => column);
 
-  GeneratedColumn<int> get customId =>
-      $composableBuilder(column: $table.customId, builder: (column) => column);
+  GeneratedColumn<int> get customId => $composableBuilder(column: $table.customId, builder: (column) => column);
 }
 
 class $$CommandmentsTableTableManager extends RootTableManager<
@@ -1949,22 +1727,16 @@ class $$CommandmentsTableTableManager extends RootTableManager<
     $$CommandmentsTableAnnotationComposer,
     $$CommandmentsTableCreateCompanionBuilder,
     $$CommandmentsTableUpdateCompanionBuilder,
-    (
-      Commandment,
-      BaseReferences<_$AppDatabase, $CommandmentsTable, Commandment>
-    ),
+    (Commandment, BaseReferences<_$AppDatabase, $CommandmentsTable, Commandment>),
     Commandment,
     PrefetchHooks Function()> {
   $$CommandmentsTableTableManager(_$AppDatabase db, $CommandmentsTable table)
       : super(TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () =>
-              $$CommandmentsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$CommandmentsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$CommandmentsTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () => $$CommandmentsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () => $$CommandmentsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () => $$CommandmentsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> number = const Value.absent(),
@@ -1997,9 +1769,7 @@ class $$CommandmentsTableTableManager extends RootTableManager<
             commandment: commandment,
             customId: customId,
           ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
+          withReferenceMapper: (p0) => p0.map((e) => (e.readTable(table), BaseReferences(db, table, e))).toList(),
           prefetchHooksCallback: null,
         ));
 }
@@ -2013,14 +1783,10 @@ typedef $$CommandmentsTableProcessedTableManager = ProcessedTableManager<
     $$CommandmentsTableAnnotationComposer,
     $$CommandmentsTableCreateCompanionBuilder,
     $$CommandmentsTableUpdateCompanionBuilder,
-    (
-      Commandment,
-      BaseReferences<_$AppDatabase, $CommandmentsTable, Commandment>
-    ),
+    (Commandment, BaseReferences<_$AppDatabase, $CommandmentsTable, Commandment>),
     Commandment,
     PrefetchHooks Function()>;
-typedef $$ExaminationsTableCreateCompanionBuilder = ExaminationsCompanion
-    Function({
+typedef $$ExaminationsTableCreateCompanionBuilder = ExaminationsCompanion Function({
   Value<int> id,
   required int commandmentId,
   required bool adult,
@@ -2037,8 +1803,7 @@ typedef $$ExaminationsTableCreateCompanionBuilder = ExaminationsCompanion
   required String activeText,
   Value<int> count,
 });
-typedef $$ExaminationsTableUpdateCompanionBuilder = ExaminationsCompanion
-    Function({
+typedef $$ExaminationsTableUpdateCompanionBuilder = ExaminationsCompanion Function({
   Value<int> id,
   Value<int> commandmentId,
   Value<bool> adult,
@@ -2056,8 +1821,7 @@ typedef $$ExaminationsTableUpdateCompanionBuilder = ExaminationsCompanion
   Value<int> count,
 });
 
-class $$ExaminationsTableFilterComposer
-    extends Composer<_$AppDatabase, $ExaminationsTable> {
+class $$ExaminationsTableFilterComposer extends Composer<_$AppDatabase, $ExaminationsTable> {
   $$ExaminationsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -2065,54 +1829,47 @@ class $$ExaminationsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get id => $composableBuilder(column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get commandmentId => $composableBuilder(
-      column: $table.commandmentId, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get commandmentId =>
+      $composableBuilder(column: $table.commandmentId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get adult => $composableBuilder(
-      column: $table.adult, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get adult => $composableBuilder(column: $table.adult, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get single => $composableBuilder(
-      column: $table.single, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get single =>
+      $composableBuilder(column: $table.single, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get married => $composableBuilder(
-      column: $table.married, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get married =>
+      $composableBuilder(column: $table.married, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get religious => $composableBuilder(
-      column: $table.religious, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get religious =>
+      $composableBuilder(column: $table.religious, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get priest => $composableBuilder(
-      column: $table.priest, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get priest =>
+      $composableBuilder(column: $table.priest, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get teen => $composableBuilder(
-      column: $table.teen, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get teen => $composableBuilder(column: $table.teen, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get female => $composableBuilder(
-      column: $table.female, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get female =>
+      $composableBuilder(column: $table.female, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get male => $composableBuilder(
-      column: $table.male, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get male => $composableBuilder(column: $table.male, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get child => $composableBuilder(
-      column: $table.child, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get child => $composableBuilder(column: $table.child, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get customId => $composableBuilder(
-      column: $table.customId, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get customId =>
+      $composableBuilder(column: $table.customId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get description => $composableBuilder(
-      column: $table.description, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get description =>
+      $composableBuilder(column: $table.description, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get activeText => $composableBuilder(
-      column: $table.activeText, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get activeText =>
+      $composableBuilder(column: $table.activeText, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get count => $composableBuilder(
-      column: $table.count, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get count => $composableBuilder(column: $table.count, builder: (column) => ColumnFilters(column));
 }
 
-class $$ExaminationsTableOrderingComposer
-    extends Composer<_$AppDatabase, $ExaminationsTable> {
+class $$ExaminationsTableOrderingComposer extends Composer<_$AppDatabase, $ExaminationsTable> {
   $$ExaminationsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2120,55 +1877,52 @@ class $$ExaminationsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get id => $composableBuilder(column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get commandmentId => $composableBuilder(
-      column: $table.commandmentId,
-      builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get commandmentId =>
+      $composableBuilder(column: $table.commandmentId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get adult => $composableBuilder(
-      column: $table.adult, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get adult =>
+      $composableBuilder(column: $table.adult, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get single => $composableBuilder(
-      column: $table.single, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get single =>
+      $composableBuilder(column: $table.single, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get married => $composableBuilder(
-      column: $table.married, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get married =>
+      $composableBuilder(column: $table.married, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get religious => $composableBuilder(
-      column: $table.religious, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get religious =>
+      $composableBuilder(column: $table.religious, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get priest => $composableBuilder(
-      column: $table.priest, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get priest =>
+      $composableBuilder(column: $table.priest, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get teen => $composableBuilder(
-      column: $table.teen, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get teen =>
+      $composableBuilder(column: $table.teen, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get female => $composableBuilder(
-      column: $table.female, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get female =>
+      $composableBuilder(column: $table.female, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get male => $composableBuilder(
-      column: $table.male, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get male =>
+      $composableBuilder(column: $table.male, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get child => $composableBuilder(
-      column: $table.child, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get child =>
+      $composableBuilder(column: $table.child, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get customId => $composableBuilder(
-      column: $table.customId, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get customId =>
+      $composableBuilder(column: $table.customId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get description => $composableBuilder(
-      column: $table.description, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get description =>
+      $composableBuilder(column: $table.description, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get activeText => $composableBuilder(
-      column: $table.activeText, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get activeText =>
+      $composableBuilder(column: $table.activeText, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get count => $composableBuilder(
-      column: $table.count, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get count =>
+      $composableBuilder(column: $table.count, builder: (column) => ColumnOrderings(column));
 }
 
-class $$ExaminationsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ExaminationsTable> {
+class $$ExaminationsTableAnnotationComposer extends Composer<_$AppDatabase, $ExaminationsTable> {
   $$ExaminationsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2176,50 +1930,37 @@ class $$ExaminationsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
+  GeneratedColumn<int> get id => $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get commandmentId => $composableBuilder(
-      column: $table.commandmentId, builder: (column) => column);
+  GeneratedColumn<int> get commandmentId =>
+      $composableBuilder(column: $table.commandmentId, builder: (column) => column);
 
-  GeneratedColumn<bool> get adult =>
-      $composableBuilder(column: $table.adult, builder: (column) => column);
+  GeneratedColumn<bool> get adult => $composableBuilder(column: $table.adult, builder: (column) => column);
 
-  GeneratedColumn<bool> get single =>
-      $composableBuilder(column: $table.single, builder: (column) => column);
+  GeneratedColumn<bool> get single => $composableBuilder(column: $table.single, builder: (column) => column);
 
-  GeneratedColumn<bool> get married =>
-      $composableBuilder(column: $table.married, builder: (column) => column);
+  GeneratedColumn<bool> get married => $composableBuilder(column: $table.married, builder: (column) => column);
 
-  GeneratedColumn<bool> get religious =>
-      $composableBuilder(column: $table.religious, builder: (column) => column);
+  GeneratedColumn<bool> get religious => $composableBuilder(column: $table.religious, builder: (column) => column);
 
-  GeneratedColumn<bool> get priest =>
-      $composableBuilder(column: $table.priest, builder: (column) => column);
+  GeneratedColumn<bool> get priest => $composableBuilder(column: $table.priest, builder: (column) => column);
 
-  GeneratedColumn<bool> get teen =>
-      $composableBuilder(column: $table.teen, builder: (column) => column);
+  GeneratedColumn<bool> get teen => $composableBuilder(column: $table.teen, builder: (column) => column);
 
-  GeneratedColumn<bool> get female =>
-      $composableBuilder(column: $table.female, builder: (column) => column);
+  GeneratedColumn<bool> get female => $composableBuilder(column: $table.female, builder: (column) => column);
 
-  GeneratedColumn<bool> get male =>
-      $composableBuilder(column: $table.male, builder: (column) => column);
+  GeneratedColumn<bool> get male => $composableBuilder(column: $table.male, builder: (column) => column);
 
-  GeneratedColumn<bool> get child =>
-      $composableBuilder(column: $table.child, builder: (column) => column);
+  GeneratedColumn<bool> get child => $composableBuilder(column: $table.child, builder: (column) => column);
 
-  GeneratedColumn<int> get customId =>
-      $composableBuilder(column: $table.customId, builder: (column) => column);
+  GeneratedColumn<int> get customId => $composableBuilder(column: $table.customId, builder: (column) => column);
 
-  GeneratedColumn<String> get description => $composableBuilder(
-      column: $table.description, builder: (column) => column);
+  GeneratedColumn<String> get description =>
+      $composableBuilder(column: $table.description, builder: (column) => column);
 
-  GeneratedColumn<String> get activeText => $composableBuilder(
-      column: $table.activeText, builder: (column) => column);
+  GeneratedColumn<String> get activeText => $composableBuilder(column: $table.activeText, builder: (column) => column);
 
-  GeneratedColumn<int> get count =>
-      $composableBuilder(column: $table.count, builder: (column) => column);
+  GeneratedColumn<int> get count => $composableBuilder(column: $table.count, builder: (column) => column);
 }
 
 class $$ExaminationsTableTableManager extends RootTableManager<
@@ -2231,22 +1972,16 @@ class $$ExaminationsTableTableManager extends RootTableManager<
     $$ExaminationsTableAnnotationComposer,
     $$ExaminationsTableCreateCompanionBuilder,
     $$ExaminationsTableUpdateCompanionBuilder,
-    (
-      Examination,
-      BaseReferences<_$AppDatabase, $ExaminationsTable, Examination>
-    ),
+    (Examination, BaseReferences<_$AppDatabase, $ExaminationsTable, Examination>),
     Examination,
     PrefetchHooks Function()> {
   $$ExaminationsTableTableManager(_$AppDatabase db, $ExaminationsTable table)
       : super(TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () =>
-              $$ExaminationsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ExaminationsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$ExaminationsTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () => $$ExaminationsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () => $$ExaminationsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () => $$ExaminationsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> commandmentId = const Value.absent(),
@@ -2315,9 +2050,7 @@ class $$ExaminationsTableTableManager extends RootTableManager<
             activeText: activeText,
             count: count,
           ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
+          withReferenceMapper: (p0) => p0.map((e) => (e.readTable(table), BaseReferences(db, table, e))).toList(),
           prefetchHooksCallback: null,
         ));
 }
@@ -2331,10 +2064,7 @@ typedef $$ExaminationsTableProcessedTableManager = ProcessedTableManager<
     $$ExaminationsTableAnnotationComposer,
     $$ExaminationsTableCreateCompanionBuilder,
     $$ExaminationsTableUpdateCompanionBuilder,
-    (
-      Examination,
-      BaseReferences<_$AppDatabase, $ExaminationsTable, Examination>
-    ),
+    (Examination, BaseReferences<_$AppDatabase, $ExaminationsTable, Examination>),
     Examination,
     PrefetchHooks Function()>;
 typedef $$GuidesTableCreateCompanionBuilder = GuidesCompanion Function({
@@ -2350,8 +2080,7 @@ typedef $$GuidesTableUpdateCompanionBuilder = GuidesCompanion Function({
   Value<int> headerId,
 });
 
-class $$GuidesTableFilterComposer
-    extends Composer<_$AppDatabase, $GuidesTable> {
+class $$GuidesTableFilterComposer extends Composer<_$AppDatabase, $GuidesTable> {
   $$GuidesTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -2359,21 +2088,19 @@ class $$GuidesTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get id => $composableBuilder(column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get guideTitle => $composableBuilder(
-      column: $table.guideTitle, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get guideTitle =>
+      $composableBuilder(column: $table.guideTitle, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get guideText => $composableBuilder(
-      column: $table.guideText, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get guideText =>
+      $composableBuilder(column: $table.guideText, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get headerId => $composableBuilder(
-      column: $table.headerId, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get headerId =>
+      $composableBuilder(column: $table.headerId, builder: (column) => ColumnFilters(column));
 }
 
-class $$GuidesTableOrderingComposer
-    extends Composer<_$AppDatabase, $GuidesTable> {
+class $$GuidesTableOrderingComposer extends Composer<_$AppDatabase, $GuidesTable> {
   $$GuidesTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2381,21 +2108,19 @@ class $$GuidesTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get id => $composableBuilder(column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get guideTitle => $composableBuilder(
-      column: $table.guideTitle, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get guideTitle =>
+      $composableBuilder(column: $table.guideTitle, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get guideText => $composableBuilder(
-      column: $table.guideText, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get guideText =>
+      $composableBuilder(column: $table.guideText, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get headerId => $composableBuilder(
-      column: $table.headerId, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get headerId =>
+      $composableBuilder(column: $table.headerId, builder: (column) => ColumnOrderings(column));
 }
 
-class $$GuidesTableAnnotationComposer
-    extends Composer<_$AppDatabase, $GuidesTable> {
+class $$GuidesTableAnnotationComposer extends Composer<_$AppDatabase, $GuidesTable> {
   $$GuidesTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2403,17 +2128,13 @@ class $$GuidesTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
+  GeneratedColumn<int> get id => $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get guideTitle => $composableBuilder(
-      column: $table.guideTitle, builder: (column) => column);
+  GeneratedColumn<String> get guideTitle => $composableBuilder(column: $table.guideTitle, builder: (column) => column);
 
-  GeneratedColumn<String> get guideText =>
-      $composableBuilder(column: $table.guideText, builder: (column) => column);
+  GeneratedColumn<String> get guideText => $composableBuilder(column: $table.guideText, builder: (column) => column);
 
-  GeneratedColumn<int> get headerId =>
-      $composableBuilder(column: $table.headerId, builder: (column) => column);
+  GeneratedColumn<int> get headerId => $composableBuilder(column: $table.headerId, builder: (column) => column);
 }
 
 class $$GuidesTableTableManager extends RootTableManager<
@@ -2432,12 +2153,9 @@ class $$GuidesTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () =>
-              $$GuidesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$GuidesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$GuidesTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () => $$GuidesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () => $$GuidesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () => $$GuidesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> guideTitle = const Value.absent(),
@@ -2462,9 +2180,7 @@ class $$GuidesTableTableManager extends RootTableManager<
             guideText: guideText,
             headerId: headerId,
           ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
+          withReferenceMapper: (p0) => p0.map((e) => (e.readTable(table), BaseReferences(db, table, e))).toList(),
           prefetchHooksCallback: null,
         ));
 }
@@ -2494,8 +2210,7 @@ typedef $$PrayersTableUpdateCompanionBuilder = PrayersCompanion Function({
   Value<String> groupName,
 });
 
-class $$PrayersTableFilterComposer
-    extends Composer<_$AppDatabase, $PrayersTable> {
+class $$PrayersTableFilterComposer extends Composer<_$AppDatabase, $PrayersTable> {
   $$PrayersTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -2503,21 +2218,19 @@ class $$PrayersTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get id => $composableBuilder(column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get prayerName => $composableBuilder(
-      column: $table.prayerName, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get prayerName =>
+      $composableBuilder(column: $table.prayerName, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get prayerText => $composableBuilder(
-      column: $table.prayerText, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get prayerText =>
+      $composableBuilder(column: $table.prayerText, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get groupName => $composableBuilder(
-      column: $table.groupName, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get groupName =>
+      $composableBuilder(column: $table.groupName, builder: (column) => ColumnFilters(column));
 }
 
-class $$PrayersTableOrderingComposer
-    extends Composer<_$AppDatabase, $PrayersTable> {
+class $$PrayersTableOrderingComposer extends Composer<_$AppDatabase, $PrayersTable> {
   $$PrayersTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2525,21 +2238,19 @@ class $$PrayersTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get id => $composableBuilder(column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get prayerName => $composableBuilder(
-      column: $table.prayerName, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get prayerName =>
+      $composableBuilder(column: $table.prayerName, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get prayerText => $composableBuilder(
-      column: $table.prayerText, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get prayerText =>
+      $composableBuilder(column: $table.prayerText, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get groupName => $composableBuilder(
-      column: $table.groupName, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get groupName =>
+      $composableBuilder(column: $table.groupName, builder: (column) => ColumnOrderings(column));
 }
 
-class $$PrayersTableAnnotationComposer
-    extends Composer<_$AppDatabase, $PrayersTable> {
+class $$PrayersTableAnnotationComposer extends Composer<_$AppDatabase, $PrayersTable> {
   $$PrayersTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2547,17 +2258,13 @@ class $$PrayersTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
+  GeneratedColumn<int> get id => $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get prayerName => $composableBuilder(
-      column: $table.prayerName, builder: (column) => column);
+  GeneratedColumn<String> get prayerName => $composableBuilder(column: $table.prayerName, builder: (column) => column);
 
-  GeneratedColumn<String> get prayerText => $composableBuilder(
-      column: $table.prayerText, builder: (column) => column);
+  GeneratedColumn<String> get prayerText => $composableBuilder(column: $table.prayerText, builder: (column) => column);
 
-  GeneratedColumn<String> get groupName =>
-      $composableBuilder(column: $table.groupName, builder: (column) => column);
+  GeneratedColumn<String> get groupName => $composableBuilder(column: $table.groupName, builder: (column) => column);
 }
 
 class $$PrayersTableTableManager extends RootTableManager<
@@ -2576,12 +2283,9 @@ class $$PrayersTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () =>
-              $$PrayersTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$PrayersTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$PrayersTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () => $$PrayersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () => $$PrayersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () => $$PrayersTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> prayerName = const Value.absent(),
@@ -2606,9 +2310,7 @@ class $$PrayersTableTableManager extends RootTableManager<
             prayerText: prayerText,
             groupName: groupName,
           ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
+          withReferenceMapper: (p0) => p0.map((e) => (e.readTable(table), BaseReferences(db, table, e))).toList(),
           prefetchHooksCallback: null,
         ));
 }
@@ -2625,21 +2327,18 @@ typedef $$PrayersTableProcessedTableManager = ProcessedTableManager<
     (Prayer, BaseReferences<_$AppDatabase, $PrayersTable, Prayer>),
     Prayer,
     PrefetchHooks Function()>;
-typedef $$InspirationsTableCreateCompanionBuilder = InspirationsCompanion
-    Function({
+typedef $$InspirationsTableCreateCompanionBuilder = InspirationsCompanion Function({
   Value<int> id,
   required String author,
   required String quote,
 });
-typedef $$InspirationsTableUpdateCompanionBuilder = InspirationsCompanion
-    Function({
+typedef $$InspirationsTableUpdateCompanionBuilder = InspirationsCompanion Function({
   Value<int> id,
   Value<String> author,
   Value<String> quote,
 });
 
-class $$InspirationsTableFilterComposer
-    extends Composer<_$AppDatabase, $InspirationsTable> {
+class $$InspirationsTableFilterComposer extends Composer<_$AppDatabase, $InspirationsTable> {
   $$InspirationsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -2647,18 +2346,16 @@ class $$InspirationsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get id => $composableBuilder(column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get author => $composableBuilder(
-      column: $table.author, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get author =>
+      $composableBuilder(column: $table.author, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get quote => $composableBuilder(
-      column: $table.quote, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get quote =>
+      $composableBuilder(column: $table.quote, builder: (column) => ColumnFilters(column));
 }
 
-class $$InspirationsTableOrderingComposer
-    extends Composer<_$AppDatabase, $InspirationsTable> {
+class $$InspirationsTableOrderingComposer extends Composer<_$AppDatabase, $InspirationsTable> {
   $$InspirationsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2666,18 +2363,16 @@ class $$InspirationsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get id => $composableBuilder(column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get author => $composableBuilder(
-      column: $table.author, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get author =>
+      $composableBuilder(column: $table.author, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get quote => $composableBuilder(
-      column: $table.quote, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get quote =>
+      $composableBuilder(column: $table.quote, builder: (column) => ColumnOrderings(column));
 }
 
-class $$InspirationsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $InspirationsTable> {
+class $$InspirationsTableAnnotationComposer extends Composer<_$AppDatabase, $InspirationsTable> {
   $$InspirationsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2685,14 +2380,11 @@ class $$InspirationsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
+  GeneratedColumn<int> get id => $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get author =>
-      $composableBuilder(column: $table.author, builder: (column) => column);
+  GeneratedColumn<String> get author => $composableBuilder(column: $table.author, builder: (column) => column);
 
-  GeneratedColumn<String> get quote =>
-      $composableBuilder(column: $table.quote, builder: (column) => column);
+  GeneratedColumn<String> get quote => $composableBuilder(column: $table.quote, builder: (column) => column);
 }
 
 class $$InspirationsTableTableManager extends RootTableManager<
@@ -2704,22 +2396,16 @@ class $$InspirationsTableTableManager extends RootTableManager<
     $$InspirationsTableAnnotationComposer,
     $$InspirationsTableCreateCompanionBuilder,
     $$InspirationsTableUpdateCompanionBuilder,
-    (
-      Inspiration,
-      BaseReferences<_$AppDatabase, $InspirationsTable, Inspiration>
-    ),
+    (Inspiration, BaseReferences<_$AppDatabase, $InspirationsTable, Inspiration>),
     Inspiration,
     PrefetchHooks Function()> {
   $$InspirationsTableTableManager(_$AppDatabase db, $InspirationsTable table)
       : super(TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () =>
-              $$InspirationsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$InspirationsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$InspirationsTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () => $$InspirationsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () => $$InspirationsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () => $$InspirationsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> author = const Value.absent(),
@@ -2740,9 +2426,7 @@ class $$InspirationsTableTableManager extends RootTableManager<
             author: author,
             quote: quote,
           ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
+          withReferenceMapper: (p0) => p0.map((e) => (e.readTable(table), BaseReferences(db, table, e))).toList(),
           prefetchHooksCallback: null,
         ));
 }
@@ -2756,24 +2440,16 @@ typedef $$InspirationsTableProcessedTableManager = ProcessedTableManager<
     $$InspirationsTableAnnotationComposer,
     $$InspirationsTableCreateCompanionBuilder,
     $$InspirationsTableUpdateCompanionBuilder,
-    (
-      Inspiration,
-      BaseReferences<_$AppDatabase, $InspirationsTable, Inspiration>
-    ),
+    (Inspiration, BaseReferences<_$AppDatabase, $InspirationsTable, Inspiration>),
     Inspiration,
     PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$CommandmentsTableTableManager get commandments =>
-      $$CommandmentsTableTableManager(_db, _db.commandments);
-  $$ExaminationsTableTableManager get examinations =>
-      $$ExaminationsTableTableManager(_db, _db.examinations);
-  $$GuidesTableTableManager get guides =>
-      $$GuidesTableTableManager(_db, _db.guides);
-  $$PrayersTableTableManager get prayers =>
-      $$PrayersTableTableManager(_db, _db.prayers);
-  $$InspirationsTableTableManager get inspirations =>
-      $$InspirationsTableTableManager(_db, _db.inspirations);
+  $$CommandmentsTableTableManager get commandments => $$CommandmentsTableTableManager(_db, _db.commandments);
+  $$ExaminationsTableTableManager get examinations => $$ExaminationsTableTableManager(_db, _db.examinations);
+  $$GuidesTableTableManager get guides => $$GuidesTableTableManager(_db, _db.guides);
+  $$PrayersTableTableManager get prayers => $$PrayersTableTableManager(_db, _db.prayers);
+  $$InspirationsTableTableManager get inspirations => $$InspirationsTableTableManager(_db, _db.inspirations);
 }

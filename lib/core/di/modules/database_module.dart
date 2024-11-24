@@ -1,9 +1,11 @@
 import 'package:confession/core/database/app_database.dart';
+import 'package:confession/core/di/modules/module.dart';
 import 'package:confession/core/di/service_locator.dart';
 import 'package:confession/data/datasources/local/database_source.dart';
 
-class DatabaseModule {
-  static void init()  {
+class DatabaseModule extends Module {
+  @override
+  void init() {
     // Database related dependencies
     sl
       ..registerLazySingleton<DatabaseSource>(

@@ -1,4 +1,3 @@
-
 import 'package:confession/core/database/app_database.dart';
 import 'package:confession/core/database/tables/commandments.dart';
 import 'package:drift/drift.dart';
@@ -6,14 +5,12 @@ import 'package:drift/drift.dart';
 part 'commandments_dao.g.dart';
 
 @DriftAccessor(tables: [Commandments])
-class CommandmentsDao extends DatabaseAccessor<AppDatabase>
-    with _$CommandmentsDaoMixin {
+class CommandmentsDao extends DatabaseAccessor<AppDatabase> with _$CommandmentsDaoMixin {
   CommandmentsDao(super.db);
 
-   Future<List<Commandment>> getAllCommandments() => select(commandments).get();
+  Future<List<Commandment>> getAllCommandments() => select(commandments).get();
 
-  Future<int> insertCommandment(Insertable<Commandment> commandment) =>
-      into(commandments).insert(commandment);
+  Future<int> insertCommandment(Insertable<Commandment> commandment) => into(commandments).insert(commandment);
 
   // Future<List<Commandment>> getCommandmentsForUser(User user) {
   //   if (user.age == Age.child) {
