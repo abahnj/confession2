@@ -19,7 +19,6 @@ class CoreModule extends Module {
       ..registerLazySingleton<PathProvider>(PathProviderImpl.new)
       ..registerLazySingleton<LocalStorageDataSource>(
         () => SharedPreferencesDataSource(preferences: sl()),
-
       );
   }
 }

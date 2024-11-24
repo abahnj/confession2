@@ -27,8 +27,8 @@ void main() {
     testFile = fileSystem.file('/test/sqlite.db');
 
     // Setup default mock behaviors
-    when(() => mockDatabaseSource.getDatabaseFile()).thenAnswer((_) async => testFile);
-    when(() => mockDatabaseSource.setupAndroidSpecifics()).thenAnswer((_) async => {});
+    when(() => mockDatabaseSource.getDatabaseFile())
+        .thenAnswer((_) async => testFile);
 
     when(() => mockExecutor.close()).thenAnswer((_) async => {});
 
@@ -116,7 +116,9 @@ void main() {
       await database.backupDatabase();
 
       // Assert
-      final backupFile = testFile.parent.listSync().firstWhere((file) => file.path.contains('backup_'));
+      final backupFile = testFile.parent
+          .listSync()
+          .firstWhere((file) => file.path.contains('backup_'));
       expect(await fileSystem.file(backupFile.path).readAsString(), testData);
     });
 
@@ -131,7 +133,10 @@ void main() {
       await database.backupDatabase();
 
       // Assert
-      final backupFiles = testFile.parent.listSync().where((file) => file.path.contains('backup_')).toList();
+      final backupFiles = testFile.parent
+          .listSync()
+          .where((file) => file.path.contains('backup_'))
+          .toList();
       expect(backupFiles.length, 2);
       expect(backupFiles[0].path, isNot(equals(backupFiles[1].path)));
     });
@@ -190,7 +195,10 @@ void main() {
 
       // Create backup
       await database.backupDatabase();
-      final backupFiles = testFile.parent.listSync().where((file) => file.path.contains('backup_')).toList();
+      final backupFiles = testFile.parent
+          .listSync()
+          .where((file) => file.path.contains('backup_'))
+          .toList();
       expect(backupFiles.length, 1);
 
       // Delete database
@@ -213,7 +221,10 @@ void main() {
       await Future<void>.delayed(const Duration(milliseconds: 1));
       await database.backupDatabase();
 
-      final backupFiles = testFile.parent.listSync().where((file) => file.path.contains('backup_')).toList();
+      final backupFiles = testFile.parent
+          .listSync()
+          .where((file) => file.path.contains('backup_'))
+          .toList();
       expect(backupFiles.length, 2);
 
       // Delete original

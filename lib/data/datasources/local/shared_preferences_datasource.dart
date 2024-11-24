@@ -2,12 +2,14 @@ import 'package:confession/domain/datasources/local_storage_datasource.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesDataSource implements LocalStorageDataSource {
-  SharedPreferencesDataSource({required SharedPreferences preferences}) : _preferences = preferences;
+  SharedPreferencesDataSource({required SharedPreferences preferences})
+      : _preferences = preferences;
 
   final SharedPreferences _preferences;
 
   @override
-  Future<bool> set(String key, String data) async => _preferences.setString(key, data);
+  Future<bool> set(String key, String data) async =>
+      _preferences.setString(key, data);
 
   @override
   Future<String?> get(String key) async => _preferences.getString(key);

@@ -41,8 +41,10 @@ void main() {
 
     // Setup default mock behaviors
     when(() => mockIoDirectory.path).thenReturn('/test/path');
-    when(() => mockPathProvider.getApplicationDocumentsDirectory()).thenAnswer((_) async => mockIoDirectory);
-    when(() => mockPathProvider.getTemporaryDirectory()).thenAnswer((_) async => mockIoDirectory);
+    when(() => mockPathProvider.getApplicationDocumentsDirectory())
+        .thenAnswer((_) async => mockIoDirectory);
+    when(() => mockPathProvider.getTemporaryDirectory())
+        .thenAnswer((_) async => mockIoDirectory);
 
     databaseSource = DatabaseSource(
       pathProvider: mockPathProvider,
@@ -77,7 +79,8 @@ void main() {
     group('getDatabaseFile', () {
       test('returns correct file path', () async {
         // Arrange
-        final expectedPath = p.join('/test/path', AppDatabaseConfig.databaseName);
+        final expectedPath =
+            p.join('/test/path', AppDatabaseConfig.databaseName);
 
         // Act
         final file = await databaseSource.getDatabaseFile();
@@ -88,7 +91,8 @@ void main() {
 
       test('handles path provider error', () async {
         // Arrange
-        when(() => mockPathProvider.getApplicationDocumentsDirectory()).thenThrow(Exception('Path provider error'));
+        when(() => mockPathProvider.getApplicationDocumentsDirectory())
+            .thenThrow(Exception('Path provider error'));
 
         // Act & Assert
         expect(
@@ -148,7 +152,8 @@ void main() {
         final byteData = ByteData(testData.length);
         testData.asMap().forEach(byteData.setUint8);
 
-        when(() => mockAssetBundle.load(any())).thenAnswer((_) async => byteData);
+        when(() => mockAssetBundle.load(any()))
+            .thenAnswer((_) async => byteData);
 
         // Act
         await databaseSource.copyAssetDatabase(
@@ -164,7 +169,8 @@ void main() {
       test('throws DatabaseException when asset loading fails', () async {
         // Arrange
         final testFile = fileSystem.file('/test/db.sqlite');
-        when(() => mockAssetBundle.load(any())).thenThrow(Exception('Asset load failed'));
+        when(() => mockAssetBundle.load(any()))
+            .thenThrow(Exception('Asset load failed'));
 
         // Act & Assert
         expect(
@@ -186,7 +192,8 @@ void main() {
         final byteData = ByteData(newData.length);
         newData.asMap().forEach(byteData.setUint8);
 
-        when(() => mockAssetBundle.load(any())).thenAnswer((_) async => byteData);
+        when(() => mockAssetBundle.load(any()))
+            .thenAnswer((_) async => byteData);
 
         // Act
         await databaseSource.copyAssetDatabase(
@@ -206,7 +213,8 @@ void main() {
         final byteData = ByteData(testData.length);
         testData.asMap().forEach(byteData.setUint8);
 
-        when(() => mockAssetBundle.load(any())).thenAnswer((_) async => byteData);
+        when(() => mockAssetBundle.load(any()))
+            .thenAnswer((_) async => byteData);
 
         // Act
         await databaseSource.ensureDirectoryExists(testFile);
@@ -226,7 +234,8 @@ void main() {
         final testFile = fileSystem.file('/test/db.sqlite');
         await testFile.parent.create(recursive: true);
 
-        when(() => mockAssetBundle.load(any())).thenAnswer((_) async => ByteData(0));
+        when(() => mockAssetBundle.load(any()))
+            .thenAnswer((_) async => ByteData(0));
 
         // Act
         await databaseSource.copyAssetDatabase(
@@ -242,8 +251,10 @@ void main() {
       test('throws DatabaseException when file write fails', () async {
         // Arrange
         final mockFile = MockFile();
-        when(() => mockAssetBundle.load(any())).thenAnswer((_) async => ByteData(0));
-        when(() => mockFile.writeAsBytes(any())).thenThrow(const FileSystemException('Write failed'));
+        when(() => mockAssetBundle.load(any()))
+            .thenAnswer((_) async => ByteData(0));
+        when(() => mockFile.writeAsBytes(any()))
+            .thenThrow(const FileSystemException('Write failed'));
 
         // Act & Assert
         expect(
@@ -260,7 +271,8 @@ void main() {
       test('complete database file setup flow', () async {
         // Arrange
         final testData = Uint8List.fromList([1, 2, 3, 4]);
-        when(() => mockAssetBundle.load(any())).thenAnswer((_) async => ByteData.sublistView(testData));
+        when(() => mockAssetBundle.load(any()))
+            .thenAnswer((_) async => ByteData.sublistView(testData));
 
         // Act
         final dbFile = await databaseSource.getDatabaseFile();
@@ -278,7 +290,8 @@ void main() {
 
       test('handles complete flow failure gracefully', () async {
         // Arrange
-        when(() => mockAssetBundle.load(any())).thenThrow(Exception('Asset load failed'));
+        when(() => mockAssetBundle.load(any()))
+            .thenThrow(Exception('Asset load failed'));
 
         // Act & Assert
         final dbFile = await databaseSource.getDatabaseFile();

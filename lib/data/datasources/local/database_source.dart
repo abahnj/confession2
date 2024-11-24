@@ -1,6 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'dart:developer';
 import 'dart:io' as io;
 
 import 'package:confession/core/database/database_config.dart';
@@ -28,8 +27,8 @@ class DatabaseSource {
 
   Future<File> getDatabaseFile() async {
     final dbFolder = await _pathProvider.getApplicationDocumentsDirectory();
-    log('Database folder: ${dbFolder.path}');
-    return _fileSystem.file(p.join(dbFolder.path, AppDatabaseConfig.databaseName));
+    return _fileSystem
+        .file(p.join(dbFolder.path, AppDatabaseConfig.databaseName));
   }
 
   Future<void> ensureDirectoryExists(File file) async {
@@ -42,7 +41,9 @@ class DatabaseSource {
   Future<void> copyAssetDatabase(File file, String assetPath) async {
     try {
       final content = await _assetBundle.load(assetPath);
-      await _fileSystem.file(file.path).writeAsBytes(content.buffer.asUint8List());
+      await _fileSystem
+          .file(file.path)
+          .writeAsBytes(content.buffer.asUint8List());
     } catch (e) {
       throw DatabaseException('Failed to copy asset database', e);
     }

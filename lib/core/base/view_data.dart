@@ -5,5 +5,4 @@ abstract class ViewData<T extends DomainModel<ViewData<T>>> extends Equatable {
   const ViewData();
 
   T toDomain();
-  ViewData<T> copyWith();
 }

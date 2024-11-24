@@ -6,6 +6,10 @@ import 'package:confession/core/database/app_database.dart';
 import 'package:confession/core/di/service_locator.dart';
 import 'package:confession/domain/dtos/models/user_domain_model.dart';
 import 'package:confession/domain/enums/user_enums.dart';
+import 'package:confession/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 class AppBlocObserver extends BlocObserver {
@@ -25,10 +29,6 @@ class AppBlocObserver extends BlocObserver {
 }
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
-  FlutterError.onError = (details) {
-    log(details.exceptionAsString(), stackTrace: details.stack);
-  };
-
   Bloc.observer = const AppBlocObserver();
 
   // Add cross-flavor configuration here
@@ -51,6 +51,18 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   );
 
   log('items in database: $allItems');
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FlutterError.onError = (details) {
+    FirebaseCrashlytics.instance.recordFlutterError(details);
+    log(details.exceptionAsString(), stackTrace: details.stack);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack);
+    return true;
+  };
 
   runApp(await builder());
 }

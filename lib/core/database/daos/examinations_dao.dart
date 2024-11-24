@@ -7,7 +7,8 @@ import 'package:drift/drift.dart';
 part 'examinations_dao.g.dart';
 
 @DriftAccessor(tables: [Examinations])
-class ExaminationsDao extends DatabaseAccessor<AppDatabase> with _$ExaminationsDaoMixin {
+class ExaminationsDao extends DatabaseAccessor<AppDatabase>
+    with _$ExaminationsDaoMixin {
   ExaminationsDao(super.db);
 
   // Constants for query optimization
@@ -15,7 +16,9 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase> with _$ExaminationsD
 
   /// Fetches examinations for a specific commandment
   Future<List<Examination>> getExaminationsForId(int commandmentId) {
-    return (select(examinations)..where((t) => t.commandmentId.equals(commandmentId))).get();
+    return (select(examinations)
+          ..where((t) => t.commandmentId.equals(commandmentId)))
+        .get();
   }
 
   /// Streams examinations filtered by user profile
@@ -23,7 +26,8 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase> with _$ExaminationsD
     int commandmentId,
     UserDomainModel user,
   ) {
-    final query = select(examinations)..where((t) => t.commandmentId.equals(commandmentId));
+    final query = select(examinations)
+      ..where((t) => t.commandmentId.equals(commandmentId));
 
     // For children, only apply age filter
     if (user.age == Age.child) {

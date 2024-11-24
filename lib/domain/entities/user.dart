@@ -16,20 +16,6 @@ class User extends ViewData<UserDomainModel> {
   final String lastConfession;
 
   @override
-  User copyWith({
-    Vocation? vocation,
-    Age? age,
-    Gender? gender,
-    String? lastConfession,
-  }) =>
-      User(
-        vocation: vocation ?? this.vocation,
-        age: age ?? this.age,
-        gender: gender ?? this.gender,
-        lastConfession: lastConfession ?? this.lastConfession,
-      );
-
-  @override
   UserDomainModel toDomain() => UserDomainModel(
         vocation: vocation,
         age: age,

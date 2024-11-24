@@ -60,7 +60,8 @@ class UserBloc extends ModuleBloc<BlocEvent<UserParams>, User> {
   }
 
   @override
-  Future<void> handleEvent(BlocEvent<UserParams> event, Emitter<BlocState<User>> emit) {
+  Future<void> handleEvent(
+      BlocEvent<UserParams> event, Emitter<BlocState<User>> emit) {
     return switch (event.argument) {
       LoadUser() => _onLoadUser(event.argument as LoadUser, emit),
       UpdateUser() => _onUpdateUser(event.argument as UpdateUser, emit),

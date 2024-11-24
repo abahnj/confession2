@@ -31,7 +31,8 @@ export 'package:bloc/bloc.dart' show Emitter;
 /// ```
 ///
 ///
-abstract class ModuleBloc<Event extends BlocEvent, ViewDataType extends ViewData<DomainModel<ViewDataType>>>
+abstract class ModuleBloc<Event extends BlocEvent,
+        ViewDataType extends ViewData<DomainModel<ViewDataType>>>
     extends Bloc<Event, BlocState<ViewDataType>> {
   ModuleBloc(super.initialState);
 
@@ -72,6 +73,7 @@ abstract class ModuleBloc<Event extends BlocEvent, ViewDataType extends ViewData
   ///
   @protected
   void listenToAppLifecycle() {
-    throw UnimplementedError('`listenToAppLifecycle` method should be overridden before calling only when required!!!');
+    throw UnimplementedError(
+        '`listenToAppLifecycle` method should be overridden before calling only when required!!!');
   }
 }

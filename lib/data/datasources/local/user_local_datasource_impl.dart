@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:confession/domain/datasources/local_storage_datasource.dart';
 import 'package:confession/domain/datasources/user_local_datasource.dart';
 import 'package:confession/domain/dtos/models/user_domain_model.dart';
-import 'package:confession/domain/entities/storage_keys.dart';
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
   UserLocalDataSourceImpl(this._localStorage);
@@ -16,7 +15,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
   @override
   Future<UserDomainModel> read() async {
-    final json = await _localStorage.get(StorageKeys.user);
+    final json = await _localStorage.get(_userKey);
 
     if (json == null) return const UserDomainModel.empty();
 
@@ -26,5 +25,6 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   }
 
   @override
-  Future<void> write(UserDomainModel? value) => _localStorage.set(StorageKeys.user, jsonEncode(value?.toJson()));
+  Future<void> write(UserDomainModel? value) =>
+      _localStorage.set(_userKey, jsonEncode(value?.toJson()));
 }

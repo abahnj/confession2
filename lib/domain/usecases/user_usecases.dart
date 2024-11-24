@@ -3,7 +3,8 @@ import 'package:confession/domain/repositories/user_repository.dart';
 import 'package:confession/domain/usecases/usecase.dart';
 
 class GetUserUseCase implements UseCase<User, NoParams> {
-  const GetUserUseCase({required UserRepository userRepository}) : _repository = userRepository;
+  const GetUserUseCase({required UserRepository userRepository})
+      : _repository = userRepository;
 
   final UserRepository _repository;
 
@@ -16,7 +17,8 @@ class GetUserUseCase implements UseCase<User, NoParams> {
 }
 
 class SaveUserUseCase implements UseCase<void, User> {
-  const SaveUserUseCase({required UserRepository userRepository}) : _repository = userRepository;
+  const SaveUserUseCase({required UserRepository userRepository})
+      : _repository = userRepository;
 
   final UserRepository _repository;
 
@@ -25,7 +27,8 @@ class SaveUserUseCase implements UseCase<void, User> {
 }
 
 class DeleteUserUseCase implements UseCase<void, NoParams> {
-  const DeleteUserUseCase({required UserRepository userRepository}) : _repository = userRepository;
+  const DeleteUserUseCase({required UserRepository userRepository})
+      : _repository = userRepository;
   final UserRepository _repository;
 
   @override
