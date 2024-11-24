@@ -15,7 +15,8 @@ class UserModule extends Module {
         () => UserLocalDataSourceImpl(sl()),
       )
       ..registerLazySingleton<UserRepository>(
-          () => UserRepositoryImpl(userLocalDataSource: sl())) //
+        () => UserRepositoryImpl(userLocalDataSource: sl()),
+      ) //
       //Usecases
       ..registerFactory(() => GetUserUseCase(userRepository: sl()))
       ..registerFactory(() => SaveUserUseCase(userRepository: sl()))
