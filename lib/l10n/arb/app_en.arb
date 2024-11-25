@@ -1,7 +1,95 @@
 {
-    "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
+  "@@locale": "en",
+  "counterAppBarTitle": "Counter",
+  "@counterAppBarTitle": {
+    "description": "Text shown in the AppBar of the Counter Page"
+  },
+  "settingsAppBarTitle": "Settings",
+  "@settingsAppBarTitle": {
+    "description": "Settings app bar title"
+  },
+  "examinationNavbarTitle": "Exam",
+  "@examinationNavbarTitle": {
+    "description": "Examination navbar title"
+  },
+  "confessionNavbarTitle": "Confession",
+  "@confessionNavbarTitle": {
+    "description": "Confession navbar title"
+  },
+  "prayersNavbarTitle": "Prayers",
+  "@prayersNavbarTitle": {
+    "description": "Prayers navbar title"
+  },
+  "guidesNavbarTitle": "Guides",
+  "@guidesNavbarTitle": {
+    "description": "Guides navbar title"
+  },
+  "settingsThemeTitle": "Theme",
+  "@settingsThemeTitle": {
+    "description": "Settings theme title"
+  },
+  "settingsThemeModeSystem": "System",
+  "@settingsThemeModeSystem": {
+    "description": "Settings theme mode system"
+  },
+  "settingsThemeModeLight": "Light mode",
+  "@settingsThemeModeLight": {
+    "description": "Settings theme mode light"
+  },
+  "settingsThemeModeDark": "Dark mode",
+  "@settingsThemeModeDark": {
+    "description": "Settings theme mode dark"
+  },
+  "settingsGenderTitle": "Gender",
+  "@settingsGenderTitle": {
+    "description": "Settings gender title"
+  },
+  "settingsAgeTitle": "Age",
+  "@settingsAgeTitle": {
+    "description": "Settings age title"
+  },
+  "settingsVocationTitle": "Vocation",
+  "@settingsVocationTitle": {
+    "description": "Settings vocation title"
+  },
+  "settingsDateOfLastConfessionTitle": "Date of last confession",
+  "@settingsDateOfLastConfessionTitle": {
+    "description": "Settings date of last confession title"
+  },
+  "settingsGenderMale": "Male",
+  "@settingsGenderMale": {
+    "description": "Settings gender male"
+  },
+  "settingsGenderFemale": "Female",
+    "@settingsGenderFemale": {
+        "description": "Settings gender female"
+    },
+    "settingsAgeAdult": "Adult",
+    "@settingsAgeAdult": {
+        "description": "Settings age adult"
+    },
+    "settingsAgeChild": "Child",
+    "@settingsAgeChild": {
+        "description": "Settings age child"
+    },
+    "settingsAgeTeen": "Teen",
+    "@settingsAgeTeen": {
+        "description": "Settings age teen"
+    },
+    "settingsVocationSingle": "Single",
+    "@settingsVocationSingle": {
+        "description": "Settings vocation single"
+    },
+    "settingsVocationMarried": "Married",
+    "@settingsVocationMarried": {
+        "description": "Settings vocation married"
+    },
+    "settingsVocationReligious": "Religious",
+    "@settingsVocationReligious": {
+        "description": "Settings vocation religious"
+    },
+    "settingsVocationPriest": "Priest",
+    "@settingsVocationPriest": {
+        "description": "Settings vocation priest"
     }
 }

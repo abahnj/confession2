@@ -1,43 +1,39 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AppTheme {
-  const AppTheme._(); // Private constructor to prevent instantiation
+/// The [AppTheme] defines light and dark themes for the app.
 
-  // Colors
-  static const Color _iconColorLightInactive = Color.fromRGBO(0, 0, 0, .9);
-  static const Color _iconColorActive = Colors.red;
-  static const Color _iconColorDarkInactive =
-      Color.fromRGBO(255, 255, 255, 0.3);
-
-  // Light Theme
-  static final ThemeData light = ThemeData(
-    brightness: Brightness.light,
-    useMaterial3: true,
-    colorSchemeSeed: _iconColorActive,
-    primaryIconTheme: const IconThemeData(
-      color: _iconColorActive,
+sealed class AppTheme {
+  // The defined light theme.
+  static ThemeData light = FlexThemeData.light(
+    scheme: FlexScheme.redWine,
+    subThemesData: const FlexSubThemesData(
+      interactionEffects: true,
+      tintedDisabledControls: true,
+      useM2StyleDividerInM3: true,
+      inputDecoratorBorderType: FlexInputBorderType.outline,
+      alignedDropdown: true,
+      navigationRailUseIndicator: true,
+      navigationRailLabelType: NavigationRailLabelType.all,
     ),
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      selectedItemColor: _iconColorActive,
-      unselectedItemColor: _iconColorLightInactive,
-    ),
+    visualDensity: FlexColorScheme.comfortablePlatformDensity,
+    cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
   );
-
-  // Dark Theme
-  static final ThemeData dark = ThemeData.dark().copyWith(
-    iconTheme: const IconThemeData(
-      color: _iconColorActive,
+  // The defined dark theme.
+  static ThemeData dark = FlexThemeData.dark(
+    scheme: FlexScheme.redWine,
+    subThemesData: const FlexSubThemesData(
+      interactionEffects: true,
+      tintedDisabledControls: true,
+      blendOnColors: true,
+      useM2StyleDividerInM3: true,
+      inputDecoratorBorderType: FlexInputBorderType.outline,
+      alignedDropdown: true,
+      navigationRailUseIndicator: true,
+      navigationRailLabelType: NavigationRailLabelType.all,
     ),
-    appBarTheme: AppBarTheme(
-      backgroundColor: const ColorScheme.dark().primary,
-    ),
-    scaffoldBackgroundColor: Colors.black,
-    colorScheme: const ColorScheme.dark(
-      surface: Colors.black,
-    ),
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      selectedItemColor: _iconColorActive,
-      unselectedItemColor: _iconColorDarkInactive,
-    ),
+    visualDensity: FlexColorScheme.comfortablePlatformDensity,
+    cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
   );
 }

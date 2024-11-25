@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 class AppRouteObserver extends AutoRouterObserver {
   @override
   void didPush(Route<Object?> route, Route<Object?>? previousRoute) {
-    log('New route pushed: $route');
-    log('New route pushed: ${route.settings.name}');
+    log('New route pushed: ${route.data?.path}');
   }
 
   // only override to observer tab routes
@@ -22,5 +21,10 @@ class AppRouteObserver extends AutoRouterObserver {
     FirebaseCrashlytics.instance.log('route changed to ${route.name}');
 
     log('Tab route re-visited: ${route.name}');
+  }
+
+  @override
+  void didPop(Route<Object?> route, Route<Object?>? previousRoute) {
+    log('Route popped: ${route.data?.path}');
   }
 }

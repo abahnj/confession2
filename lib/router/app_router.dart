@@ -12,11 +12,28 @@ class AppRouter extends RootStackRouter {
           path: '/',
           page: ShellRoute.page,
           children: [
-            AutoRoute(path: '', page: PrayersRoute.page),
-            AutoRoute(path: 'guide', page: GuideRoute.page),
-            AutoRoute(path: 'exam', page: ExaminationRoute.page),
-            AutoRoute(path: 'confession', page: ConfessionRoute.page),
+            AutoRoute(
+              path: '',
+              page: ExaminationRoute.page,
+              title: (context, data) => 'Examination',
+            ),
+            AutoRoute(
+              path: 'prayers',
+              page: PrayersRoute.page,
+              title: (context, data) => 'Prayers',
+            ),
+            AutoRoute(
+              path: 'guide',
+              page: GuideRoute.page,
+              title: (context, data) => 'Guide',
+            ),
+            AutoRoute(
+              path: 'confession',
+              page: ConfessionRoute.page,
+              title: (context, data) => 'Confession',
+            ),
           ],
         ),
+        AutoRoute(path: '/settings', page: SettingsRoute.page),
       ];
 }

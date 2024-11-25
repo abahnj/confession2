@@ -10,10 +10,29 @@ class User extends ViewData<UserDomainModel> {
     required this.lastConfession,
   });
 
+  const User.empty()
+      : vocation = Vocation.single,
+        age = Age.adult,
+        gender = Gender.female,
+        lastConfession = '';
+
   final Vocation vocation;
   final Age age;
   final Gender gender;
   final String lastConfession;
+
+  User copyWith({
+    Vocation? vocation,
+    Age? age,
+    Gender? gender,
+    String? lastConfession,
+  }) =>
+      User(
+        vocation: vocation ?? this.vocation,
+        age: age ?? this.age,
+        gender: gender ?? this.gender,
+        lastConfession: lastConfession ?? this.lastConfession,
+      );
 
   @override
   UserDomainModel toDomain() => UserDomainModel(

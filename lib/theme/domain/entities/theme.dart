@@ -1,21 +1,15 @@
 import 'package:confession/core/base/view_data.dart';
 import 'package:confession/theme/data/models/theme_domain_model.dart';
+import 'package:flutter/material.dart';
 
-class Theme extends ViewData<ThemeDomainModel> {
-  const Theme({
-    required this.isDarkMode,
-    required this.themeName,
-  });
+class AppThemeMode extends ViewData<ThemeDomainModel> {
+  const AppThemeMode({required this.themeMode});
 
-  final bool isDarkMode;
-  final String themeName;
+  final ThemeMode themeMode;
 
   @override
-  ThemeDomainModel toDomain() => ThemeDomainModel(
-        isDarkMode: isDarkMode,
-        themeName: themeName,
-      );
+  ThemeDomainModel toDomain() => ThemeDomainModel(themeMode: themeMode);
 
   @override
-  List<Object?> get props => [isDarkMode, themeName];
+  List<Object?> get props => [themeMode];
 }

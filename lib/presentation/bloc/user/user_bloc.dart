@@ -1,11 +1,10 @@
 import 'package:confession/core/base/bloc/bloc_event.dart';
-import 'package:confession/core/base/bloc/bloc_state.dart';
-import 'package:confession/core/base/bloc/module_bloc.dart';
 import 'package:confession/domain/entities/user.dart';
 import 'package:confession/domain/usecases/usecase.dart';
 import 'package:confession/domain/usecases/user_usecases.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UserBloc extends ModuleBloc<BlocEvent<UserParams>, User> {
+class UserBloc extends Bloc<BlocEvent<UserParams>, User> {
   UserBloc({
     required GetUserUseCase getUser,
     required SaveUserUseCase saveUser,
@@ -13,7 +12,7 @@ class UserBloc extends ModuleBloc<BlocEvent<UserParams>, User> {
   })  : _getUser = getUser,
         _saveUser = saveUser,
         _deleteUser = deleteUser,
-        super(const BlocState.initial()) {
+        super(const User.empty()) {
     on<BlocEvent<UserParams>>(handleEvent);
   }
   final GetUserUseCase _getUser;
@@ -22,47 +21,43 @@ class UserBloc extends ModuleBloc<BlocEvent<UserParams>, User> {
 
   Future<void> _onLoadUser(
     LoadUser event,
-    Emitter<BlocState<User>> emit,
+    Emitter<User> emit,
   ) async {
     try {
-      emit(const BlocState.loading());
       final user = await _getUser(const NoParams());
-      emit(BlocState.success(data: user));
+      emit(user);
     } catch (e) {
-      emit(const BlocState.error());
+      emit(const User.empty());
     }
   }
 
   Future<void> _onUpdateUser(
     UpdateUser event,
-    Emitter<BlocState<User>> emit,
+    Emitter<User> emit,
   ) async {
     try {
-      emit(const BlocState.loading());
       await _saveUser(event.user);
-      emit(BlocState.success(data: event.user));
+      emit(event.user);
     } catch (e) {
-      emit(const BlocState.error());
+      emit(const User.empty());
     }
   }
 
   Future<void> _onDeleteUser(
     DeleteUser event,
-    Emitter<BlocState<User>> emit,
+    Emitter<User> emit,
   ) async {
     try {
-      emit(const BlocState.loading());
       await _deleteUser(const NoParams());
-      emit(const BlocState.initial());
+      emit(const User.empty());
     } catch (e) {
-      emit(const BlocState.error());
+      emit(const User.empty());
     }
   }
 
-  @override
   Future<void> handleEvent(
     BlocEvent<UserParams> event,
-    Emitter<BlocState<User>> emit,
+    Emitter<User> emit,
   ) =>
       switch (event.argument) {
         LoadUser() => _onLoadUser(event.argument as LoadUser, emit),

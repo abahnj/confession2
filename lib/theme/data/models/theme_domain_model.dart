@@ -1,49 +1,31 @@
 import 'package:confession/core/base/domain_model.dart';
 import 'package:confession/theme/domain/entities/theme.dart';
+import 'package:flutter/material.dart';
 
-final class ThemeDomainModel implements DomainModel<Theme> {
-  const ThemeDomainModel({
-    required this.isDarkMode,
-    required this.themeName,
-  });
+final class ThemeDomainModel implements DomainModel<AppThemeMode> {
+  const ThemeDomainModel({required this.themeMode});
 
   @override
-  factory ThemeDomainModel.fromJson(Map<String, dynamic> json) {
-    return ThemeDomainModel(
-      isDarkMode: json['isDarkMode'] as bool,
-      themeName: json['themeName'] as String,
-    );
-  }
+  factory ThemeDomainModel.fromJson(Map<String, dynamic> json) => ThemeDomainModel(
+        themeMode: ThemeMode.values.byName(json['themeMode'] as String),
+      );
 
-  const ThemeDomainModel.empty()
-      : isDarkMode = false,
-        themeName = '';
+  const ThemeDomainModel.empty() : themeMode = ThemeMode.system;
 
-  final bool isDarkMode;
-  final String themeName;
+  final ThemeMode themeMode;
 
   @override
   ThemeDomainModel copyWith({
     bool? isDarkMode,
     String? themeName,
-  }) {
-    return ThemeDomainModel(
-      isDarkMode: isDarkMode ?? this.isDarkMode,
-      themeName: themeName ?? this.themeName,
-    );
-  }
+  }) =>
+      ThemeDomainModel(themeMode: themeMode);
 
   @override
-  Theme toViewData() => Theme(
-        isDarkMode: isDarkMode,
-        themeName: themeName,
-      );
+  AppThemeMode toViewData() => AppThemeMode(themeMode: themeMode);
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'isDarkMode': isDarkMode,
-      'themeName': themeName,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'themeMode': themeMode.name,
+      };
 }
