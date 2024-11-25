@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "852942704392",
+    "project_id": "confession-flutter",
+    "storage_bucket": "confession-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852942704392:android:1ca3cde992e562f4ef66bd",
+        "android_client_info": {
+          "package_name": "com.norvera.confession"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "852942704392-p012vqnhsdl16poa4olrql6t28n7p9op.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyc5FHsEC9myFIqvU6Yelv4IZGYS65-sY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "852942704392-p012vqnhsdl16poa4olrql6t28n7p9op.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "852942704392-h4d3tn9m4oh5icr6oqnf0irts0a52bf7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.norvera.confessionFlutter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
