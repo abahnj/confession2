@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "929492894262",
+    "project_id": "confession-devj",
+    "storage_bucket": "confession-devj.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929492894262:android:c1eabf51ad84ad8904ce97",
+        "android_client_info": {
+          "package_name": "com.norvera.confession.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrq7HwnmBp2O1-5egqnaw__mWMPWWDAAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
