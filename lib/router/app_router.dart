@@ -11,11 +11,13 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           path: '/',
           page: ShellRoute.page,
+          fullMatch: true,
           children: [
             AutoRoute(
-              path: '',
+              path: 'exam',
               page: ExaminationRoute.page,
               title: (context, data) => 'Examination',
+              initial: true,
             ),
             AutoRoute(
               path: 'prayers',
