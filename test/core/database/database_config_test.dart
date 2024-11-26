@@ -14,7 +14,7 @@ void main() {
     test('has correct asset path', () {
       expect(
         AppDatabaseConfig.defaultAssetPath,
-        'assets/database/confessionold.db',
+        'assets/database/confession.db',
       );
     });
   });
