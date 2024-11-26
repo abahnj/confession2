@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:confession/core/database/app_database.dart';
 import 'package:confession/core/di/service_locator.dart';
-import 'package:confession/domain/dtos/models/user_domain_model.dart';
-import 'package:confession/domain/enums/user_enums.dart';
+import 'package:confession/database/app_database.dart';
 import 'package:flutter/widgets.dart';
 
 class AppBlocObserver extends BlocObserver {
@@ -35,16 +33,14 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   ServiceLocator.init();
 
   final database = sl.get<AppDatabase>();
+  final examinationsDao = database.examinationsDao;
 
-  final allItems = await database.examinationsDao.getExaminationsForUserAndId(
-    4,
-    UserDomainModel(
-      vocation: Vocation.single,
-      age: Age.adult,
-      gender: Gender.male,
-      lastConfession: DateTime.now().toIso8601String(),
-    ),
-  );
+  final allItems = await examinationsDao.getExaminations([
+    examinationsDao.getCommandmentFilter(4),
+    examinationsDao.getSingleFilter(),
+    examinationsDao.getAdultFilter(),
+    examinationsDao.getMaleFilter(),
+  ]);
 
   log('items in database: $allItems');
 

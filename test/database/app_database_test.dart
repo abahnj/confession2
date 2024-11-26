@@ -1,8 +1,8 @@
 // test/core/database/app_database_test.dart
-import 'package:confession/core/database/app_database.dart';
-import 'package:confession/core/database/database_config.dart';
 import 'package:confession/core/errors/database_exception.dart';
 import 'package:confession/data/datasources/local/database_source.dart';
+import 'package:confession/database/app_database.dart';
+import 'package:confession/database/database_config.dart';
 import 'package:drift/drift.dart' hide isNotNull;
 import 'package:file/file.dart';
 import 'package:file/memory.dart';

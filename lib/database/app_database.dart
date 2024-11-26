@@ -1,10 +1,10 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:confession/core/database/daos/daos.dart';
-import 'package:confession/core/database/database_config.dart';
-import 'package:confession/core/database/tables/tables.dart';
 import 'package:confession/core/errors/database_exception.dart';
 import 'package:confession/data/datasources/local/database_source.dart';
+import 'package:confession/database/daos/daos.dart';
+import 'package:confession/database/database_config.dart';
+import 'package:confession/database/tables/tables.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;

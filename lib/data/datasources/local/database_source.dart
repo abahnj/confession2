@@ -2,9 +2,9 @@
 
 import 'dart:io' as io;
 
-import 'package:confession/core/database/database_config.dart';
 import 'package:confession/core/errors/database_exception.dart';
 import 'package:confession/core/platform/path_provider/path_provider.dart';
+import 'package:confession/database/database_config.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:flutter/services.dart';

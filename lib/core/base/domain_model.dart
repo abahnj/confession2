@@ -1,6 +1,6 @@
 import 'package:confession/core/base/view_data.dart';
 
-abstract interface class DomainModel<T extends ViewData<DomainModel<T>>> {
+abstract class DomainModel<T extends ViewData<DomainModel<T>>> {
   const DomainModel();
 
   static DomainModel fromJson(Map<String, dynamic> json) {

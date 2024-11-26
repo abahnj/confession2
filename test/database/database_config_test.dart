@@ -1,4 +1,4 @@
-import 'package:confession/core/database/database_config.dart';
+import 'package:confession/database/database_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

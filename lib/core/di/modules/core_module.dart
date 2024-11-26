@@ -6,6 +6,7 @@ import 'package:confession/domain/datasources/local_storage_datasource.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CoreModule extends Module {
@@ -16,7 +17,12 @@ class CoreModule extends Module {
       ..registerSingletonAsync<SharedPreferences>(SharedPreferences.getInstance)
       ..registerLazySingleton<FileSystem>(() => const LocalFileSystem())
       ..registerLazySingleton<AssetBundle>(() => rootBundle)
-      ..registerLazySingleton<PathProvider>(PathProviderImpl.new)
+      ..registerLazySingleton<PathProvider>(
+        () => PathProviderImpl(
+          getDocumentsDirectory: path_provider.getApplicationDocumentsDirectory,
+          getTempDirectory: path_provider.getTemporaryDirectory,
+        ),
+      )
       ..registerLazySingleton<LocalStorageDataSource>(
         () => SharedPreferencesDataSource(preferences: sl()),
       );

@@ -1,10 +1,10 @@
 // test/data/datasources/local/database_source_test.dart
 import 'dart:io' as io;
 
-import 'package:confession/core/database/database_config.dart';
 import 'package:confession/core/errors/database_exception.dart';
 import 'package:confession/core/platform/path_provider/path_provider.dart';
 import 'package:confession/data/datasources/local/database_source.dart';
+import 'package:confession/database/database_config.dart';
 import 'package:file/file.dart';
 import 'package:file/memory.dart';
 import 'package:flutter/services.dart';

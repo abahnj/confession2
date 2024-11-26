@@ -72,6 +72,7 @@ abstract class ModuleBloc<Event extends BlocEvent,
   /// ```
   ///
   @protected
+  @visibleForTesting
   void listenToAppLifecycle() {
     throw UnimplementedError(
       '`listenToAppLifecycle` method should be overridden before calling only when required!!!',
