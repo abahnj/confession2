@@ -1,6 +1,6 @@
-import 'package:confession/core/base/view_data.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class DomainModel<T extends ViewData<DomainModel<T>>> {
+abstract class DomainModel extends Equatable {
   const DomainModel();
 
   static DomainModel fromJson(Map<String, dynamic> json) {
@@ -9,8 +9,7 @@ abstract class DomainModel<T extends ViewData<DomainModel<T>>> {
     );
   }
 
-  T toViewData();
-  DomainModel<T> copyWith();
+  DomainModel copyWith();
 
   Map<String, dynamic> toJson();
 }

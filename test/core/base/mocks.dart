@@ -1,7 +1,7 @@
 import 'package:confession/core/base/domain_model.dart';
 import 'package:confession/core/base/view_data.dart';
 
-class MockDomainModel extends DomainModel<MockViewData> {
+class MockDomainModel extends DomainModel {
   const MockDomainModel({
     required this.id,
     required this.name,
@@ -15,14 +15,6 @@ class MockDomainModel extends DomainModel<MockViewData> {
   }
   final String id;
   final String name;
-
-  @override
-  MockViewData toViewData() {
-    return MockViewData(
-      id: id,
-      name: name,
-    );
-  }
 
   @override
   MockDomainModel copyWith({
@@ -42,23 +34,18 @@ class MockDomainModel extends DomainModel<MockViewData> {
       'name': name,
     };
   }
+
+  @override
+  List<Object?> get props => [id, name];
 }
 
-class MockViewData extends ViewData<MockDomainModel> {
+class MockViewData extends ViewData {
   const MockViewData({
     required this.id,
     required this.name,
   });
   final String id;
   final String name;
-
-  @override
-  MockDomainModel toDomain() {
-    return MockDomainModel(
-      id: id,
-      name: name,
-    );
-  }
 
   @override
   List<Object?> get props => [id, name];

@@ -1,8 +1,7 @@
 import 'package:confession/core/base/view_data.dart';
-import 'package:confession/domain/dtos/models/user_domain_model.dart';
 import 'package:confession/domain/enums/user_enums.dart';
 
-class User extends ViewData<UserDomainModel> {
+class User extends ViewData {
   const User({
     required this.vocation,
     required this.age,
@@ -32,14 +31,6 @@ class User extends ViewData<UserDomainModel> {
         age: age ?? this.age,
         gender: gender ?? this.gender,
         lastConfession: lastConfession ?? this.lastConfession,
-      );
-
-  @override
-  UserDomainModel toDomain() => UserDomainModel(
-        vocation: vocation,
-        age: age,
-        gender: gender,
-        lastConfession: lastConfession,
       );
 
   @override

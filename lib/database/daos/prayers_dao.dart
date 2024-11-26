@@ -1,5 +1,5 @@
 import 'package:confession/database/app_database.dart';
-import 'package:confession/database/tables/prayers.dart';
+import 'package:confession/database/tables/prayers.t.dart';
 import 'package:drift/drift.dart';
 
 part 'prayers_dao.g.dart';

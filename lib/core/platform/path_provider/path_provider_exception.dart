@@ -4,10 +4,5 @@ class PathProviderException implements Exception {
   final dynamic error;
 
   @override
-  String toString() {
-    if (error != null) {
-      return 'PathProviderException: $message (Error: $error)';
-    }
-    return 'PathProviderException: $message';
-  }
+  String toString() => 'PathProviderException: $message';
 }

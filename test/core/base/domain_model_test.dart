@@ -61,19 +61,6 @@ void main() {
         expect(copied.name, equals(original.name));
         expect(identical(original, copied), isFalse);
       });
-
-      test('toViewData creates correct ViewData instance', () {
-        const model = MockDomainModel(
-          id: 'test-id',
-          name: 'Test Name',
-        );
-
-        final viewData = model.toViewData();
-
-        expect(viewData, isA<MockViewData>());
-        expect(viewData.id, equals(model.id));
-        expect(viewData.name, equals(model.name));
-      });
     });
   });
 }

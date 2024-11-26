@@ -13,7 +13,7 @@ import 'package:equatable/equatable.dart';
 /// final event = BlocEvent(argument: argument);
 /// ```
 ///
- class BlocEvent<T extends Param> extends Equatable {
+class BlocEvent<T extends Param> extends Equatable {
   const BlocEvent({required this.argument});
 
   const BlocEvent.noParam() : this(argument: noParam as T);

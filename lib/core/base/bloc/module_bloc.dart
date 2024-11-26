@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:confession/core/base/bloc/bloc_event.dart';
 import 'package:confession/core/base/bloc/bloc_state.dart';
-import 'package:confession/core/base/domain_model.dart';
 import 'package:confession/core/base/view_data.dart';
 import 'package:meta/meta.dart';
 
@@ -32,7 +31,7 @@ export 'package:bloc/bloc.dart' show Emitter;
 ///
 ///
 abstract class ModuleBloc<Event extends BlocEvent,
-        ViewDataType extends ViewData<DomainModel<ViewDataType>>>
+        ViewDataType extends ViewData>
     extends Bloc<Event, BlocState<ViewDataType>> {
   ModuleBloc(super.initialState);
 

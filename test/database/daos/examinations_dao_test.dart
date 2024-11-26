@@ -16,7 +16,7 @@ void main() {
   // Helper to create a fresh database
   setUp(() async {
     // Reset the singleton instance first
-    AppDatabase.resetInstance();
+    await AppDatabase.resetInstance();
 
     mockDatabaseSource = _MockDatabaseSource();
     database = AppDatabase.instance(
@@ -29,7 +29,7 @@ void main() {
   tearDown(() async {
     // Close and reset the instance
     await database.close();
-    AppDatabase.resetInstance();
+    await AppDatabase.resetInstance();
   });
 
   group('ExaminationsDao - Basic CRUD Operations', () {

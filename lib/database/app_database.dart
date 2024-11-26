@@ -35,8 +35,8 @@ class AppDatabase extends _$AppDatabase {
   final DatabaseSource _databaseSource;
   static AppDatabase? _instance;
 
-  static void resetInstance() {
-    _instance?.close();
+  static Future<void> resetInstance() async {
+    await _instance?.close();
     _instance = null;
   }
 
@@ -55,8 +55,6 @@ class AppDatabase extends _$AppDatabase {
             AppDatabaseConfig.defaultAssetPath,
           );
         }
-
-        await databaseSource.setupAndroidSpecifics();
 
         return NativeDatabase.createInBackground(file);
       } catch (e) {

@@ -13,7 +13,7 @@ void main() {
   late _MockDatabaseSource mockDatabaseSource;
 
   setUp(() async {
-    AppDatabase.resetInstance();
+    await AppDatabase.resetInstance();
     mockDatabaseSource = _MockDatabaseSource();
     database = AppDatabase.instance(
       databaseSource: mockDatabaseSource,
@@ -24,7 +24,7 @@ void main() {
 
   tearDown(() async {
     await database.close();
-    AppDatabase.resetInstance();
+    await AppDatabase.resetInstance();
   });
 
   group('PrayersDao - Prayer Operations', () {

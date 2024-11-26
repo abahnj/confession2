@@ -20,5 +20,16 @@ void main() {
       final exception = DatabaseException('Test error');
       expect(exception.toString(), contains('Test error'));
     });
+
+    test('toString includes DatabaseException prefix', () {
+      final exception = DatabaseException('Test error');
+      expect(exception.toString(), startsWith('DatabaseException:'));
+    });
+
+    test('error can be any type', () {
+      const error = 'String error';
+      final exception = DatabaseException('Test error', error);
+      expect(exception.error, error);
+    });
   });
 }

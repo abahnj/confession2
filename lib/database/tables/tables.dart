@@ -1,4 +1,4 @@
-export 'commandments.dart';
-export 'examinations.dart';
-export 'guides.dart';
-export 'prayers.dart';
+export 'commandments.t.dart';
+export 'examinations.t.dart';
+export 'guides.t.dart';
+export 'prayers.t.dart';

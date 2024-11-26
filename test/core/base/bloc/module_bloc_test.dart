@@ -4,7 +4,6 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:confession/core/base/bloc/bloc_event.dart';
 import 'package:confession/core/base/bloc/bloc_state.dart';
 import 'package:confession/core/base/bloc/module_bloc.dart';
-import 'package:confession/core/base/domain_model.dart';
 import 'package:confession/core/base/view_data.dart';
 import 'package:confession/domain/usecases/usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,27 +26,9 @@ class _TestEvent extends BlocEvent<_Payload> {
   List<Object?> get props => [payload];
 }
 
-class _TestDomainModel extends DomainModel<_TestViewData> {
-  const _TestDomainModel({required this.data});
-  final String data;
-
-  @override
-  _TestViewData toViewData() => _TestViewData(data: data);
-
-  @override
-  _TestDomainModel copyWith({String? data}) =>
-      _TestDomainModel(data: data ?? this.data);
-
-  @override
-  Map<String, dynamic> toJson() => {'data': data};
-}
-
-class _TestViewData extends ViewData<_TestDomainModel> {
+class _TestViewData extends ViewData {
   const _TestViewData({required this.data});
   final String data;
-
-  @override
-  _TestDomainModel toDomain() => _TestDomainModel(data: data);
 
   @override
   List<Object?> get props => [data];
@@ -473,18 +454,6 @@ void main() {
           state.props,
           equals([]),
         );
-      });
-    });
-
-    group('Data Transformation', () {
-      test('ensures domain model and view data transformations are correct',
-          () {
-        const viewData = _TestViewData(data: 'test');
-        final domainModel = viewData.toDomain();
-        final transformedViewData = domainModel.toViewData();
-
-        expect(transformedViewData, equals(viewData));
-        expect(transformedViewData.data, equals('test'));
       });
     });
 

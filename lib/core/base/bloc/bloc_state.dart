@@ -1,4 +1,3 @@
-import 'package:confession/core/base/domain_model.dart';
 import 'package:confession/core/base/view_data.dart';
 import 'package:equatable/equatable.dart';
 
@@ -42,7 +41,7 @@ import 'package:equatable/equatable.dart';
 /// ```
 ///
 ///
-sealed class BlocState<T extends ViewData<DomainModel<T>>> extends Equatable {
+sealed class BlocState<T extends ViewData> extends Equatable {
   const BlocState();
 
   const factory BlocState.initial() = Initial<T>;
@@ -94,21 +93,21 @@ sealed class BlocState<T extends ViewData<DomainModel<T>>> extends Equatable {
   }
 }
 
-class Initial<T extends ViewData<DomainModel<T>>> extends BlocState<T> {
+class Initial<T extends ViewData> extends BlocState<T> {
   const Initial();
 
   @override
   List<Object?> get props => [];
 }
 
-class Loading<T extends ViewData<DomainModel<T>>> extends BlocState<T> {
+class Loading<T extends ViewData> extends BlocState<T> {
   const Loading();
 
   @override
   List<Object?> get props => [];
 }
 
-class Success<T extends ViewData<DomainModel<T>>> extends BlocState<T> {
+class Success<T extends ViewData> extends BlocState<T> {
   const Success({required this.data});
   final T data;
 
@@ -116,7 +115,7 @@ class Success<T extends ViewData<DomainModel<T>>> extends BlocState<T> {
   List<Object?> get props => [data];
 }
 
-class Error<T extends ViewData<DomainModel<T>>> extends BlocState<T> {
+class Error<T extends ViewData> extends BlocState<T> {
   const Error();
 
   @override

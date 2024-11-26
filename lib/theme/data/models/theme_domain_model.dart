@@ -1,19 +1,17 @@
 import 'package:confession/core/base/domain_model.dart';
-import 'package:confession/theme/domain/entities/theme.dart';
-import 'package:flutter/material.dart';
 
-final class ThemeDomainModel implements DomainModel<AppThemeMode> {
+final class ThemeDomainModel extends DomainModel {
   const ThemeDomainModel({required this.themeMode});
 
   @override
   factory ThemeDomainModel.fromJson(Map<String, dynamic> json) =>
       ThemeDomainModel(
-        themeMode: ThemeMode.values.byName(json['themeMode'] as String),
+        themeMode: json['themeMode'] as String,
       );
 
-  const ThemeDomainModel.empty() : themeMode = ThemeMode.system;
+  const ThemeDomainModel.empty() : themeMode = 'system';
 
-  final ThemeMode themeMode;
+  final String themeMode;
 
   @override
   ThemeDomainModel copyWith({
@@ -23,10 +21,10 @@ final class ThemeDomainModel implements DomainModel<AppThemeMode> {
       ThemeDomainModel(themeMode: themeMode);
 
   @override
-  AppThemeMode toViewData() => AppThemeMode(themeMode: themeMode);
+  Map<String, dynamic> toJson() => {
+        'themeMode': themeMode,
+      };
 
   @override
-  Map<String, dynamic> toJson() => {
-        'themeMode': themeMode.name,
-      };
+  List<Object?> get props => [themeMode];
 }

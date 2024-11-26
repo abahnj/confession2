@@ -3,20 +3,20 @@ import 'dart:developer';
 import 'package:confession/domain/usecases/usecase.dart';
 import 'package:confession/theme/domain/entities/theme.dart';
 import 'package:confession/theme/domain/usecases.dart/get_theme_usecase.dart';
-import 'package:confession/theme/domain/usecases.dart/toggle_theme_usecase.dart';
+import 'package:confession/theme/domain/usecases.dart/switch_theme_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ThemeCubit extends Cubit<AppThemeMode> {
   ThemeCubit({
     required GetThemeUseCase getThemeUseCase,
-    required ToggleThemeUsecase toggleThemeUsecase,
+    required SwitchThemeUseCase toggleThemeUsecase,
   })  : _getThemeUseCase = getThemeUseCase,
         _toggleThemeUsecase = toggleThemeUsecase,
         super(const AppThemeMode(themeMode: ThemeMode.system));
 
   final GetThemeUseCase _getThemeUseCase;
-  final ToggleThemeUsecase _toggleThemeUsecase;
+  final SwitchThemeUseCase _toggleThemeUsecase;
 
   Future<void> loadThemeSettings() async {
     try {

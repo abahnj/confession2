@@ -14,7 +14,11 @@ class CoreModule extends Module {
   void init() {
     // Core system dependencies
     sl
-      ..registerSingletonAsync<SharedPreferences>(SharedPreferences.getInstance)
+      ..registerSingletonAsync<SharedPreferencesWithCache>(
+        () => SharedPreferencesWithCache.create(
+          cacheOptions: const SharedPreferencesWithCacheOptions(),
+        ),
+      )
       ..registerLazySingleton<FileSystem>(() => const LocalFileSystem())
       ..registerLazySingleton<AssetBundle>(() => rootBundle)
       ..registerLazySingleton<PathProvider>(

@@ -267,6 +267,8 @@ void main() {
       });
     });
 
+    group('setupAndroidSpecifics', () {});
+
     group('integration tests', () {
       test('complete database file setup flow', () async {
         // Arrange
