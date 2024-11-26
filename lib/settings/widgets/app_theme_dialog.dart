@@ -20,7 +20,7 @@ class AppThemeDialog extends StatelessWidget {
           title: Text(context.l10n.settingsThemeModeSystem),
           value: ThemeMode.system,
           groupValue: userThemeMode,
-          onChanged: (gender) {
+          onChanged: (_) {
             context.read<ThemeCubit>().setThemeMode(ThemeMode.system);
             context.maybePop();
           },
@@ -29,7 +29,7 @@ class AppThemeDialog extends StatelessWidget {
           title: Text(context.l10n.settingsThemeModeDark),
           value: ThemeMode.dark,
           groupValue: userThemeMode,
-          onChanged: (gender) {
+          onChanged: (_) {
             context.read<ThemeCubit>().setThemeMode(ThemeMode.dark);
             context.maybePop();
           },
@@ -38,7 +38,7 @@ class AppThemeDialog extends StatelessWidget {
           title: Text(context.l10n.settingsThemeModeLight),
           value: ThemeMode.light,
           groupValue: userThemeMode,
-          onChanged: (gender) {
+          onChanged: (_) {
             context.read<ThemeCubit>().setThemeMode(ThemeMode.light);
             context.maybePop();
           },

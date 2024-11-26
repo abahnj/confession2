@@ -56,6 +56,10 @@
   "@settingsDateOfLastConfessionTitle": {
     "description": "Settings date of last confession title"
   },
+  "settingsDateOfLastConfessionUnknown": "Unknown",
+  "@settingsDateOfLastConfessionUnknown": {
+    "description": "Settings date of last confession unknown"
+  },
   "settingsGenderMale": "Male",
   "@settingsGenderMale": {
     "description": "Settings gender male"

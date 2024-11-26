@@ -16,7 +16,10 @@ class AgeDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: Center(
-        child: Text(context.l10n.settingsGenderTitle),
+        child: Text(
+          context.l10n.settingsAgeTitle,
+          // style: context.textTheme.titleLarge,
+        ),
       ),
       children: <Widget>[
         RadioListTile<Age>(
@@ -24,7 +27,11 @@ class AgeDialog extends StatelessWidget {
           value: Age.adult,
           groupValue: user.age,
           onChanged: (gender) {
-            context.read<UserBloc>().add(BlocEvent(argument: UpdateUser(user.copyWith(age: Age.adult))));
+            context.read<UserBloc>().add(
+                  BlocEvent(
+                    argument: UpdateUser(user.copyWith(age: Age.adult)),
+                  ),
+                );
             context.maybePop();
           },
         ),
@@ -33,7 +40,9 @@ class AgeDialog extends StatelessWidget {
           value: Age.teen,
           groupValue: user.age,
           onChanged: (gender) {
-            context.read<UserBloc>().add(BlocEvent(argument: UpdateUser(user.copyWith(age: Age.teen))));
+            context.read<UserBloc>().add(
+                  BlocEvent(argument: UpdateUser(user.copyWith(age: Age.teen))),
+                );
             context.maybePop();
           },
         ),
@@ -42,7 +51,11 @@ class AgeDialog extends StatelessWidget {
           value: Age.child,
           groupValue: user.age,
           onChanged: (value) {
-            context.read<UserBloc>().add(BlocEvent(argument: UpdateUser(user.copyWith(age: Age.child))));
+            context.read<UserBloc>().add(
+                  BlocEvent(
+                    argument: UpdateUser(user.copyWith(age: Age.child)),
+                  ),
+                );
             context.maybePop();
           },
         ),
