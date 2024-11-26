@@ -6,7 +6,8 @@ final class ThemeDomainModel implements DomainModel<AppThemeMode> {
   const ThemeDomainModel({required this.themeMode});
 
   @override
-  factory ThemeDomainModel.fromJson(Map<String, dynamic> json) => ThemeDomainModel(
+  factory ThemeDomainModel.fromJson(Map<String, dynamic> json) =>
+      ThemeDomainModel(
         themeMode: ThemeMode.values.byName(json['themeMode'] as String),
       );
 

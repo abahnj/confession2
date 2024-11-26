@@ -31,7 +31,8 @@ export 'package:bloc/bloc.dart' show Emitter;
 /// ```
 ///
 ///
-abstract class ModuleBloc<Event extends BlocEvent, ViewDataType extends ViewData<DomainModel<ViewDataType>>>
+abstract class ModuleBloc<Event extends BlocEvent,
+        ViewDataType extends ViewData<DomainModel<ViewDataType>>>
     extends Bloc<Event, BlocState<ViewDataType>> {
   ModuleBloc(super.initialState);
 

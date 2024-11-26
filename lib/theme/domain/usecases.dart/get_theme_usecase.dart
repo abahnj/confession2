@@ -3,7 +3,8 @@ import 'package:confession/theme/domain/entities/theme.dart';
 import 'package:confession/theme/domain/repositories/theme_repository.dart';
 
 class GetThemeUseCase implements UseCase<AppThemeMode, NoParams> {
-  const GetThemeUseCase({required ThemeRepository themeRepository}) : _repository = themeRepository;
+  const GetThemeUseCase({required ThemeRepository themeRepository})
+      : _repository = themeRepository;
 
   final ThemeRepository _repository;
 

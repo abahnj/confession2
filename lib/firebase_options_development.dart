@@ -65,5 +65,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'confession-devj.firebasestorage.app',
     iosBundleId: 'com.norvera.confession.dev',
   );
-
 }
