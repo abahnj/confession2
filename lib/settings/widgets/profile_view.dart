@@ -73,7 +73,7 @@ class ProfileView extends StatelessWidget {
                 subtitle: Text(
                   state.lastConfession.isEmpty
                       ? context.l10n.settingsDateOfLastConfessionUnknown
-                      : state.lastConfession,
+                      : state.formattedLastConfession,
                   style: surfaceVariantTextTheme,
                 ),
                 onTap: () async {

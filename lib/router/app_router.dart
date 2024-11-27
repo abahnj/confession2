@@ -15,24 +15,53 @@ class AppRouter extends RootStackRouter {
           children: [
             AutoRoute(
               path: 'exam',
-              page: ExaminationRoute.page,
-              title: (context, data) => 'Examination',
+              page: const EmptyShellRoute('Examination'),
               initial: true,
-            ),
-            AutoRoute(
-              path: 'prayers',
-              page: PrayersRoute.page,
-              title: (context, data) => 'Prayers',
-            ),
-            AutoRoute(
-              path: 'guide',
-              page: GuideRoute.page,
-              title: (context, data) => 'Guide',
+              children: [
+                AutoRoute(
+                  page: ExaminationRoute.page,
+                  title: (context, data) => 'Examination',
+                  path: '',
+                ),
+              ],
             ),
             AutoRoute(
               path: 'confession',
-              page: ConfessionRoute.page,
-              title: (context, data) => 'Confession',
+              page: const EmptyShellRoute('Confession'),
+              children: [
+                AutoRoute(
+                  page: ConfessionRoute.page,
+                  title: (context, data) => 'Confession',
+                  path: '',
+                ),
+              ],
+            ),
+            AutoRoute(
+              path: 'guide',
+              page: const EmptyShellRoute('Guide'),
+              children: [
+                AutoRoute(
+                  page: GuideRoute.page,
+                  title: (context, data) => 'Guide',
+                  path: '',
+                ),
+              ],
+            ),
+            AutoRoute(
+              path: 'prayers',
+              page: const EmptyShellRoute('Prayers'),
+              children: [
+                AutoRoute(
+                  page: PrayersRoute.page,
+                  title: (context, data) => 'Prayers',
+                  path: '',
+                ),
+                AutoRoute(
+                  path: 'details',
+                  page: PrayerDetailsRoute.page,
+                  title: (context, data) => 'Prayer Details',
+                ),
+              ],
             ),
           ],
         ),

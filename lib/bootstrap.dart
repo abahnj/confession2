@@ -5,6 +5,8 @@ import 'package:bloc/bloc.dart';
 import 'package:confession/core/di/service_locator.dart';
 import 'package:confession/database/app_database.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl_standalone.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -28,21 +30,19 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   // Add cross-flavor configuration here
 
   WidgetsFlutterBinding.ensureInitialized();
+  Intl.systemLocale = await findSystemLocale();
 
   //Initialize dependencies
   ServiceLocator.init();
 
   final database = sl.get<AppDatabase>();
-  final examinationsDao = database.examinationsDao;
 
-  final allItems = await examinationsDao.getExaminations([
-    examinationsDao.getCommandmentFilter(4),
-    examinationsDao.getSingleFilter(),
-    examinationsDao.getAdultFilter(),
-    examinationsDao.getMaleFilter(),
-  ]);
+  final prayersDao = database.prayersDao;
 
-  log('items in database: $allItems');
+  final inspirationCount = await prayersDao.getRandomInspiration();
+  log('inspiration count: $inspirationCount');
+
+  //log('items in database: $allItems');
 
   runApp(await builder());
 }

@@ -1,5 +1,6 @@
 import 'package:confession/core/base/view_data.dart';
 import 'package:confession/domain/enums/user_enums.dart';
+import 'package:intl/intl.dart';
 
 class User extends ViewData {
   const User({
@@ -32,6 +33,17 @@ class User extends ViewData {
         gender: gender ?? this.gender,
         lastConfession: lastConfession ?? this.lastConfession,
       );
+
+  String get formattedLastConfession => _formatDateTime(lastConfession);
+
+  String _formatDateTime(String isoString) {
+    final date = DateTime.tryParse(isoString);
+
+    if (date == null) return isoString;
+
+    final formatter = DateFormat('EEEE, MMMM d, y');
+    return formatter.format(date);
+  }
 
   @override
   List<Object?> get props => [vocation, age, gender, lastConfession];
