@@ -36,12 +36,12 @@ void main() {
     test('getAllPrayers returns all inserted prayers', () async {
       // Arrange
       final testPrayers = [
-        PrayersCompanion.insert(
+        PrayersTableCompanion.insert(
           prayerName: 'Prayer 1',
           prayerText: 'Text 1',
           groupName: 'Group A',
         ),
-        PrayersCompanion.insert(
+        PrayersTableCompanion.insert(
           prayerName: 'Prayer 2',
           prayerText: 'Text 2',
           groupName: 'Group B',
@@ -49,8 +49,9 @@ void main() {
       ];
 
       await Future.wait(
-        testPrayers
-            .map((prayer) => database.into(database.prayers).insert(prayer)),
+        testPrayers.map(
+          (prayer) => database.into(database.prayersTable).insert(prayer),
+        ),
       );
 
       // Act
@@ -70,12 +71,12 @@ void main() {
 
     test('getPrayerForId returns correct prayer', () async {
       // Arrange
-      final prayer = PrayersCompanion.insert(
+      final prayer = PrayersTableCompanion.insert(
         prayerName: 'Test Prayer',
         prayerText: 'Prayer Text',
         groupName: 'Test Group',
       );
-      final id = await database.into(database.prayers).insert(prayer);
+      final id = await database.into(database.prayersTable).insert(prayer);
 
       // Act
       final result = await dao.getPrayerForId(id);
@@ -98,11 +99,12 @@ void main() {
   group('PrayersDao - Inspiration Operations', () {
     test('getInspirationForId returns correct inspiration', () async {
       // Arrange
-      final inspiration = InspirationsCompanion.insert(
+      final inspiration = InspirationsTableCompanion.insert(
         author: 'Test Author',
         quote: 'Test Quote',
       );
-      final id = await database.into(database.inspirations).insert(inspiration);
+      final id =
+          await database.into(database.inspirationsTable).insert(inspiration);
 
       // Act
       final result = await dao.getInspirationForId(id);
@@ -124,7 +126,7 @@ void main() {
   group('PrayersDao - Edge Cases', () {
     test('handles prayers with special characters correctly', () async {
       // Arrange
-      final prayer = PrayersCompanion.insert(
+      final prayer = PrayersTableCompanion.insert(
         prayerName: 'Prayer with 特殊文字',
         prayerText: '''
 Multiple
@@ -134,7 +136,7 @@ Multiple
         groupName: 'Special Group 🙏',
       );
 
-      final id = await database.into(database.prayers).insert(prayer);
+      final id = await database.into(database.prayersTable).insert(prayer);
 
       // Act
       final result = await dao.getPrayerForId(id);
@@ -147,13 +149,13 @@ Multiple
 
     test('handles empty prayer text and group name', () async {
       // Arrange
-      final prayer = PrayersCompanion.insert(
+      final prayer = PrayersTableCompanion.insert(
         prayerName: 'Empty Prayer',
         prayerText: '',
         groupName: '',
       );
 
-      final id = await database.into(database.prayers).insert(prayer);
+      final id = await database.into(database.prayersTable).insert(prayer);
 
       // Act
       final result = await dao.getPrayerForId(id);
@@ -166,12 +168,13 @@ Multiple
     test('handles inspiration with very long quote', () async {
       // Arrange
       final longQuote = 'A' * 1000; // 1000 character quote
-      final inspiration = InspirationsCompanion.insert(
+      final inspiration = InspirationsTableCompanion.insert(
         author: 'Long Quote Author',
         quote: longQuote,
       );
 
-      final id = await database.into(database.inspirations).insert(inspiration);
+      final id =
+          await database.into(database.inspirationsTable).insert(inspiration);
 
       // Act
       final result = await dao.getInspirationForId(id);

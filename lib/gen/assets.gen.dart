@@ -35,42 +35,26 @@ class $AssetsImagesGen {
   AssetGenImage get asSaidByPope =>
       const AssetGenImage('assets/images/as_said_by_pope.jpg');
 
-  /// File path: assets/images/ccc.jpg
-  AssetGenImage get ccc => const AssetGenImage('assets/images/ccc.jpg');
+  /// File path: assets/images/ccc.jpeg
+  AssetGenImage get ccc => const AssetGenImage('assets/images/ccc.jpeg');
 
   /// File path: assets/images/confession.jpg
   AssetGenImage get confession =>
       const AssetGenImage('assets/images/confession.jpg');
 
-  /// File path: assets/images/confession_lock.png
-  AssetGenImage get confessionLock =>
-      const AssetGenImage('assets/images/confession_lock.png');
+  /// File path: assets/images/faq.jpeg
+  AssetGenImage get faq => const AssetGenImage('assets/images/faq.jpeg');
 
-  /// File path: assets/images/faq.jpg
-  AssetGenImage get faq => const AssetGenImage('assets/images/faq.jpg');
+  /// File path: assets/images/faq_alt.jpg
+  AssetGenImage get faqAlt => const AssetGenImage('assets/images/faq_alt.jpg');
 
-  /// File path: assets/images/fingerprint.png
-  AssetGenImage get fingerprint =>
-      const AssetGenImage('assets/images/fingerprint.png');
-
-  /// File path: assets/images/fulton_sheen.jpg
+  /// File path: assets/images/fulton_sheen.jpeg
   AssetGenImage get fultonSheen =>
-      const AssetGenImage('assets/images/fulton_sheen.jpg');
-
-  /// File path: assets/images/splash.png
-  AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+      const AssetGenImage('assets/images/fulton_sheen.jpeg');
 
   /// List of all assets
-  List<AssetGenImage> get values => [
-        asSaidByPope,
-        ccc,
-        confession,
-        confessionLock,
-        faq,
-        fingerprint,
-        fultonSheen,
-        splash
-      ];
+  List<AssetGenImage> get values =>
+      [asSaidByPope, ccc, confession, faq, faqAlt, fultonSheen];
 }
 
 class $AssetsVectorsGen {

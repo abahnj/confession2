@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class AppRouteObserver extends AutoRouterObserver {
   @override
   void didPush(Route<Object?> route, Route<Object?>? previousRoute) {
-    log('New route pushed: ${route.data?.path}');
+    log('New route pushed: ${route.data?.breadcrumbs.map((e) => e.path).join(' > ')}');
   }
 
   // only override to observer tab routes

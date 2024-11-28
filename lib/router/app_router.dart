@@ -45,6 +45,10 @@ class AppRouter extends RootStackRouter {
                   title: (context, data) => 'Guide',
                   path: '',
                 ),
+                AutoRoute(
+                  path: ':guideId',
+                  page: GuideDetailListRoute.page,
+                ),
               ],
             ),
             AutoRoute(

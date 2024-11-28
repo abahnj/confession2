@@ -28,7 +28,7 @@ void main() {
     await AppDatabase.resetInstance();
   });
 
-  final commandment = CommandmentsCompanion.insert(
+  final commandment = CommandmentsTableCompanion.insert(
     number: 1,
     category: 'Category',
     commandment: 'First Commandment',
@@ -79,7 +79,7 @@ void main() {
 
     test('getCommandmentById should return correct commandment', () async {
       // Arrange
-      final commandment = CommandmentsCompanion.insert(
+      final commandment = CommandmentsTableCompanion.insert(
         number: 5,
         id: const Value(5),
         commandment: 'Fifth',
@@ -108,35 +108,35 @@ void main() {
   group('CommandmentsDao - Filtered Queries', () {
     setUp(() async {
       final commandments = [
-        CommandmentsCompanion.insert(
+        CommandmentsTableCompanion.insert(
           number: 1,
           id: const Value(1),
           commandment: 'Adult 1',
           commandmentText: 'Adult Description 1',
           category: 'Category',
         ),
-        CommandmentsCompanion.insert(
+        CommandmentsTableCompanion.insert(
           number: 2,
           id: const Value(10),
           commandment: 'Adult 10',
           commandmentText: 'Adult Description 10',
           category: 'Category',
         ),
-        CommandmentsCompanion.insert(
+        CommandmentsTableCompanion.insert(
           number: 3,
           id: const Value(11),
           commandment: 'Child 11',
           commandmentText: 'Child Description 11',
           category: 'Category',
         ),
-        CommandmentsCompanion.insert(
+        CommandmentsTableCompanion.insert(
           number: 4,
           id: const Value(12),
           commandment: 'Religious 12',
           commandmentText: 'Religious Description 12',
           category: 'Category',
         ),
-        CommandmentsCompanion.insert(
+        CommandmentsTableCompanion.insert(
           number: 5,
           id: const Value(14),
           commandment: 'Child 14',
@@ -217,14 +217,14 @@ void main() {
 
     test('insertCommandment handles duplicate ids correctly', () async {
       // Arrange
-      final commandment1 = CommandmentsCompanion.insert(
+      final commandment1 = CommandmentsTableCompanion.insert(
         number: 1,
         id: const Value(1),
         commandment: 'First Version',
         commandmentText: 'Description 1',
         category: 'Category',
       );
-      final commandment2 = CommandmentsCompanion.insert(
+      final commandment2 = CommandmentsTableCompanion.insert(
         number: 2,
         id: const Value(1),
         commandment: 'Second Version',
@@ -244,7 +244,7 @@ void main() {
       // Arrange
       final commandments = List.generate(
         100,
-        (i) => CommandmentsCompanion.insert(
+        (i) => CommandmentsTableCompanion.insert(
           number: i + 1,
           id: Value(i + 1),
           commandment: 'Commandment ${i + 1}',

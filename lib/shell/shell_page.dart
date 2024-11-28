@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:confession/gen/assets.gen.dart';
-import 'package:confession/gen/fonts.gen.dart';
 import 'package:confession/l10n/l10n.dart';
 import 'package:confession/router/app_router.gr.dart';
 import 'package:confession/shared/utils.dart';
+import 'package:confession/shared/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -37,19 +37,6 @@ class ShellPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: navigationItems.map((item) => item.route).toList(),
-      appBarBuilder: (context, tabsRouter) => AppBar(
-        title: Text(
-          context.topRoute.title(context),
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontFamily: FontFamily.robotoMono),
-        ),
-        leading: const AutoLeadingButton(),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings_rounded),
-            onPressed: () => context.pushRoute(const SettingsRoute()),
-          ),
-        ],
-      ),
       bottomNavigationBuilder: (_, tabsRouter) {
         return BottomNavigationBar(
           currentIndex: tabsRouter.activeIndex,
@@ -88,7 +75,9 @@ class ShellPage extends StatelessWidget {
       width: 24,
       height: 24,
       colorFilter: ColorFilter.mode(
-        isActive ? context.colorScheme.primary : context.colorScheme.onSurfaceVariant,
+        isActive
+            ? context.colorScheme.primary
+            : context.colorScheme.onSurfaceVariant,
         BlendMode.srcIn,
       ),
     );

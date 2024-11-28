@@ -36,10 +36,11 @@ void main() {
       const domainModel = ThemeDomainModel(themeMode: 'dark');
 
       when(() => mockMapper.toDomainModel(themeMode)).thenReturn(domainModel);
-      when(() => mockRepository.saveThemeSettings(any())).thenAnswer((_) => Future.value());
+      when(() => mockRepository.saveThemeSettings(any()))
+          .thenAnswer((_) => Future.value());
 
       // Act
-      await useCase(themeMode);
+      await useCase(const SaveThemeParam(theme: themeMode));
 
       // Assert
       verify(() => mockMapper.toDomainModel(themeMode)).called(1);
@@ -57,7 +58,7 @@ void main() {
 
       // Act & Assert
       expect(
-        () => useCase(themeMode),
+        () => useCase(const SaveThemeParam(theme: themeMode)),
         throwsA(equals(exception)),
       );
       verify(() => mockMapper.toDomainModel(themeMode)).called(1);
@@ -73,7 +74,7 @@ void main() {
 
       // Act & Assert
       expect(
-        () => useCase(themeMode),
+        () => useCase(const SaveThemeParam(theme: themeMode)),
         throwsA(equals(exception)),
       );
       verify(() => mockMapper.toDomainModel(themeMode)).called(1);
@@ -96,7 +97,7 @@ void main() {
       });
 
       // Act
-      await useCase(themeMode);
+      await useCase(const SaveThemeParam(theme: themeMode));
 
       // Assert
       expect(executionOrder, equals(['mapper', 'repository']));
@@ -105,23 +106,27 @@ void main() {
     group('initialization', () {
       test('should create use case with provided dependencies', () {
         expect(useCase, isNotNull);
-        expect(useCase, isA<AsyncViewDataParamUseCase<void, AppThemeMode>>());
+        expect(useCase, isA<AsyncViewDataParamUseCase<void, SaveThemeParam>>());
       });
     });
 
     test('should handle all theme modes correctly', () async {
       // Test all possible theme modes
-      final themeModes = ThemeMode.values.map((value) => AppThemeMode(themeMode: value)).toList();
+      final themeModes = ThemeMode.values
+          .map((value) => AppThemeMode(themeMode: value))
+          .toList();
 
       for (final themeMode in themeModes) {
         // Arrange
-        final domainModel = ThemeDomainModel(themeMode: themeMode.toString().split('.').last);
+        final domainModel =
+            ThemeDomainModel(themeMode: themeMode.toString().split('.').last);
 
         when(() => mockMapper.toDomainModel(themeMode)).thenReturn(domainModel);
-        when(() => mockRepository.saveThemeSettings(any())).thenAnswer((_) => Future.value());
+        when(() => mockRepository.saveThemeSettings(any()))
+            .thenAnswer((_) => Future.value());
 
         // Act
-        await useCase(themeMode);
+        await useCase(SaveThemeParam(theme: themeMode));
 
         // Assert
         verify(() => mockMapper.toDomainModel(themeMode)).called(1);

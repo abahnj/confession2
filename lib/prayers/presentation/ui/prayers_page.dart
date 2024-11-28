@@ -8,6 +8,7 @@ import 'package:confession/prayers/domain/entities/prayer.dart';
 import 'package:confession/prayers/presentation/bloc/prayers_bloc.dart';
 import 'package:confession/router/app_router.gr.dart';
 import 'package:confession/shared/utils.dart';
+import 'package:confession/shared/widgets/app_bar.dart';
 import 'package:confession/shared/widgets/confession_list_tile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,8 @@ class PrayersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PrayersBloc(getPrayersUsecase: sl())..add(const BlocEvent.noParam()),
+      create: (context) =>
+          PrayersBloc(getPrayersUsecase: sl())..add(const BlocEvent.noParam()),
       child: const PrayersConsumer(),
     );
   }
@@ -32,20 +34,14 @@ class PrayersConsumer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final errorWidget = DisplayableErrorWidget(
-              error: StateError('Unexpected state'),
-              stackTrace: StackTrace.current,
-              child: const PrayersErrorView(),
-            );
-    print('isDebug: $kDebugMode');
-    print('shouldShowError: ${errorWidget.shouldShowError}');
     return Scaffold(
+      appBar: const ConfessionAppBar(),
       body: SingleChildScrollView(
         child: BlocBuilder<PrayersBloc, BlocState<PrayerList>>(
           builder: (context, state) => state.mapOrElse(
-            orElse: () => errorWidget ,
-            // success: (prayers) => PrayersLoadedView(prayerList: prayers),
-            //  error: () => const PrayersErrorView(),
+            orElse: () => const PrayersLoadingView(),
+            success: (prayers) => PrayersLoadedView(prayerList: prayers),
+            error: () => const PrayersErrorView(),
           ),
         ),
       ),
@@ -77,7 +73,7 @@ class PrayersLoadedView extends StatelessWidget {
               (prayer) => ConfessionListTile(
                 title: prayer.prayerName,
                 onTap: () {
-                  context.pushRoute(const PrayerDetailsRoute());
+                  context.pushRoute(PrayerDetailsRoute(prayer: prayer));
                 },
               ),
             ),
@@ -92,7 +88,7 @@ class PrayersLoadedView extends StatelessWidget {
               (prayer) => ConfessionListTile(
                 title: prayer.prayerName,
                 onTap: () {
-                  context.pushRoute(const PrayerDetailsRoute());
+                  context.pushRoute(PrayerDetailsRoute(prayer: prayer));
                 },
               ),
             ),
@@ -139,7 +135,7 @@ class DisplayableErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => shouldShowError
       ? GestureDetector(
-        onTap: () => showError(context),
+          onTap: () => showError(context),
           onLongPress: () {
             log('Error info: $info');
             showError(context);
@@ -157,14 +153,20 @@ class DisplayableErrorWidget extends StatelessWidget {
       builder: (BuildContext context) => AlertDialog(
         title: Text(
           'Error info',
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+          style: Theme.of(context)
+              .textTheme
+              .headlineSmall
+              ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
               Text(
                 error?.toString() ?? '',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
               ),
               if (stackTrace != null)
                 Padding(
@@ -275,7 +277,8 @@ class ErrorContent extends StatelessWidget {
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: theme.colorScheme.onSurface.withOpacity(0.7),
                       ),
-                      child: subtitle ?? const Text('notifications.error.subTitle'),
+                      child: subtitle ??
+                          const Text('notifications.error.subTitle'),
                     ),
                   ],
                 ),

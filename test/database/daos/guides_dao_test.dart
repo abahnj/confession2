@@ -36,12 +36,12 @@ void main() {
     test('getAllGuides returns all inserted guides', () async {
       // Arrange
       final testGuides = [
-        GuidesCompanion.insert(
+        GuidesTableCompanion.insert(
           guideTitle: 'Guide 1',
           guideText: 'Text 1',
           headerId: 1,
         ),
-        GuidesCompanion.insert(
+        GuidesTableCompanion.insert(
           guideTitle: 'Guide 2',
           guideText: 'Text 2',
           headerId: 1,
@@ -50,7 +50,7 @@ void main() {
 
       // Act
       await Future.wait(
-        testGuides.map((guide) => database.into(database.guides).insert(guide)),
+        testGuides.map((guide) => database.into(database.guidesTable).insert(guide)),
       );
       final results = await dao.getAllGuides();
 
@@ -66,7 +66,7 @@ void main() {
       // Arrange
       final testGuides = List.generate(
         5,
-        (index) => GuidesCompanion.insert(
+        (index) => GuidesTableCompanion.insert(
           guideTitle: 'Guide ${index + 1}',
           guideText: 'Text ${index + 1}',
           headerId: 1,
@@ -75,7 +75,7 @@ void main() {
 
       // Act
       await Future.wait(
-        testGuides.map((guide) => database.into(database.guides).insert(guide)),
+        testGuides.map((guide) => database.into(database.guidesTable).insert(guide)),
       );
       final results = await dao.getAllGuides();
 
@@ -98,17 +98,17 @@ void main() {
     test('getGuidesForId returns only guides with matching headerId', () async {
       // Arrange
       final testGuides = [
-        GuidesCompanion.insert(
+        GuidesTableCompanion.insert(
           guideTitle: 'Guide 1',
           guideText: 'Text 1',
           headerId: 1,
         ),
-        GuidesCompanion.insert(
+        GuidesTableCompanion.insert(
           guideTitle: 'Guide 2',
           guideText: 'Text 2',
           headerId: 2,
         ),
-        GuidesCompanion.insert(
+        GuidesTableCompanion.insert(
           guideTitle: 'Guide 3',
           guideText: 'Text 3',
           headerId: 1,
@@ -116,7 +116,7 @@ void main() {
       ];
 
       await Future.wait(
-        testGuides.map((guide) => database.into(database.guides).insert(guide)),
+        testGuides.map((guide) => database.into(database.guidesTable).insert(guide)),
       );
 
       // Act
@@ -136,12 +136,12 @@ void main() {
     test('getGuidesForId returns empty list for non-existent headerId',
         () async {
       // Arrange
-      final guide = GuidesCompanion.insert(
+      final guide = GuidesTableCompanion.insert(
         guideTitle: 'Guide 1',
         guideText: 'Text 1',
         headerId: 1,
       );
-      await database.into(database.guides).insert(guide);
+      await database.into(database.guidesTable).insert(guide);
 
       // Act
       final results = await dao.getGuidesForId(999);
@@ -156,12 +156,12 @@ void main() {
         () async {
       // Arrange
       final testGuides = [
-        GuidesCompanion.insert(
+        GuidesTableCompanion.insert(
           guideTitle: 'Same Title',
           guideText: 'Text 1',
           headerId: 1,
         ),
-        GuidesCompanion.insert(
+        GuidesTableCompanion.insert(
           guideTitle: 'Same Title',
           guideText: 'Text 2',
           headerId: 2,
@@ -169,7 +169,7 @@ void main() {
       ];
 
       await Future.wait(
-        testGuides.map((guide) => database.into(database.guides).insert(guide)),
+        testGuides.map((guide) => database.into(database.guidesTable).insert(guide)),
       );
 
       // Act
@@ -190,7 +190,7 @@ void main() {
       const largeNumber = 1000;
       final testGuides = List.generate(
         largeNumber,
-        (index) => GuidesCompanion.insert(
+        (index) => GuidesTableCompanion.insert(
           guideTitle: 'Guide $index',
           guideText: 'Text $index',
           headerId: index % 10, // Distribute across 10 headers
@@ -199,7 +199,7 @@ void main() {
 
       // Act
       await Future.wait(
-        testGuides.map((guide) => database.into(database.guides).insert(guide)),
+        testGuides.map((guide) => database.into(database.guidesTable).insert(guide)),
       );
 
       final allGuides = await dao.getAllGuides();
@@ -212,7 +212,7 @@ void main() {
 
     test('maintains data integrity with special characters in text', () async {
       // Arrange
-      final specialCharGuide = GuidesCompanion.insert(
+      final specialCharGuide = GuidesTableCompanion.insert(
         guideTitle: 'Guide with 特殊文字 and émojis 🎉',
         guideText: '''
 Multiple
@@ -223,7 +223,7 @@ Multiple
       );
 
       // Act
-      await database.into(database.guides).insert(specialCharGuide);
+      await database.into(database.guidesTable).insert(specialCharGuide);
       final result = (await dao.getGuidesForId(1)).first;
 
       // Assert
@@ -240,8 +240,8 @@ Multiple
       await Future.wait(
         List.generate(
           100,
-          (index) => database.into(database.guides).insert(
-                GuidesCompanion.insert(
+          (index) => database.into(database.guidesTable).insert(
+                GuidesTableCompanion.insert(
                   guideTitle: 'Guide $index',
                   guideText: 'Text $index',
                   headerId: index % 10,

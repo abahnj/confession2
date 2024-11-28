@@ -75,8 +75,8 @@ void main() {
       final db = AppDatabase.instance(databaseSource: databaseSource);
 
       // Force database initialization
-      await db.into(db.prayers).insert(
-            PrayersCompanion.insert(
+      await db.into(db.prayersTable).insert(
+            PrayersTableCompanion.insert(
               prayerName: 'Test Prayer',
               prayerText: 'Test Text',
               groupName: 'Test Group',
@@ -106,8 +106,8 @@ void main() {
       final db = AppDatabase.instance(databaseSource: databaseSource);
 
       // Force initialization
-      await db.into(db.prayers).insert(
-            PrayersCompanion.insert(
+      await db.into(db.prayersTable).insert(
+            PrayersTableCompanion.insert(
               prayerName: 'Test Prayer',
               prayerText: 'Test Text',
               groupName: 'Test Group',
@@ -134,7 +134,7 @@ void main() {
       final db = AppDatabase.instance(databaseSource: errorDatabaseSource);
 
       expect(
-        () => db.select(db.commandments).get(),
+        () => db.select(db.commandmentsTable).get(),
         throwsA(isA<DatabaseException>()),
       );
     });

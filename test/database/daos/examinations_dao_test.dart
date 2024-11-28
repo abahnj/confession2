@@ -33,7 +33,7 @@ void main() {
   });
 
   group('ExaminationsDao - Basic CRUD Operations', () {
-    final baseExamination = ExaminationsCompanion.insert(
+    final baseExamination = ExaminationsTableCompanion.insert(
       commandmentId: 1,
       adult: true,
       single: true,
@@ -53,8 +53,8 @@ void main() {
         () async {
       // Arrange
       final inserted =
-          await database.into(database.examinations).insert(baseExamination);
-      final updatedExamination = Examination(
+          await database.into(database.examinationsTable).insert(baseExamination);
+      final updatedExamination = ExaminationsTableData(
         id: inserted,
         commandmentId: 1,
         adult: true,
@@ -83,8 +83,8 @@ void main() {
   });
 
   group('ExaminationsDao - Individual Filters', () {
-    final testData = <ExaminationsCompanion>[
-      ExaminationsCompanion.insert(
+    final testData = <ExaminationsTableCompanion>[
+      ExaminationsTableCompanion.insert(
         commandmentId: 1,
         adult: true,
         single: false,
@@ -99,7 +99,7 @@ void main() {
         male: false,
         count: const Value(1),
       ),
-      ExaminationsCompanion.insert(
+      ExaminationsTableCompanion.insert(
         commandmentId: 2,
         adult: false,
         single: true,
@@ -114,7 +114,7 @@ void main() {
         male: true,
         count: const Value(0),
       ),
-      ExaminationsCompanion.insert(
+      ExaminationsTableCompanion.insert(
         commandmentId: 3,
         adult: false,
         single: false,
@@ -134,7 +134,7 @@ void main() {
     setUp(() async {
       await Future.wait(
         testData
-            .map((exam) => database.into(database.examinations).insert(exam)),
+            .map((exam) => database.into(database.examinationsTable).insert(exam)),
       );
     });
 
@@ -191,8 +191,8 @@ void main() {
   group('ExaminationsDao - Examination Reset', () {
     test('resetExaminationsCount sets all counts to 0', () async {
       // Arrange
-      final examinations = [
-        ExaminationsCompanion.insert(
+      final examinationsTable = [
+        ExaminationsTableCompanion.insert(
           commandmentId: 1,
           adult: true,
           single: true,
@@ -207,7 +207,7 @@ void main() {
           male: true,
           count: const Value(5),
         ),
-        ExaminationsCompanion.insert(
+        ExaminationsTableCompanion.insert(
           commandmentId: 2,
           adult: true,
           single: true,
@@ -225,14 +225,14 @@ void main() {
       ];
 
       await Future.wait(
-        examinations.map((e) => database.into(database.examinations).insert(e)),
+        examinationsTable.map((e) => database.into(database.examinationsTable).insert(e)),
       );
 
       // Act
       await dao.resetExaminationsCount();
 
       // Assert
-      final results = await (database.select(database.examinations)
+      final results = await (database.select(database.examinationsTable)
             ..where((tbl) => tbl.count.isBiggerThanValue(0)))
           .get();
       expect(results, isEmpty);
@@ -240,8 +240,8 @@ void main() {
 
     test('resetExaminationsCount only affects non-zero counts', () async {
       // Arrange
-      final examinations = [
-        ExaminationsCompanion.insert(
+      final examinationsTable = [
+        ExaminationsTableCompanion.insert(
           commandmentId: 1,
           adult: true,
           single: true,
@@ -256,7 +256,7 @@ void main() {
           male: true,
           count: const Value(5),
         ),
-        ExaminationsCompanion.insert(
+        ExaminationsTableCompanion.insert(
           commandmentId: 2,
           adult: true,
           single: true,
@@ -274,7 +274,7 @@ void main() {
       ];
 
       await Future.wait(
-        examinations.map((e) => database.into(database.examinations).insert(e)),
+        examinationsTable.map((e) => database.into(database.examinationsTable).insert(e)),
       );
 
       // Act
@@ -285,8 +285,8 @@ void main() {
     });
 
     test('resetExaminationsCount only affects count value', () async {
-      await database.into(database.examinations).insert(
-            ExaminationsCompanion.insert(
+      await database.into(database.examinationsTable).insert(
+            ExaminationsTableCompanion.insert(
               commandmentId: 1,
               adult: true,
               single: true,
@@ -307,11 +307,11 @@ void main() {
       await dao.resetExaminationsCount();
 
       // Assert
-      final result = await database.select(database.examinations).getSingle();
+      final result = await database.select(database.examinationsTable).getSingle();
 
       expect(
         result,
-        const Examination(
+        const ExaminationsTableData(
           id: 1,
           commandmentId: 1,
           adult: true,
@@ -333,7 +333,7 @@ void main() {
 
   group('ExaminationsDao - Complex Filter Combinations', () {
     final testExaminations = [
-      ExaminationsCompanion.insert(
+      ExaminationsTableCompanion.insert(
         commandmentId: 1,
         adult: true,
         single: true,
@@ -348,7 +348,7 @@ void main() {
         male: false,
         count: const Value(1),
       ),
-      ExaminationsCompanion.insert(
+      ExaminationsTableCompanion.insert(
         commandmentId: 1,
         adult: true,
         single: false,
@@ -368,7 +368,7 @@ void main() {
     setUp(() async {
       await Future.wait(
         testExaminations
-            .map((exam) => database.into(database.examinations).insert(exam)),
+            .map((exam) => database.into(database.examinationsTable).insert(exam)),
       );
     });
 
@@ -393,7 +393,7 @@ void main() {
 
   group('ExaminationsDao - Watch Functionality', () {
     test('watchExaminations emits updated list when records change', () async {
-      final examination = ExaminationsCompanion.insert(
+      final examination = ExaminationsTableCompanion.insert(
         commandmentId: 1,
         adult: true,
         single: true,
@@ -419,15 +419,15 @@ void main() {
         ]),
       );
 
-      await database.into(database.examinations).insert(examination);
-      await database.into(database.examinations).insert(examination);
+      await database.into(database.examinationsTable).insert(examination);
+      await database.into(database.examinationsTable).insert(examination);
 
       await expectation;
     });
 
     test('watchExaminations with filters emits only matching records',
         () async {
-      final adultExam = ExaminationsCompanion.insert(
+      final adultExam = ExaminationsTableCompanion.insert(
         commandmentId: 1,
         adult: true,
         single: true,
@@ -443,7 +443,7 @@ void main() {
         count: const Value(0),
       );
 
-      final teenExam = ExaminationsCompanion.insert(
+      final teenExam = ExaminationsTableCompanion.insert(
         commandmentId: 1,
         adult: false,
         single: true,
@@ -469,15 +469,15 @@ void main() {
         ]),
       );
 
-      await database.into(database.examinations).insert(adultExam);
-      await database.into(database.examinations).insert(teenExam);
+      await database.into(database.examinationsTable).insert(adultExam);
+      await database.into(database.examinationsTable).insert(teenExam);
 
       await expectation;
     });
   });
 
   group('ExaminationsDao Tests', () {
-    final testExamination = ExaminationsCompanion.insert(
+    final testExamination = ExaminationsTableCompanion.insert(
       commandmentId: 1,
       adult: true,
       single: true,
@@ -493,9 +493,9 @@ void main() {
       count: const Value(0),
     );
 
-    test('getExaminations with no filters returns all examinations', () async {
+    test('getExaminations with no filters returns all examinationsTable', () async {
       // Arrange
-      await database.into(database.examinations).insert(testExamination);
+      await database.into(database.examinationsTable).insert(testExamination);
 
       // Act
       final results = await dao.getExaminations([]);
@@ -506,14 +506,14 @@ void main() {
 
     test('filters are combined correctly', () async {
       // Arrange
-      final examinations = [
+      final examinationsTable = [
         testExamination,
         testExamination.copyWith(adult: const Value(false)),
       ];
 
       await Future.wait(
-        examinations.map(
-          (exam) => database.into(database.examinations).insert(exam),
+        examinationsTable.map(
+          (exam) => database.into(database.examinationsTable).insert(exam),
         ),
       );
 
@@ -536,13 +536,13 @@ void main() {
       final expectation = expectLater(
         stream,
         emitsInOrder([
-          isA<List<Examination>>()
+          isA<List<ExaminationsTableData>>()
               .having((list) => list.length, 'length', 1)
               .having((list) => list.first.adult, 'is adult', true),
         ]),
       );
 
-      await database.into(database.examinations).insert(testExamination);
+      await database.into(database.examinationsTable).insert(testExamination);
 
       await expectation;
     });
@@ -554,21 +554,21 @@ void main() {
         stream,
         emitsInOrder([
           // After first insert
-          isA<List<Examination>>().having((list) => list.length, 'length', 1),
+          isA<List<ExaminationsTableData>>().having((list) => list.length, 'length', 1),
           // After second insert
-          isA<List<Examination>>().having((list) => list.length, 'length', 2),
+          isA<List<ExaminationsTableData>>().having((list) => list.length, 'length', 2),
         ]),
       );
 
-      await database.into(database.examinations).insert(testExamination);
-      await database.into(database.examinations).insert(testExamination);
+      await database.into(database.examinationsTable).insert(testExamination);
+      await database.into(database.examinationsTable).insert(testExamination);
 
       await expectation;
     });
 
     test('getExaminations handles multiple filters correctly', () async {
       // Arrange
-      final examinations = [
+      final examinationsTable = [
         testExamination, // adult: true, male: true
         testExamination.copyWith(
           adult: const Value(true),
@@ -581,8 +581,8 @@ void main() {
       ];
 
       await Future.wait(
-        examinations.map(
-          (exam) => database.into(database.examinations).insert(exam),
+        examinationsTable.map(
+          (exam) => database.into(database.examinationsTable).insert(exam),
         ),
       );
 
@@ -602,7 +602,7 @@ void main() {
 
     test('filters exclude non-matching records', () async {
       // Arrange
-      final examinations = [
+      final examinationsTable = [
         testExamination,
         testExamination.copyWith(
           adult: const Value(true),
@@ -612,8 +612,8 @@ void main() {
       ];
 
       await Future.wait(
-        examinations.map(
-          (exam) => database.into(database.examinations).insert(exam),
+        examinationsTable.map(
+          (exam) => database.into(database.examinationsTable).insert(exam),
         ),
       );
 
