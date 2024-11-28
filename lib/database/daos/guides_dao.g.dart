@@ -4,5 +4,5 @@ part of 'guides_dao.dart';
 
 // ignore_for_file: type=lint
 mixin _$GuidesDaoMixin on DatabaseAccessor<AppDatabase> {
-  $GuidesTable get guides => attachedDatabase.guides;
+  $GuidesTableTable get guidesTable => attachedDatabase.guidesTable;
 }

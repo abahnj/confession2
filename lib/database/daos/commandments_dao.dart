@@ -4,27 +4,24 @@ import 'package:drift/drift.dart';
 
 part 'commandments_dao.g.dart';
 
-@DriftAccessor(tables: [Commandments])
-class CommandmentsDao extends DatabaseAccessor<AppDatabase>
-    with _$CommandmentsDaoMixin {
+@DriftAccessor(tables: [CommandmentsTable])
+class CommandmentsDao extends DatabaseAccessor<AppDatabase> with _$CommandmentsDaoMixin {
   CommandmentsDao(super.db);
 
-  Future<List<Commandment>> getAllCommandments() => select(commandments).get();
+  Future<List<CommandmentsTableData>> getAllCommandments() => select(commandmentsTable).get();
 
-  Future<int> insertCommandment(Insertable<Commandment> commandment) =>
-      into(commandments).insert(commandment);
+  Future<int> insertCommandment(Insertable<CommandmentsTableData> commandment) =>
+      into(commandmentsTable).insert(commandment);
 
-  Future<List<Commandment>> getCommandmentsForChildren() =>
-      (select(commandments)..where((tbl) => tbl.id.isIn([11, 14]))).get();
+  Future<List<CommandmentsTableData>> getCommandmentsForChildren() =>
+      (select(commandmentsTable)..where((tbl) => tbl.id.isIn([11, 14]))).get();
 
-  Future<List<Commandment>> getCommandmentsForReligious() =>
-      (select(commandments)..where((tbl) => tbl.id.isBiggerThanValue(10)))
-          .get();
+  Future<List<CommandmentsTableData>> getCommandmentsForReligious() =>
+      (select(commandmentsTable)..where((tbl) => tbl.id.isBiggerThanValue(10))).get();
 
-  Future<List<Commandment>> getCommandmentsForAdults() =>
-      (select(commandments)..where((tbl) => tbl.id.isSmallerThanValue(11)))
-          .get();
+  Future<List<CommandmentsTableData>> getCommandmentsForAdults() =>
+      (select(commandmentsTable)..where((tbl) => tbl.id.isSmallerThanValue(11))).get();
 
-  Future<Commandment> getCommandmentById(int id) =>
-      (select(commandments)..where((tbl) => tbl.id.equals(id))).getSingle();
+  Future<CommandmentsTableData> getCommandmentById(int id) =>
+      (select(commandmentsTable)..where((tbl) => tbl.id.equals(id))).getSingle();
 }

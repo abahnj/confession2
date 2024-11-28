@@ -3,7 +3,7 @@ import 'package:confession/domain/entities/user.dart';
 import 'package:confession/domain/repositories/user_repository.dart';
 import 'package:confession/domain/usecases/usecase.dart';
 
-class GetUserUseCase implements UseCase<User, NoParams> {
+class GetUserUseCase implements AsyncViewDataUseCase<User> {
   const GetUserUseCase({
     required UserRepository userRepository,
     required UserMapper userMapper,
@@ -14,14 +14,14 @@ class GetUserUseCase implements UseCase<User, NoParams> {
   final UserMapper _mapper;
 
   @override
-  Future<User> call(NoParams params) async {
+  Future<User> call() async {
     final model = await _repository.getUser();
 
     return _mapper.toViewData(model);
   }
 }
 
-class SaveUserUseCase implements UseCase<void, User> {
+class SaveUserUseCase implements AsyncParamUseCase<SaveUserParam> {
   const SaveUserUseCase({
     required UserRepository userRepository,
     required UserMapper userMapper,
@@ -32,15 +32,22 @@ class SaveUserUseCase implements UseCase<void, User> {
   final UserMapper _mapper;
 
   @override
-  Future<void> call(User params) =>
-      _repository.saveUser(_mapper.toDomainModel(params));
+  Future<void> call(SaveUserParam param) => _repository.saveUser(_mapper.toDomainModel(param.user));
 }
 
-class DeleteUserUseCase implements UseCase<void, NoParams> {
-  const DeleteUserUseCase({required UserRepository userRepository})
-      : _repository = userRepository;
+class DeleteUserUseCase implements AsyncUseCase {
+  const DeleteUserUseCase({required UserRepository userRepository}) : _repository = userRepository;
   final UserRepository _repository;
 
   @override
-  Future<void> call(NoParams params) => _repository.deleteUser();
+  Future<void> call() => _repository.deleteUser();
+}
+
+class SaveUserParam extends Param {
+  const SaveUserParam({required this.user});
+
+  final User user;
+
+  @override
+  List<Object?> get props => [user];
 }

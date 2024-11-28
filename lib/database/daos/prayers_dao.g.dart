@@ -4,6 +4,7 @@ part of 'prayers_dao.dart';
 
 // ignore_for_file: type=lint
 mixin _$PrayersDaoMixin on DatabaseAccessor<AppDatabase> {
-  $PrayersTable get prayers => attachedDatabase.prayers;
-  $InspirationsTable get inspirations => attachedDatabase.inspirations;
+  $PrayersTableTable get prayersTable => attachedDatabase.prayersTable;
+  $InspirationsTableTable get inspirationsTable =>
+      attachedDatabase.inspirationsTable;
 }

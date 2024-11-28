@@ -3,12 +3,12 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class $CommandmentsTable extends Commandments
-    with TableInfo<$CommandmentsTable, Commandment> {
+class $CommandmentsTableTable extends CommandmentsTable
+    with TableInfo<$CommandmentsTableTable, CommandmentsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $CommandmentsTable(this.attachedDatabase, [this._alias]);
+  $CommandmentsTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -56,7 +56,8 @@ class $CommandmentsTable extends Commandments
   String get actualTableName => $name;
   static const String $name = 'COMMANDMENTS';
   @override
-  VerificationContext validateIntegrity(Insertable<Commandment> instance,
+  VerificationContext validateIntegrity(
+      Insertable<CommandmentsTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -101,9 +102,9 @@ class $CommandmentsTable extends Commandments
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Commandment map(Map<String, dynamic> data, {String? tablePrefix}) {
+  CommandmentsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Commandment(
+    return CommandmentsTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
       number: attachedDatabase.typeMapping
@@ -120,19 +121,20 @@ class $CommandmentsTable extends Commandments
   }
 
   @override
-  $CommandmentsTable createAlias(String alias) {
-    return $CommandmentsTable(attachedDatabase, alias);
+  $CommandmentsTableTable createAlias(String alias) {
+    return $CommandmentsTableTable(attachedDatabase, alias);
   }
 }
 
-class Commandment extends DataClass implements Insertable<Commandment> {
+class CommandmentsTableData extends DataClass
+    implements Insertable<CommandmentsTableData> {
   final int id;
   final int number;
   final String commandmentText;
   final String category;
   final String commandment;
   final int? customId;
-  const Commandment(
+  const CommandmentsTableData(
       {required this.id,
       required this.number,
       required this.commandmentText,
@@ -153,8 +155,8 @@ class Commandment extends DataClass implements Insertable<Commandment> {
     return map;
   }
 
-  CommandmentsCompanion toCompanion(bool nullToAbsent) {
-    return CommandmentsCompanion(
+  CommandmentsTableCompanion toCompanion(bool nullToAbsent) {
+    return CommandmentsTableCompanion(
       id: Value(id),
       number: Value(number),
       commandmentText: Value(commandmentText),
@@ -166,10 +168,10 @@ class Commandment extends DataClass implements Insertable<Commandment> {
     );
   }
 
-  factory Commandment.fromJson(Map<String, dynamic> json,
+  factory CommandmentsTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Commandment(
+    return CommandmentsTableData(
       id: serializer.fromJson<int>(json['id']),
       number: serializer.fromJson<int>(json['number']),
       commandmentText: serializer.fromJson<String>(json['commandmentText']),
@@ -191,14 +193,14 @@ class Commandment extends DataClass implements Insertable<Commandment> {
     };
   }
 
-  Commandment copyWith(
+  CommandmentsTableData copyWith(
           {int? id,
           int? number,
           String? commandmentText,
           String? category,
           String? commandment,
           Value<int?> customId = const Value.absent()}) =>
-      Commandment(
+      CommandmentsTableData(
         id: id ?? this.id,
         number: number ?? this.number,
         commandmentText: commandmentText ?? this.commandmentText,
@@ -206,8 +208,8 @@ class Commandment extends DataClass implements Insertable<Commandment> {
         commandment: commandment ?? this.commandment,
         customId: customId.present ? customId.value : this.customId,
       );
-  Commandment copyWithCompanion(CommandmentsCompanion data) {
-    return Commandment(
+  CommandmentsTableData copyWithCompanion(CommandmentsTableCompanion data) {
+    return CommandmentsTableData(
       id: data.id.present ? data.id.value : this.id,
       number: data.number.present ? data.number.value : this.number,
       commandmentText: data.commandmentText.present
@@ -222,7 +224,7 @@ class Commandment extends DataClass implements Insertable<Commandment> {
 
   @override
   String toString() {
-    return (StringBuffer('Commandment(')
+    return (StringBuffer('CommandmentsTableData(')
           ..write('id: $id, ')
           ..write('number: $number, ')
           ..write('commandmentText: $commandmentText, ')
@@ -239,7 +241,7 @@ class Commandment extends DataClass implements Insertable<Commandment> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Commandment &&
+      (other is CommandmentsTableData &&
           other.id == this.id &&
           other.number == this.number &&
           other.commandmentText == this.commandmentText &&
@@ -248,14 +250,15 @@ class Commandment extends DataClass implements Insertable<Commandment> {
           other.customId == this.customId);
 }
 
-class CommandmentsCompanion extends UpdateCompanion<Commandment> {
+class CommandmentsTableCompanion
+    extends UpdateCompanion<CommandmentsTableData> {
   final Value<int> id;
   final Value<int> number;
   final Value<String> commandmentText;
   final Value<String> category;
   final Value<String> commandment;
   final Value<int?> customId;
-  const CommandmentsCompanion({
+  const CommandmentsTableCompanion({
     this.id = const Value.absent(),
     this.number = const Value.absent(),
     this.commandmentText = const Value.absent(),
@@ -263,7 +266,7 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
     this.commandment = const Value.absent(),
     this.customId = const Value.absent(),
   });
-  CommandmentsCompanion.insert({
+  CommandmentsTableCompanion.insert({
     this.id = const Value.absent(),
     required int number,
     required String commandmentText,
@@ -274,7 +277,7 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
         commandmentText = Value(commandmentText),
         category = Value(category),
         commandment = Value(commandment);
-  static Insertable<Commandment> custom({
+  static Insertable<CommandmentsTableData> custom({
     Expression<int>? id,
     Expression<int>? number,
     Expression<String>? commandmentText,
@@ -292,14 +295,14 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
     });
   }
 
-  CommandmentsCompanion copyWith(
+  CommandmentsTableCompanion copyWith(
       {Value<int>? id,
       Value<int>? number,
       Value<String>? commandmentText,
       Value<String>? category,
       Value<String>? commandment,
       Value<int?>? customId}) {
-    return CommandmentsCompanion(
+    return CommandmentsTableCompanion(
       id: id ?? this.id,
       number: number ?? this.number,
       commandmentText: commandmentText ?? this.commandmentText,
@@ -335,7 +338,7 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
 
   @override
   String toString() {
-    return (StringBuffer('CommandmentsCompanion(')
+    return (StringBuffer('CommandmentsTableCompanion(')
           ..write('id: $id, ')
           ..write('number: $number, ')
           ..write('commandmentText: $commandmentText, ')
@@ -347,12 +350,12 @@ class CommandmentsCompanion extends UpdateCompanion<Commandment> {
   }
 }
 
-class $ExaminationsTable extends Examinations
-    with TableInfo<$ExaminationsTable, Examination> {
+class $ExaminationsTableTable extends ExaminationsTable
+    with TableInfo<$ExaminationsTableTable, ExaminationsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ExaminationsTable(this.attachedDatabase, [this._alias]);
+  $ExaminationsTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -491,7 +494,8 @@ class $ExaminationsTable extends Examinations
   String get actualTableName => $name;
   static const String $name = 'SIN';
   @override
-  VerificationContext validateIntegrity(Insertable<Examination> instance,
+  VerificationContext validateIntegrity(
+      Insertable<ExaminationsTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -590,9 +594,9 @@ class $ExaminationsTable extends Examinations
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Examination map(Map<String, dynamic> data, {String? tablePrefix}) {
+  ExaminationsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Examination(
+    return ExaminationsTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
       commandmentId: attachedDatabase.typeMapping
@@ -627,12 +631,13 @@ class $ExaminationsTable extends Examinations
   }
 
   @override
-  $ExaminationsTable createAlias(String alias) {
-    return $ExaminationsTable(attachedDatabase, alias);
+  $ExaminationsTableTable createAlias(String alias) {
+    return $ExaminationsTableTable(attachedDatabase, alias);
   }
 }
 
-class Examination extends DataClass implements Insertable<Examination> {
+class ExaminationsTableData extends DataClass
+    implements Insertable<ExaminationsTableData> {
   final int id;
   final int commandmentId;
   final bool adult;
@@ -648,7 +653,7 @@ class Examination extends DataClass implements Insertable<Examination> {
   final String description;
   final String activeText;
   final int count;
-  const Examination(
+  const ExaminationsTableData(
       {required this.id,
       required this.commandmentId,
       required this.adult,
@@ -687,8 +692,8 @@ class Examination extends DataClass implements Insertable<Examination> {
     return map;
   }
 
-  ExaminationsCompanion toCompanion(bool nullToAbsent) {
-    return ExaminationsCompanion(
+  ExaminationsTableCompanion toCompanion(bool nullToAbsent) {
+    return ExaminationsTableCompanion(
       id: Value(id),
       commandmentId: Value(commandmentId),
       adult: Value(adult),
@@ -709,10 +714,10 @@ class Examination extends DataClass implements Insertable<Examination> {
     );
   }
 
-  factory Examination.fromJson(Map<String, dynamic> json,
+  factory ExaminationsTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Examination(
+    return ExaminationsTableData(
       id: serializer.fromJson<int>(json['id']),
       commandmentId: serializer.fromJson<int>(json['commandmentId']),
       adult: serializer.fromJson<bool>(json['adult']),
@@ -752,7 +757,7 @@ class Examination extends DataClass implements Insertable<Examination> {
     };
   }
 
-  Examination copyWith(
+  ExaminationsTableData copyWith(
           {int? id,
           int? commandmentId,
           bool? adult,
@@ -768,7 +773,7 @@ class Examination extends DataClass implements Insertable<Examination> {
           String? description,
           String? activeText,
           int? count}) =>
-      Examination(
+      ExaminationsTableData(
         id: id ?? this.id,
         commandmentId: commandmentId ?? this.commandmentId,
         adult: adult ?? this.adult,
@@ -785,8 +790,8 @@ class Examination extends DataClass implements Insertable<Examination> {
         activeText: activeText ?? this.activeText,
         count: count ?? this.count,
       );
-  Examination copyWithCompanion(ExaminationsCompanion data) {
-    return Examination(
+  ExaminationsTableData copyWithCompanion(ExaminationsTableCompanion data) {
+    return ExaminationsTableData(
       id: data.id.present ? data.id.value : this.id,
       commandmentId: data.commandmentId.present
           ? data.commandmentId.value
@@ -811,7 +816,7 @@ class Examination extends DataClass implements Insertable<Examination> {
 
   @override
   String toString() {
-    return (StringBuffer('Examination(')
+    return (StringBuffer('ExaminationsTableData(')
           ..write('id: $id, ')
           ..write('commandmentId: $commandmentId, ')
           ..write('adult: $adult, ')
@@ -851,7 +856,7 @@ class Examination extends DataClass implements Insertable<Examination> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Examination &&
+      (other is ExaminationsTableData &&
           other.id == this.id &&
           other.commandmentId == this.commandmentId &&
           other.adult == this.adult &&
@@ -869,7 +874,8 @@ class Examination extends DataClass implements Insertable<Examination> {
           other.count == this.count);
 }
 
-class ExaminationsCompanion extends UpdateCompanion<Examination> {
+class ExaminationsTableCompanion
+    extends UpdateCompanion<ExaminationsTableData> {
   final Value<int> id;
   final Value<int> commandmentId;
   final Value<bool> adult;
@@ -885,7 +891,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
   final Value<String> description;
   final Value<String> activeText;
   final Value<int> count;
-  const ExaminationsCompanion({
+  const ExaminationsTableCompanion({
     this.id = const Value.absent(),
     this.commandmentId = const Value.absent(),
     this.adult = const Value.absent(),
@@ -902,7 +908,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
     this.activeText = const Value.absent(),
     this.count = const Value.absent(),
   });
-  ExaminationsCompanion.insert({
+  ExaminationsTableCompanion.insert({
     this.id = const Value.absent(),
     required int commandmentId,
     required bool adult,
@@ -930,7 +936,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
         child = Value(child),
         description = Value(description),
         activeText = Value(activeText);
-  static Insertable<Examination> custom({
+  static Insertable<ExaminationsTableData> custom({
     Expression<int>? id,
     Expression<int>? commandmentId,
     Expression<bool>? adult,
@@ -966,7 +972,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
     });
   }
 
-  ExaminationsCompanion copyWith(
+  ExaminationsTableCompanion copyWith(
       {Value<int>? id,
       Value<int>? commandmentId,
       Value<bool>? adult,
@@ -982,7 +988,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
       Value<String>? description,
       Value<String>? activeText,
       Value<int>? count}) {
-    return ExaminationsCompanion(
+    return ExaminationsTableCompanion(
       id: id ?? this.id,
       commandmentId: commandmentId ?? this.commandmentId,
       adult: adult ?? this.adult,
@@ -1054,7 +1060,7 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
 
   @override
   String toString() {
-    return (StringBuffer('ExaminationsCompanion(')
+    return (StringBuffer('ExaminationsTableCompanion(')
           ..write('id: $id, ')
           ..write('commandmentId: $commandmentId, ')
           ..write('adult: $adult, ')
@@ -1075,11 +1081,12 @@ class ExaminationsCompanion extends UpdateCompanion<Examination> {
   }
 }
 
-class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
+class $GuidesTableTable extends GuidesTable
+    with TableInfo<$GuidesTableTable, GuidesTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $GuidesTable(this.attachedDatabase, [this._alias]);
+  $GuidesTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1115,7 +1122,7 @@ class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
   String get actualTableName => $name;
   static const String $name = 'guide_main';
   @override
-  VerificationContext validateIntegrity(Insertable<Guide> instance,
+  VerificationContext validateIntegrity(Insertable<GuidesTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1146,9 +1153,9 @@ class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Guide map(Map<String, dynamic> data, {String? tablePrefix}) {
+  GuidesTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Guide(
+    return GuidesTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
       guideTitle: attachedDatabase.typeMapping
@@ -1161,17 +1168,17 @@ class $GuidesTable extends Guides with TableInfo<$GuidesTable, Guide> {
   }
 
   @override
-  $GuidesTable createAlias(String alias) {
-    return $GuidesTable(attachedDatabase, alias);
+  $GuidesTableTable createAlias(String alias) {
+    return $GuidesTableTable(attachedDatabase, alias);
   }
 }
 
-class Guide extends DataClass implements Insertable<Guide> {
+class GuidesTableData extends DataClass implements Insertable<GuidesTableData> {
   final int id;
   final String guideTitle;
   final String guideText;
   final int headerId;
-  const Guide(
+  const GuidesTableData(
       {required this.id,
       required this.guideTitle,
       required this.guideText,
@@ -1186,8 +1193,8 @@ class Guide extends DataClass implements Insertable<Guide> {
     return map;
   }
 
-  GuidesCompanion toCompanion(bool nullToAbsent) {
-    return GuidesCompanion(
+  GuidesTableCompanion toCompanion(bool nullToAbsent) {
+    return GuidesTableCompanion(
       id: Value(id),
       guideTitle: Value(guideTitle),
       guideText: Value(guideText),
@@ -1195,10 +1202,10 @@ class Guide extends DataClass implements Insertable<Guide> {
     );
   }
 
-  factory Guide.fromJson(Map<String, dynamic> json,
+  factory GuidesTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Guide(
+    return GuidesTableData(
       id: serializer.fromJson<int>(json['id']),
       guideTitle: serializer.fromJson<String>(json['guideTitle']),
       guideText: serializer.fromJson<String>(json['guideText']),
@@ -1216,16 +1223,16 @@ class Guide extends DataClass implements Insertable<Guide> {
     };
   }
 
-  Guide copyWith(
+  GuidesTableData copyWith(
           {int? id, String? guideTitle, String? guideText, int? headerId}) =>
-      Guide(
+      GuidesTableData(
         id: id ?? this.id,
         guideTitle: guideTitle ?? this.guideTitle,
         guideText: guideText ?? this.guideText,
         headerId: headerId ?? this.headerId,
       );
-  Guide copyWithCompanion(GuidesCompanion data) {
-    return Guide(
+  GuidesTableData copyWithCompanion(GuidesTableCompanion data) {
+    return GuidesTableData(
       id: data.id.present ? data.id.value : this.id,
       guideTitle:
           data.guideTitle.present ? data.guideTitle.value : this.guideTitle,
@@ -1236,7 +1243,7 @@ class Guide extends DataClass implements Insertable<Guide> {
 
   @override
   String toString() {
-    return (StringBuffer('Guide(')
+    return (StringBuffer('GuidesTableData(')
           ..write('id: $id, ')
           ..write('guideTitle: $guideTitle, ')
           ..write('guideText: $guideText, ')
@@ -1250,25 +1257,25 @@ class Guide extends DataClass implements Insertable<Guide> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Guide &&
+      (other is GuidesTableData &&
           other.id == this.id &&
           other.guideTitle == this.guideTitle &&
           other.guideText == this.guideText &&
           other.headerId == this.headerId);
 }
 
-class GuidesCompanion extends UpdateCompanion<Guide> {
+class GuidesTableCompanion extends UpdateCompanion<GuidesTableData> {
   final Value<int> id;
   final Value<String> guideTitle;
   final Value<String> guideText;
   final Value<int> headerId;
-  const GuidesCompanion({
+  const GuidesTableCompanion({
     this.id = const Value.absent(),
     this.guideTitle = const Value.absent(),
     this.guideText = const Value.absent(),
     this.headerId = const Value.absent(),
   });
-  GuidesCompanion.insert({
+  GuidesTableCompanion.insert({
     this.id = const Value.absent(),
     required String guideTitle,
     required String guideText,
@@ -1276,7 +1283,7 @@ class GuidesCompanion extends UpdateCompanion<Guide> {
   })  : guideTitle = Value(guideTitle),
         guideText = Value(guideText),
         headerId = Value(headerId);
-  static Insertable<Guide> custom({
+  static Insertable<GuidesTableData> custom({
     Expression<int>? id,
     Expression<String>? guideTitle,
     Expression<String>? guideText,
@@ -1290,12 +1297,12 @@ class GuidesCompanion extends UpdateCompanion<Guide> {
     });
   }
 
-  GuidesCompanion copyWith(
+  GuidesTableCompanion copyWith(
       {Value<int>? id,
       Value<String>? guideTitle,
       Value<String>? guideText,
       Value<int>? headerId}) {
-    return GuidesCompanion(
+    return GuidesTableCompanion(
       id: id ?? this.id,
       guideTitle: guideTitle ?? this.guideTitle,
       guideText: guideText ?? this.guideText,
@@ -1323,7 +1330,7 @@ class GuidesCompanion extends UpdateCompanion<Guide> {
 
   @override
   String toString() {
-    return (StringBuffer('GuidesCompanion(')
+    return (StringBuffer('GuidesTableCompanion(')
           ..write('id: $id, ')
           ..write('guideTitle: $guideTitle, ')
           ..write('guideText: $guideText, ')
@@ -1333,11 +1340,12 @@ class GuidesCompanion extends UpdateCompanion<Guide> {
   }
 }
 
-class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
+class $PrayersTableTable extends PrayersTable
+    with TableInfo<$PrayersTableTable, PrayersTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $PrayersTable(this.attachedDatabase, [this._alias]);
+  $PrayersTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1373,7 +1381,7 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   String get actualTableName => $name;
   static const String $name = 'PRAYERS';
   @override
-  VerificationContext validateIntegrity(Insertable<Prayer> instance,
+  VerificationContext validateIntegrity(Insertable<PrayersTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1408,9 +1416,9 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Prayer map(Map<String, dynamic> data, {String? tablePrefix}) {
+  PrayersTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Prayer(
+    return PrayersTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
       prayerName: attachedDatabase.typeMapping
@@ -1423,17 +1431,18 @@ class $PrayersTable extends Prayers with TableInfo<$PrayersTable, Prayer> {
   }
 
   @override
-  $PrayersTable createAlias(String alias) {
-    return $PrayersTable(attachedDatabase, alias);
+  $PrayersTableTable createAlias(String alias) {
+    return $PrayersTableTable(attachedDatabase, alias);
   }
 }
 
-class Prayer extends DataClass implements Insertable<Prayer> {
+class PrayersTableData extends DataClass
+    implements Insertable<PrayersTableData> {
   final int id;
   final String prayerName;
   final String prayerText;
   final String groupName;
-  const Prayer(
+  const PrayersTableData(
       {required this.id,
       required this.prayerName,
       required this.prayerText,
@@ -1448,8 +1457,8 @@ class Prayer extends DataClass implements Insertable<Prayer> {
     return map;
   }
 
-  PrayersCompanion toCompanion(bool nullToAbsent) {
-    return PrayersCompanion(
+  PrayersTableCompanion toCompanion(bool nullToAbsent) {
+    return PrayersTableCompanion(
       id: Value(id),
       prayerName: Value(prayerName),
       prayerText: Value(prayerText),
@@ -1457,10 +1466,10 @@ class Prayer extends DataClass implements Insertable<Prayer> {
     );
   }
 
-  factory Prayer.fromJson(Map<String, dynamic> json,
+  factory PrayersTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Prayer(
+    return PrayersTableData(
       id: serializer.fromJson<int>(json['id']),
       prayerName: serializer.fromJson<String>(json['prayerName']),
       prayerText: serializer.fromJson<String>(json['prayerText']),
@@ -1478,19 +1487,19 @@ class Prayer extends DataClass implements Insertable<Prayer> {
     };
   }
 
-  Prayer copyWith(
+  PrayersTableData copyWith(
           {int? id,
           String? prayerName,
           String? prayerText,
           String? groupName}) =>
-      Prayer(
+      PrayersTableData(
         id: id ?? this.id,
         prayerName: prayerName ?? this.prayerName,
         prayerText: prayerText ?? this.prayerText,
         groupName: groupName ?? this.groupName,
       );
-  Prayer copyWithCompanion(PrayersCompanion data) {
-    return Prayer(
+  PrayersTableData copyWithCompanion(PrayersTableCompanion data) {
+    return PrayersTableData(
       id: data.id.present ? data.id.value : this.id,
       prayerName:
           data.prayerName.present ? data.prayerName.value : this.prayerName,
@@ -1502,7 +1511,7 @@ class Prayer extends DataClass implements Insertable<Prayer> {
 
   @override
   String toString() {
-    return (StringBuffer('Prayer(')
+    return (StringBuffer('PrayersTableData(')
           ..write('id: $id, ')
           ..write('prayerName: $prayerName, ')
           ..write('prayerText: $prayerText, ')
@@ -1516,25 +1525,25 @@ class Prayer extends DataClass implements Insertable<Prayer> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Prayer &&
+      (other is PrayersTableData &&
           other.id == this.id &&
           other.prayerName == this.prayerName &&
           other.prayerText == this.prayerText &&
           other.groupName == this.groupName);
 }
 
-class PrayersCompanion extends UpdateCompanion<Prayer> {
+class PrayersTableCompanion extends UpdateCompanion<PrayersTableData> {
   final Value<int> id;
   final Value<String> prayerName;
   final Value<String> prayerText;
   final Value<String> groupName;
-  const PrayersCompanion({
+  const PrayersTableCompanion({
     this.id = const Value.absent(),
     this.prayerName = const Value.absent(),
     this.prayerText = const Value.absent(),
     this.groupName = const Value.absent(),
   });
-  PrayersCompanion.insert({
+  PrayersTableCompanion.insert({
     this.id = const Value.absent(),
     required String prayerName,
     required String prayerText,
@@ -1542,7 +1551,7 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
   })  : prayerName = Value(prayerName),
         prayerText = Value(prayerText),
         groupName = Value(groupName);
-  static Insertable<Prayer> custom({
+  static Insertable<PrayersTableData> custom({
     Expression<int>? id,
     Expression<String>? prayerName,
     Expression<String>? prayerText,
@@ -1556,12 +1565,12 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
     });
   }
 
-  PrayersCompanion copyWith(
+  PrayersTableCompanion copyWith(
       {Value<int>? id,
       Value<String>? prayerName,
       Value<String>? prayerText,
       Value<String>? groupName}) {
-    return PrayersCompanion(
+    return PrayersTableCompanion(
       id: id ?? this.id,
       prayerName: prayerName ?? this.prayerName,
       prayerText: prayerText ?? this.prayerText,
@@ -1589,7 +1598,7 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
 
   @override
   String toString() {
-    return (StringBuffer('PrayersCompanion(')
+    return (StringBuffer('PrayersTableCompanion(')
           ..write('id: $id, ')
           ..write('prayerName: $prayerName, ')
           ..write('prayerText: $prayerText, ')
@@ -1599,12 +1608,12 @@ class PrayersCompanion extends UpdateCompanion<Prayer> {
   }
 }
 
-class $InspirationsTable extends Inspirations
-    with TableInfo<$InspirationsTable, Inspiration> {
+class $InspirationsTableTable extends InspirationsTable
+    with TableInfo<$InspirationsTableTable, InspirationsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $InspirationsTable(this.attachedDatabase, [this._alias]);
+  $InspirationsTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1632,7 +1641,8 @@ class $InspirationsTable extends Inspirations
   String get actualTableName => $name;
   static const String $name = 'INSPIRATION';
   @override
-  VerificationContext validateIntegrity(Insertable<Inspiration> instance,
+  VerificationContext validateIntegrity(
+      Insertable<InspirationsTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1657,9 +1667,9 @@ class $InspirationsTable extends Inspirations
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Inspiration map(Map<String, dynamic> data, {String? tablePrefix}) {
+  InspirationsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Inspiration(
+    return InspirationsTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}_id'])!,
       author: attachedDatabase.typeMapping
@@ -1670,16 +1680,17 @@ class $InspirationsTable extends Inspirations
   }
 
   @override
-  $InspirationsTable createAlias(String alias) {
-    return $InspirationsTable(attachedDatabase, alias);
+  $InspirationsTableTable createAlias(String alias) {
+    return $InspirationsTableTable(attachedDatabase, alias);
   }
 }
 
-class Inspiration extends DataClass implements Insertable<Inspiration> {
+class InspirationsTableData extends DataClass
+    implements Insertable<InspirationsTableData> {
   final int id;
   final String author;
   final String quote;
-  const Inspiration(
+  const InspirationsTableData(
       {required this.id, required this.author, required this.quote});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1690,18 +1701,18 @@ class Inspiration extends DataClass implements Insertable<Inspiration> {
     return map;
   }
 
-  InspirationsCompanion toCompanion(bool nullToAbsent) {
-    return InspirationsCompanion(
+  InspirationsTableCompanion toCompanion(bool nullToAbsent) {
+    return InspirationsTableCompanion(
       id: Value(id),
       author: Value(author),
       quote: Value(quote),
     );
   }
 
-  factory Inspiration.fromJson(Map<String, dynamic> json,
+  factory InspirationsTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Inspiration(
+    return InspirationsTableData(
       id: serializer.fromJson<int>(json['id']),
       author: serializer.fromJson<String>(json['author']),
       quote: serializer.fromJson<String>(json['quote']),
@@ -1717,13 +1728,14 @@ class Inspiration extends DataClass implements Insertable<Inspiration> {
     };
   }
 
-  Inspiration copyWith({int? id, String? author, String? quote}) => Inspiration(
+  InspirationsTableData copyWith({int? id, String? author, String? quote}) =>
+      InspirationsTableData(
         id: id ?? this.id,
         author: author ?? this.author,
         quote: quote ?? this.quote,
       );
-  Inspiration copyWithCompanion(InspirationsCompanion data) {
-    return Inspiration(
+  InspirationsTableData copyWithCompanion(InspirationsTableCompanion data) {
+    return InspirationsTableData(
       id: data.id.present ? data.id.value : this.id,
       author: data.author.present ? data.author.value : this.author,
       quote: data.quote.present ? data.quote.value : this.quote,
@@ -1732,7 +1744,7 @@ class Inspiration extends DataClass implements Insertable<Inspiration> {
 
   @override
   String toString() {
-    return (StringBuffer('Inspiration(')
+    return (StringBuffer('InspirationsTableData(')
           ..write('id: $id, ')
           ..write('author: $author, ')
           ..write('quote: $quote')
@@ -1745,28 +1757,29 @@ class Inspiration extends DataClass implements Insertable<Inspiration> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Inspiration &&
+      (other is InspirationsTableData &&
           other.id == this.id &&
           other.author == this.author &&
           other.quote == this.quote);
 }
 
-class InspirationsCompanion extends UpdateCompanion<Inspiration> {
+class InspirationsTableCompanion
+    extends UpdateCompanion<InspirationsTableData> {
   final Value<int> id;
   final Value<String> author;
   final Value<String> quote;
-  const InspirationsCompanion({
+  const InspirationsTableCompanion({
     this.id = const Value.absent(),
     this.author = const Value.absent(),
     this.quote = const Value.absent(),
   });
-  InspirationsCompanion.insert({
+  InspirationsTableCompanion.insert({
     this.id = const Value.absent(),
     required String author,
     required String quote,
   })  : author = Value(author),
         quote = Value(quote);
-  static Insertable<Inspiration> custom({
+  static Insertable<InspirationsTableData> custom({
     Expression<int>? id,
     Expression<String>? author,
     Expression<String>? quote,
@@ -1778,9 +1791,9 @@ class InspirationsCompanion extends UpdateCompanion<Inspiration> {
     });
   }
 
-  InspirationsCompanion copyWith(
+  InspirationsTableCompanion copyWith(
       {Value<int>? id, Value<String>? author, Value<String>? quote}) {
-    return InspirationsCompanion(
+    return InspirationsTableCompanion(
       id: id ?? this.id,
       author: author ?? this.author,
       quote: quote ?? this.quote,
@@ -1804,7 +1817,7 @@ class InspirationsCompanion extends UpdateCompanion<Inspiration> {
 
   @override
   String toString() {
-    return (StringBuffer('InspirationsCompanion(')
+    return (StringBuffer('InspirationsTableCompanion(')
           ..write('id: $id, ')
           ..write('author: $author, ')
           ..write('quote: $quote')
@@ -1816,11 +1829,14 @@ class InspirationsCompanion extends UpdateCompanion<Inspiration> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $CommandmentsTable commandments = $CommandmentsTable(this);
-  late final $ExaminationsTable examinations = $ExaminationsTable(this);
-  late final $GuidesTable guides = $GuidesTable(this);
-  late final $PrayersTable prayers = $PrayersTable(this);
-  late final $InspirationsTable inspirations = $InspirationsTable(this);
+  late final $CommandmentsTableTable commandmentsTable =
+      $CommandmentsTableTable(this);
+  late final $ExaminationsTableTable examinationsTable =
+      $ExaminationsTableTable(this);
+  late final $GuidesTableTable guidesTable = $GuidesTableTable(this);
+  late final $PrayersTableTable prayersTable = $PrayersTableTable(this);
+  late final $InspirationsTableTable inspirationsTable =
+      $InspirationsTableTable(this);
   late final CommandmentsDao commandmentsDao =
       CommandmentsDao(this as AppDatabase);
   late final ExaminationsDao examinationsDao =
@@ -1831,12 +1847,17 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [commandments, examinations, guides, prayers, inspirations];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        commandmentsTable,
+        examinationsTable,
+        guidesTable,
+        prayersTable,
+        inspirationsTable
+      ];
 }
 
-typedef $$CommandmentsTableCreateCompanionBuilder = CommandmentsCompanion
-    Function({
+typedef $$CommandmentsTableTableCreateCompanionBuilder
+    = CommandmentsTableCompanion Function({
   Value<int> id,
   required int number,
   required String commandmentText,
@@ -1844,8 +1865,8 @@ typedef $$CommandmentsTableCreateCompanionBuilder = CommandmentsCompanion
   required String commandment,
   Value<int?> customId,
 });
-typedef $$CommandmentsTableUpdateCompanionBuilder = CommandmentsCompanion
-    Function({
+typedef $$CommandmentsTableTableUpdateCompanionBuilder
+    = CommandmentsTableCompanion Function({
   Value<int> id,
   Value<int> number,
   Value<String> commandmentText,
@@ -1854,9 +1875,9 @@ typedef $$CommandmentsTableUpdateCompanionBuilder = CommandmentsCompanion
   Value<int?> customId,
 });
 
-class $$CommandmentsTableFilterComposer
-    extends Composer<_$AppDatabase, $CommandmentsTable> {
-  $$CommandmentsTableFilterComposer({
+class $$CommandmentsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $CommandmentsTableTable> {
+  $$CommandmentsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1883,9 +1904,9 @@ class $$CommandmentsTableFilterComposer
       column: $table.customId, builder: (column) => ColumnFilters(column));
 }
 
-class $$CommandmentsTableOrderingComposer
-    extends Composer<_$AppDatabase, $CommandmentsTable> {
-  $$CommandmentsTableOrderingComposer({
+class $$CommandmentsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $CommandmentsTableTable> {
+  $$CommandmentsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1912,9 +1933,9 @@ class $$CommandmentsTableOrderingComposer
       column: $table.customId, builder: (column) => ColumnOrderings(column));
 }
 
-class $$CommandmentsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $CommandmentsTable> {
-  $$CommandmentsTableAnnotationComposer({
+class $$CommandmentsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CommandmentsTableTable> {
+  $$CommandmentsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1940,31 +1961,34 @@ class $$CommandmentsTableAnnotationComposer
       $composableBuilder(column: $table.customId, builder: (column) => column);
 }
 
-class $$CommandmentsTableTableManager extends RootTableManager<
+class $$CommandmentsTableTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $CommandmentsTable,
-    Commandment,
-    $$CommandmentsTableFilterComposer,
-    $$CommandmentsTableOrderingComposer,
-    $$CommandmentsTableAnnotationComposer,
-    $$CommandmentsTableCreateCompanionBuilder,
-    $$CommandmentsTableUpdateCompanionBuilder,
+    $CommandmentsTableTable,
+    CommandmentsTableData,
+    $$CommandmentsTableTableFilterComposer,
+    $$CommandmentsTableTableOrderingComposer,
+    $$CommandmentsTableTableAnnotationComposer,
+    $$CommandmentsTableTableCreateCompanionBuilder,
+    $$CommandmentsTableTableUpdateCompanionBuilder,
     (
-      Commandment,
-      BaseReferences<_$AppDatabase, $CommandmentsTable, Commandment>
+      CommandmentsTableData,
+      BaseReferences<_$AppDatabase, $CommandmentsTableTable,
+          CommandmentsTableData>
     ),
-    Commandment,
+    CommandmentsTableData,
     PrefetchHooks Function()> {
-  $$CommandmentsTableTableManager(_$AppDatabase db, $CommandmentsTable table)
+  $$CommandmentsTableTableTableManager(
+      _$AppDatabase db, $CommandmentsTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$CommandmentsTableFilterComposer($db: db, $table: table),
+              $$CommandmentsTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$CommandmentsTableOrderingComposer($db: db, $table: table),
+              $$CommandmentsTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$CommandmentsTableAnnotationComposer($db: db, $table: table),
+              $$CommandmentsTableTableAnnotationComposer(
+                  $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> number = const Value.absent(),
@@ -1973,7 +1997,7 @@ class $$CommandmentsTableTableManager extends RootTableManager<
             Value<String> commandment = const Value.absent(),
             Value<int?> customId = const Value.absent(),
           }) =>
-              CommandmentsCompanion(
+              CommandmentsTableCompanion(
             id: id,
             number: number,
             commandmentText: commandmentText,
@@ -1989,7 +2013,7 @@ class $$CommandmentsTableTableManager extends RootTableManager<
             required String commandment,
             Value<int?> customId = const Value.absent(),
           }) =>
-              CommandmentsCompanion.insert(
+              CommandmentsTableCompanion.insert(
             id: id,
             number: number,
             commandmentText: commandmentText,
@@ -2004,23 +2028,24 @@ class $$CommandmentsTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$CommandmentsTableProcessedTableManager = ProcessedTableManager<
+typedef $$CommandmentsTableTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
-    $CommandmentsTable,
-    Commandment,
-    $$CommandmentsTableFilterComposer,
-    $$CommandmentsTableOrderingComposer,
-    $$CommandmentsTableAnnotationComposer,
-    $$CommandmentsTableCreateCompanionBuilder,
-    $$CommandmentsTableUpdateCompanionBuilder,
+    $CommandmentsTableTable,
+    CommandmentsTableData,
+    $$CommandmentsTableTableFilterComposer,
+    $$CommandmentsTableTableOrderingComposer,
+    $$CommandmentsTableTableAnnotationComposer,
+    $$CommandmentsTableTableCreateCompanionBuilder,
+    $$CommandmentsTableTableUpdateCompanionBuilder,
     (
-      Commandment,
-      BaseReferences<_$AppDatabase, $CommandmentsTable, Commandment>
+      CommandmentsTableData,
+      BaseReferences<_$AppDatabase, $CommandmentsTableTable,
+          CommandmentsTableData>
     ),
-    Commandment,
+    CommandmentsTableData,
     PrefetchHooks Function()>;
-typedef $$ExaminationsTableCreateCompanionBuilder = ExaminationsCompanion
-    Function({
+typedef $$ExaminationsTableTableCreateCompanionBuilder
+    = ExaminationsTableCompanion Function({
   Value<int> id,
   required int commandmentId,
   required bool adult,
@@ -2037,8 +2062,8 @@ typedef $$ExaminationsTableCreateCompanionBuilder = ExaminationsCompanion
   required String activeText,
   Value<int> count,
 });
-typedef $$ExaminationsTableUpdateCompanionBuilder = ExaminationsCompanion
-    Function({
+typedef $$ExaminationsTableTableUpdateCompanionBuilder
+    = ExaminationsTableCompanion Function({
   Value<int> id,
   Value<int> commandmentId,
   Value<bool> adult,
@@ -2056,9 +2081,9 @@ typedef $$ExaminationsTableUpdateCompanionBuilder = ExaminationsCompanion
   Value<int> count,
 });
 
-class $$ExaminationsTableFilterComposer
-    extends Composer<_$AppDatabase, $ExaminationsTable> {
-  $$ExaminationsTableFilterComposer({
+class $$ExaminationsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $ExaminationsTableTable> {
+  $$ExaminationsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2111,9 +2136,9 @@ class $$ExaminationsTableFilterComposer
       column: $table.count, builder: (column) => ColumnFilters(column));
 }
 
-class $$ExaminationsTableOrderingComposer
-    extends Composer<_$AppDatabase, $ExaminationsTable> {
-  $$ExaminationsTableOrderingComposer({
+class $$ExaminationsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $ExaminationsTableTable> {
+  $$ExaminationsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2167,9 +2192,9 @@ class $$ExaminationsTableOrderingComposer
       column: $table.count, builder: (column) => ColumnOrderings(column));
 }
 
-class $$ExaminationsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ExaminationsTable> {
-  $$ExaminationsTableAnnotationComposer({
+class $$ExaminationsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ExaminationsTableTable> {
+  $$ExaminationsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2222,31 +2247,34 @@ class $$ExaminationsTableAnnotationComposer
       $composableBuilder(column: $table.count, builder: (column) => column);
 }
 
-class $$ExaminationsTableTableManager extends RootTableManager<
+class $$ExaminationsTableTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $ExaminationsTable,
-    Examination,
-    $$ExaminationsTableFilterComposer,
-    $$ExaminationsTableOrderingComposer,
-    $$ExaminationsTableAnnotationComposer,
-    $$ExaminationsTableCreateCompanionBuilder,
-    $$ExaminationsTableUpdateCompanionBuilder,
+    $ExaminationsTableTable,
+    ExaminationsTableData,
+    $$ExaminationsTableTableFilterComposer,
+    $$ExaminationsTableTableOrderingComposer,
+    $$ExaminationsTableTableAnnotationComposer,
+    $$ExaminationsTableTableCreateCompanionBuilder,
+    $$ExaminationsTableTableUpdateCompanionBuilder,
     (
-      Examination,
-      BaseReferences<_$AppDatabase, $ExaminationsTable, Examination>
+      ExaminationsTableData,
+      BaseReferences<_$AppDatabase, $ExaminationsTableTable,
+          ExaminationsTableData>
     ),
-    Examination,
+    ExaminationsTableData,
     PrefetchHooks Function()> {
-  $$ExaminationsTableTableManager(_$AppDatabase db, $ExaminationsTable table)
+  $$ExaminationsTableTableTableManager(
+      _$AppDatabase db, $ExaminationsTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$ExaminationsTableFilterComposer($db: db, $table: table),
+              $$ExaminationsTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$ExaminationsTableOrderingComposer($db: db, $table: table),
+              $$ExaminationsTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$ExaminationsTableAnnotationComposer($db: db, $table: table),
+              $$ExaminationsTableTableAnnotationComposer(
+                  $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> commandmentId = const Value.absent(),
@@ -2264,7 +2292,7 @@ class $$ExaminationsTableTableManager extends RootTableManager<
             Value<String> activeText = const Value.absent(),
             Value<int> count = const Value.absent(),
           }) =>
-              ExaminationsCompanion(
+              ExaminationsTableCompanion(
             id: id,
             commandmentId: commandmentId,
             adult: adult,
@@ -2298,7 +2326,7 @@ class $$ExaminationsTableTableManager extends RootTableManager<
             required String activeText,
             Value<int> count = const Value.absent(),
           }) =>
-              ExaminationsCompanion.insert(
+              ExaminationsTableCompanion.insert(
             id: id,
             commandmentId: commandmentId,
             adult: adult,
@@ -2322,37 +2350,40 @@ class $$ExaminationsTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$ExaminationsTableProcessedTableManager = ProcessedTableManager<
+typedef $$ExaminationsTableTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
-    $ExaminationsTable,
-    Examination,
-    $$ExaminationsTableFilterComposer,
-    $$ExaminationsTableOrderingComposer,
-    $$ExaminationsTableAnnotationComposer,
-    $$ExaminationsTableCreateCompanionBuilder,
-    $$ExaminationsTableUpdateCompanionBuilder,
+    $ExaminationsTableTable,
+    ExaminationsTableData,
+    $$ExaminationsTableTableFilterComposer,
+    $$ExaminationsTableTableOrderingComposer,
+    $$ExaminationsTableTableAnnotationComposer,
+    $$ExaminationsTableTableCreateCompanionBuilder,
+    $$ExaminationsTableTableUpdateCompanionBuilder,
     (
-      Examination,
-      BaseReferences<_$AppDatabase, $ExaminationsTable, Examination>
+      ExaminationsTableData,
+      BaseReferences<_$AppDatabase, $ExaminationsTableTable,
+          ExaminationsTableData>
     ),
-    Examination,
+    ExaminationsTableData,
     PrefetchHooks Function()>;
-typedef $$GuidesTableCreateCompanionBuilder = GuidesCompanion Function({
+typedef $$GuidesTableTableCreateCompanionBuilder = GuidesTableCompanion
+    Function({
   Value<int> id,
   required String guideTitle,
   required String guideText,
   required int headerId,
 });
-typedef $$GuidesTableUpdateCompanionBuilder = GuidesCompanion Function({
+typedef $$GuidesTableTableUpdateCompanionBuilder = GuidesTableCompanion
+    Function({
   Value<int> id,
   Value<String> guideTitle,
   Value<String> guideText,
   Value<int> headerId,
 });
 
-class $$GuidesTableFilterComposer
-    extends Composer<_$AppDatabase, $GuidesTable> {
-  $$GuidesTableFilterComposer({
+class $$GuidesTableTableFilterComposer
+    extends Composer<_$AppDatabase, $GuidesTableTable> {
+  $$GuidesTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2372,9 +2403,9 @@ class $$GuidesTableFilterComposer
       column: $table.headerId, builder: (column) => ColumnFilters(column));
 }
 
-class $$GuidesTableOrderingComposer
-    extends Composer<_$AppDatabase, $GuidesTable> {
-  $$GuidesTableOrderingComposer({
+class $$GuidesTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $GuidesTableTable> {
+  $$GuidesTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2394,9 +2425,9 @@ class $$GuidesTableOrderingComposer
       column: $table.headerId, builder: (column) => ColumnOrderings(column));
 }
 
-class $$GuidesTableAnnotationComposer
-    extends Composer<_$AppDatabase, $GuidesTable> {
-  $$GuidesTableAnnotationComposer({
+class $$GuidesTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GuidesTableTable> {
+  $$GuidesTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2416,35 +2447,38 @@ class $$GuidesTableAnnotationComposer
       $composableBuilder(column: $table.headerId, builder: (column) => column);
 }
 
-class $$GuidesTableTableManager extends RootTableManager<
+class $$GuidesTableTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $GuidesTable,
-    Guide,
-    $$GuidesTableFilterComposer,
-    $$GuidesTableOrderingComposer,
-    $$GuidesTableAnnotationComposer,
-    $$GuidesTableCreateCompanionBuilder,
-    $$GuidesTableUpdateCompanionBuilder,
-    (Guide, BaseReferences<_$AppDatabase, $GuidesTable, Guide>),
-    Guide,
+    $GuidesTableTable,
+    GuidesTableData,
+    $$GuidesTableTableFilterComposer,
+    $$GuidesTableTableOrderingComposer,
+    $$GuidesTableTableAnnotationComposer,
+    $$GuidesTableTableCreateCompanionBuilder,
+    $$GuidesTableTableUpdateCompanionBuilder,
+    (
+      GuidesTableData,
+      BaseReferences<_$AppDatabase, $GuidesTableTable, GuidesTableData>
+    ),
+    GuidesTableData,
     PrefetchHooks Function()> {
-  $$GuidesTableTableManager(_$AppDatabase db, $GuidesTable table)
+  $$GuidesTableTableTableManager(_$AppDatabase db, $GuidesTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$GuidesTableFilterComposer($db: db, $table: table),
+              $$GuidesTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$GuidesTableOrderingComposer($db: db, $table: table),
+              $$GuidesTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$GuidesTableAnnotationComposer($db: db, $table: table),
+              $$GuidesTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> guideTitle = const Value.absent(),
             Value<String> guideText = const Value.absent(),
             Value<int> headerId = const Value.absent(),
           }) =>
-              GuidesCompanion(
+              GuidesTableCompanion(
             id: id,
             guideTitle: guideTitle,
             guideText: guideText,
@@ -2456,7 +2490,7 @@ class $$GuidesTableTableManager extends RootTableManager<
             required String guideText,
             required int headerId,
           }) =>
-              GuidesCompanion.insert(
+              GuidesTableCompanion.insert(
             id: id,
             guideTitle: guideTitle,
             guideText: guideText,
@@ -2469,34 +2503,39 @@ class $$GuidesTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$GuidesTableProcessedTableManager = ProcessedTableManager<
+typedef $$GuidesTableTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
-    $GuidesTable,
-    Guide,
-    $$GuidesTableFilterComposer,
-    $$GuidesTableOrderingComposer,
-    $$GuidesTableAnnotationComposer,
-    $$GuidesTableCreateCompanionBuilder,
-    $$GuidesTableUpdateCompanionBuilder,
-    (Guide, BaseReferences<_$AppDatabase, $GuidesTable, Guide>),
-    Guide,
+    $GuidesTableTable,
+    GuidesTableData,
+    $$GuidesTableTableFilterComposer,
+    $$GuidesTableTableOrderingComposer,
+    $$GuidesTableTableAnnotationComposer,
+    $$GuidesTableTableCreateCompanionBuilder,
+    $$GuidesTableTableUpdateCompanionBuilder,
+    (
+      GuidesTableData,
+      BaseReferences<_$AppDatabase, $GuidesTableTable, GuidesTableData>
+    ),
+    GuidesTableData,
     PrefetchHooks Function()>;
-typedef $$PrayersTableCreateCompanionBuilder = PrayersCompanion Function({
+typedef $$PrayersTableTableCreateCompanionBuilder = PrayersTableCompanion
+    Function({
   Value<int> id,
   required String prayerName,
   required String prayerText,
   required String groupName,
 });
-typedef $$PrayersTableUpdateCompanionBuilder = PrayersCompanion Function({
+typedef $$PrayersTableTableUpdateCompanionBuilder = PrayersTableCompanion
+    Function({
   Value<int> id,
   Value<String> prayerName,
   Value<String> prayerText,
   Value<String> groupName,
 });
 
-class $$PrayersTableFilterComposer
-    extends Composer<_$AppDatabase, $PrayersTable> {
-  $$PrayersTableFilterComposer({
+class $$PrayersTableTableFilterComposer
+    extends Composer<_$AppDatabase, $PrayersTableTable> {
+  $$PrayersTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2516,9 +2555,9 @@ class $$PrayersTableFilterComposer
       column: $table.groupName, builder: (column) => ColumnFilters(column));
 }
 
-class $$PrayersTableOrderingComposer
-    extends Composer<_$AppDatabase, $PrayersTable> {
-  $$PrayersTableOrderingComposer({
+class $$PrayersTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $PrayersTableTable> {
+  $$PrayersTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2538,9 +2577,9 @@ class $$PrayersTableOrderingComposer
       column: $table.groupName, builder: (column) => ColumnOrderings(column));
 }
 
-class $$PrayersTableAnnotationComposer
-    extends Composer<_$AppDatabase, $PrayersTable> {
-  $$PrayersTableAnnotationComposer({
+class $$PrayersTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PrayersTableTable> {
+  $$PrayersTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2560,35 +2599,38 @@ class $$PrayersTableAnnotationComposer
       $composableBuilder(column: $table.groupName, builder: (column) => column);
 }
 
-class $$PrayersTableTableManager extends RootTableManager<
+class $$PrayersTableTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $PrayersTable,
-    Prayer,
-    $$PrayersTableFilterComposer,
-    $$PrayersTableOrderingComposer,
-    $$PrayersTableAnnotationComposer,
-    $$PrayersTableCreateCompanionBuilder,
-    $$PrayersTableUpdateCompanionBuilder,
-    (Prayer, BaseReferences<_$AppDatabase, $PrayersTable, Prayer>),
-    Prayer,
+    $PrayersTableTable,
+    PrayersTableData,
+    $$PrayersTableTableFilterComposer,
+    $$PrayersTableTableOrderingComposer,
+    $$PrayersTableTableAnnotationComposer,
+    $$PrayersTableTableCreateCompanionBuilder,
+    $$PrayersTableTableUpdateCompanionBuilder,
+    (
+      PrayersTableData,
+      BaseReferences<_$AppDatabase, $PrayersTableTable, PrayersTableData>
+    ),
+    PrayersTableData,
     PrefetchHooks Function()> {
-  $$PrayersTableTableManager(_$AppDatabase db, $PrayersTable table)
+  $$PrayersTableTableTableManager(_$AppDatabase db, $PrayersTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$PrayersTableFilterComposer($db: db, $table: table),
+              $$PrayersTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$PrayersTableOrderingComposer($db: db, $table: table),
+              $$PrayersTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$PrayersTableAnnotationComposer($db: db, $table: table),
+              $$PrayersTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> prayerName = const Value.absent(),
             Value<String> prayerText = const Value.absent(),
             Value<String> groupName = const Value.absent(),
           }) =>
-              PrayersCompanion(
+              PrayersTableCompanion(
             id: id,
             prayerName: prayerName,
             prayerText: prayerText,
@@ -2600,7 +2642,7 @@ class $$PrayersTableTableManager extends RootTableManager<
             required String prayerText,
             required String groupName,
           }) =>
-              PrayersCompanion.insert(
+              PrayersTableCompanion.insert(
             id: id,
             prayerName: prayerName,
             prayerText: prayerText,
@@ -2613,34 +2655,37 @@ class $$PrayersTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$PrayersTableProcessedTableManager = ProcessedTableManager<
+typedef $$PrayersTableTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
-    $PrayersTable,
-    Prayer,
-    $$PrayersTableFilterComposer,
-    $$PrayersTableOrderingComposer,
-    $$PrayersTableAnnotationComposer,
-    $$PrayersTableCreateCompanionBuilder,
-    $$PrayersTableUpdateCompanionBuilder,
-    (Prayer, BaseReferences<_$AppDatabase, $PrayersTable, Prayer>),
-    Prayer,
+    $PrayersTableTable,
+    PrayersTableData,
+    $$PrayersTableTableFilterComposer,
+    $$PrayersTableTableOrderingComposer,
+    $$PrayersTableTableAnnotationComposer,
+    $$PrayersTableTableCreateCompanionBuilder,
+    $$PrayersTableTableUpdateCompanionBuilder,
+    (
+      PrayersTableData,
+      BaseReferences<_$AppDatabase, $PrayersTableTable, PrayersTableData>
+    ),
+    PrayersTableData,
     PrefetchHooks Function()>;
-typedef $$InspirationsTableCreateCompanionBuilder = InspirationsCompanion
-    Function({
+typedef $$InspirationsTableTableCreateCompanionBuilder
+    = InspirationsTableCompanion Function({
   Value<int> id,
   required String author,
   required String quote,
 });
-typedef $$InspirationsTableUpdateCompanionBuilder = InspirationsCompanion
-    Function({
+typedef $$InspirationsTableTableUpdateCompanionBuilder
+    = InspirationsTableCompanion Function({
   Value<int> id,
   Value<String> author,
   Value<String> quote,
 });
 
-class $$InspirationsTableFilterComposer
-    extends Composer<_$AppDatabase, $InspirationsTable> {
-  $$InspirationsTableFilterComposer({
+class $$InspirationsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $InspirationsTableTable> {
+  $$InspirationsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2657,9 +2702,9 @@ class $$InspirationsTableFilterComposer
       column: $table.quote, builder: (column) => ColumnFilters(column));
 }
 
-class $$InspirationsTableOrderingComposer
-    extends Composer<_$AppDatabase, $InspirationsTable> {
-  $$InspirationsTableOrderingComposer({
+class $$InspirationsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $InspirationsTableTable> {
+  $$InspirationsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2676,9 +2721,9 @@ class $$InspirationsTableOrderingComposer
       column: $table.quote, builder: (column) => ColumnOrderings(column));
 }
 
-class $$InspirationsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $InspirationsTable> {
-  $$InspirationsTableAnnotationComposer({
+class $$InspirationsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $InspirationsTableTable> {
+  $$InspirationsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2695,37 +2740,40 @@ class $$InspirationsTableAnnotationComposer
       $composableBuilder(column: $table.quote, builder: (column) => column);
 }
 
-class $$InspirationsTableTableManager extends RootTableManager<
+class $$InspirationsTableTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $InspirationsTable,
-    Inspiration,
-    $$InspirationsTableFilterComposer,
-    $$InspirationsTableOrderingComposer,
-    $$InspirationsTableAnnotationComposer,
-    $$InspirationsTableCreateCompanionBuilder,
-    $$InspirationsTableUpdateCompanionBuilder,
+    $InspirationsTableTable,
+    InspirationsTableData,
+    $$InspirationsTableTableFilterComposer,
+    $$InspirationsTableTableOrderingComposer,
+    $$InspirationsTableTableAnnotationComposer,
+    $$InspirationsTableTableCreateCompanionBuilder,
+    $$InspirationsTableTableUpdateCompanionBuilder,
     (
-      Inspiration,
-      BaseReferences<_$AppDatabase, $InspirationsTable, Inspiration>
+      InspirationsTableData,
+      BaseReferences<_$AppDatabase, $InspirationsTableTable,
+          InspirationsTableData>
     ),
-    Inspiration,
+    InspirationsTableData,
     PrefetchHooks Function()> {
-  $$InspirationsTableTableManager(_$AppDatabase db, $InspirationsTable table)
+  $$InspirationsTableTableTableManager(
+      _$AppDatabase db, $InspirationsTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$InspirationsTableFilterComposer($db: db, $table: table),
+              $$InspirationsTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$InspirationsTableOrderingComposer($db: db, $table: table),
+              $$InspirationsTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$InspirationsTableAnnotationComposer($db: db, $table: table),
+              $$InspirationsTableTableAnnotationComposer(
+                  $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> author = const Value.absent(),
             Value<String> quote = const Value.absent(),
           }) =>
-              InspirationsCompanion(
+              InspirationsTableCompanion(
             id: id,
             author: author,
             quote: quote,
@@ -2735,7 +2783,7 @@ class $$InspirationsTableTableManager extends RootTableManager<
             required String author,
             required String quote,
           }) =>
-              InspirationsCompanion.insert(
+              InspirationsTableCompanion.insert(
             id: id,
             author: author,
             quote: quote,
@@ -2747,33 +2795,34 @@ class $$InspirationsTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$InspirationsTableProcessedTableManager = ProcessedTableManager<
+typedef $$InspirationsTableTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
-    $InspirationsTable,
-    Inspiration,
-    $$InspirationsTableFilterComposer,
-    $$InspirationsTableOrderingComposer,
-    $$InspirationsTableAnnotationComposer,
-    $$InspirationsTableCreateCompanionBuilder,
-    $$InspirationsTableUpdateCompanionBuilder,
+    $InspirationsTableTable,
+    InspirationsTableData,
+    $$InspirationsTableTableFilterComposer,
+    $$InspirationsTableTableOrderingComposer,
+    $$InspirationsTableTableAnnotationComposer,
+    $$InspirationsTableTableCreateCompanionBuilder,
+    $$InspirationsTableTableUpdateCompanionBuilder,
     (
-      Inspiration,
-      BaseReferences<_$AppDatabase, $InspirationsTable, Inspiration>
+      InspirationsTableData,
+      BaseReferences<_$AppDatabase, $InspirationsTableTable,
+          InspirationsTableData>
     ),
-    Inspiration,
+    InspirationsTableData,
     PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$CommandmentsTableTableManager get commandments =>
-      $$CommandmentsTableTableManager(_db, _db.commandments);
-  $$ExaminationsTableTableManager get examinations =>
-      $$ExaminationsTableTableManager(_db, _db.examinations);
-  $$GuidesTableTableManager get guides =>
-      $$GuidesTableTableManager(_db, _db.guides);
-  $$PrayersTableTableManager get prayers =>
-      $$PrayersTableTableManager(_db, _db.prayers);
-  $$InspirationsTableTableManager get inspirations =>
-      $$InspirationsTableTableManager(_db, _db.inspirations);
+  $$CommandmentsTableTableTableManager get commandmentsTable =>
+      $$CommandmentsTableTableTableManager(_db, _db.commandmentsTable);
+  $$ExaminationsTableTableTableManager get examinationsTable =>
+      $$ExaminationsTableTableTableManager(_db, _db.examinationsTable);
+  $$GuidesTableTableTableManager get guidesTable =>
+      $$GuidesTableTableTableManager(_db, _db.guidesTable);
+  $$PrayersTableTableTableManager get prayersTable =>
+      $$PrayersTableTableTableManager(_db, _db.prayersTable);
+  $$InspirationsTableTableTableManager get inspirationsTable =>
+      $$InspirationsTableTableTableManager(_db, _db.inspirationsTable);
 }

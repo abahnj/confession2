@@ -12,9 +12,10 @@ import 'package:auto_route/auto_route.dart' as _i8;
 import 'package:confession/confession/confession_page.dart' as _i1;
 import 'package:confession/exam/exam_page.dart' as _i2;
 import 'package:confession/guide/guide_page.dart' as _i3;
-import 'package:confession/prayers/details_page/prayer_details_page.dart'
+import 'package:confession/prayers/presentation/ui/details_page/prayer_details_page.dart'
     as _i4;
-import 'package:confession/prayers/prayers_page.dart' as _i5;
+import 'package:confession/prayers/presentation/ui/details_page/prayers_page.dart'
+    as _i5;
 import 'package:confession/settings/settings_page.dart' as _i6;
 import 'package:confession/shell/shell_page.dart' as _i7;
 import 'package:flutter/material.dart' as _i9;

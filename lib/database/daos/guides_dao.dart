@@ -4,12 +4,12 @@ import 'package:drift/drift.dart';
 
 part 'guides_dao.g.dart';
 
-@DriftAccessor(tables: [Guides])
+@DriftAccessor(tables: [GuidesTable])
 class GuidesDao extends DatabaseAccessor<AppDatabase> with _$GuidesDaoMixin {
   GuidesDao(super.db);
 
-  Future<List<Guide>> getAllGuides() => select(guides).get();
+  Future<List<GuidesTableData>> getAllGuides() => select(guidesTable).get();
 
-  Future<List<Guide>> getGuidesForId(int id) =>
-      (select(guides)..where((tbl) => tbl.headerId.equals(id))).get();
+  Future<List<GuidesTableData>> getGuidesForId(int id) =>
+      (select(guidesTable)..where((tbl) => tbl.headerId.equals(id))).get();
 }

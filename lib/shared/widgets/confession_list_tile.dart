@@ -22,7 +22,6 @@ class ConfessionListTile extends StatelessWidget {
 
   static const _padding = EdgeInsets.symmetric(horizontal: 20, vertical: 10);
   static const _borderRadius = 16.0;
-  static const _elevation = 8.0;
   static const _iconSize = 24.0;
   static const _arrowSize = 30.0;
 
@@ -31,8 +30,7 @@ class ConfessionListTile extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Card(
-      elevation: _elevation,
-      color: theme.colorScheme.secondary.withOpacity(.44),
+      color: Theme.of(context).colorScheme.tertiary.withOpacity(.2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_borderRadius),
       ),

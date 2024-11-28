@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class Prayers extends Table {
+class PrayersTable extends Table {
   IntColumn get id => integer().named('_id').autoIncrement()();
 
   TextColumn get prayerName => text().named('PRAYERNAME')();
@@ -13,7 +13,7 @@ class Prayers extends Table {
   String get tableName => 'PRAYERS';
 }
 
-class Inspirations extends Table {
+class InspirationsTable extends Table {
   IntColumn get id => integer().named('_id').autoIncrement()();
 
   TextColumn get author => text().named('AUTHOR')();

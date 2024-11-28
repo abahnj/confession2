@@ -3,7 +3,7 @@ import 'package:confession/theme/data/mappers/theme_mapper.dart';
 import 'package:confession/theme/domain/entities/theme.dart';
 import 'package:confession/theme/domain/repositories/theme_repository.dart';
 
-class SwitchThemeUseCase implements UseCase<void, AppThemeMode> {
+class SwitchThemeUseCase implements AsyncParamUseCase<SaveThemeParam> {
   const SwitchThemeUseCase({
     required ThemeRepository themeRepository,
     required ThemeMapper themeMapper,
@@ -14,6 +14,14 @@ class SwitchThemeUseCase implements UseCase<void, AppThemeMode> {
   final ThemeMapper _mapper;
 
   @override
-  Future<void> call(AppThemeMode params) =>
-      _repository.saveThemeSettings(_mapper.toDomainModel(params));
+  Future<void> call(SaveThemeParam param) => _repository.saveThemeSettings(_mapper.toDomainModel(param.theme));
+}
+
+class SaveThemeParam extends Param {
+  const SaveThemeParam({required this.theme});
+
+  final AppThemeMode theme;
+
+  @override
+  List<Object?> get props => [theme];
 }

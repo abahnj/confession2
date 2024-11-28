@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class Examinations extends Table {
+class ExaminationsTable extends Table {
   IntColumn get id => integer().named('_id').autoIncrement()();
 
   IntColumn get commandmentId => integer().named('COMMANDMENT_ID')();
@@ -29,8 +29,7 @@ class Examinations extends Table {
 
   TextColumn get activeText => text().named('DESCRIPTION_ACTIVE')();
 
-  IntColumn get count =>
-      integer().named('COUNT').withDefault(const Constant(0))();
+  IntColumn get count => integer().named('COUNT').withDefault(const Constant(0))();
 
   @override
   String get tableName => 'SIN';

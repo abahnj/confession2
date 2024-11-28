@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 @RoutePage()
 class PrayerDetailsPage extends StatelessWidget {
@@ -7,6 +7,11 @@ class PrayerDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+      backgroundColor: Colors.redAccent,
+      body: Center(
+        child: Text('Prayer Details Page'),
+      ),
+    );
   }
 }

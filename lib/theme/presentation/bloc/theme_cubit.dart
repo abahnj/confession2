@@ -30,7 +30,7 @@ class ThemeCubit extends Cubit<AppThemeMode> {
   Future<void> setThemeMode(ThemeMode theme) async {
     try {
       final newSettings = AppThemeMode(themeMode: theme);
-      await _toggleThemeUsecase(newSettings);
+      await _toggleThemeUsecase(SaveThemeParam(theme: newSettings));
       emit(newSettings);
     } catch (e, st) {
       log('Error setting theme mode', error: e, stackTrace: st);

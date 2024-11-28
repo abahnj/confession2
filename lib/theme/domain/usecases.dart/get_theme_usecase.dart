@@ -3,7 +3,7 @@ import 'package:confession/theme/data/mappers/theme_mapper.dart';
 import 'package:confession/theme/domain/entities/theme.dart';
 import 'package:confession/theme/domain/repositories/theme_repository.dart';
 
-class GetThemeUseCase implements UseCase<AppThemeMode, NoParams> {
+class GetThemeUseCase implements AsyncViewDataParamUseCase<AppThemeMode, NoParams> {
   const GetThemeUseCase({
     required ThemeRepository themeRepository,
     required ThemeMapper themeMapper,

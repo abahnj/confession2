@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class Guides extends Table {
+class GuidesTable extends Table {
   IntColumn get id => integer().named('_id').autoIncrement()();
 
   TextColumn get guideTitle => text().named('g_title')();

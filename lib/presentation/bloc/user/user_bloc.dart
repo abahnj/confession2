@@ -4,7 +4,7 @@ import 'package:confession/domain/usecases/usecase.dart';
 import 'package:confession/domain/usecases/user_usecases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UserBloc extends Bloc<BlocEvent<UserParams>, User> {
+class UserBloc extends Bloc<BlocEvent<UserEvent>, User> {
   UserBloc({
     required GetUserUseCase getUser,
     required SaveUserUseCase saveUser,
@@ -13,7 +13,7 @@ class UserBloc extends Bloc<BlocEvent<UserParams>, User> {
         _saveUser = saveUser,
         _deleteUser = deleteUser,
         super(const User.empty()) {
-    on<BlocEvent<UserParams>>(handleEvent);
+    on<BlocEvent<UserEvent>>(handleEvent);
   }
   final GetUserUseCase _getUser;
   final SaveUserUseCase _saveUser;
@@ -24,7 +24,7 @@ class UserBloc extends Bloc<BlocEvent<UserParams>, User> {
     Emitter<User> emit,
   ) async {
     try {
-      final user = await _getUser(const NoParams());
+      final user = await _getUser();
       emit(user);
     } catch (e) {
       emit(const User.empty());
@@ -36,7 +36,7 @@ class UserBloc extends Bloc<BlocEvent<UserParams>, User> {
     Emitter<User> emit,
   ) async {
     try {
-      await _saveUser(event.user);
+      await _saveUser(SaveUserParam(user: event.user));
       emit(event.user);
     } catch (e) {
       emit(const User.empty());
@@ -48,7 +48,7 @@ class UserBloc extends Bloc<BlocEvent<UserParams>, User> {
     Emitter<User> emit,
   ) async {
     try {
-      await _deleteUser(const NoParams());
+      await _deleteUser();
       emit(const User.empty());
     } catch (e) {
       emit(const User.empty());
@@ -56,7 +56,7 @@ class UserBloc extends Bloc<BlocEvent<UserParams>, User> {
   }
 
   Future<void> handleEvent(
-    BlocEvent<UserParams> event,
+    BlocEvent<UserEvent> event,
     Emitter<User> emit,
   ) =>
       switch (event.argument) {
@@ -66,18 +66,18 @@ class UserBloc extends Bloc<BlocEvent<UserParams>, User> {
       };
 }
 
-sealed class UserParams extends Param {
-  const UserParams();
+sealed class UserEvent extends Param {
+  const UserEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class LoadUser extends UserParams {
+class LoadUser extends UserEvent {
   const LoadUser();
 }
 
-class UpdateUser extends UserParams {
+class UpdateUser extends UserEvent {
   const UpdateUser(this.user);
 
   final User user;
@@ -86,6 +86,6 @@ class UpdateUser extends UserParams {
   List<Object?> get props => [user];
 }
 
-class DeleteUser extends UserParams {
+class DeleteUser extends UserEvent {
   const DeleteUser();
 }

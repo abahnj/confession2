@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class Commandments extends Table {
+class CommandmentsTable extends Table {
   IntColumn get id => integer().named('_id').autoIncrement()();
 
   IntColumn get number => integer().named('NUMBER')();

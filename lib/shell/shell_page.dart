@@ -40,10 +40,7 @@ class ShellPage extends StatelessWidget {
       appBarBuilder: (context, tabsRouter) => AppBar(
         title: Text(
           context.topRoute.title(context),
-          style: Theme.of(context)
-              .textTheme
-              .headlineMedium
-              ?.copyWith(fontFamily: FontFamily.robotoMono),
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontFamily: FontFamily.robotoMono),
         ),
         leading: const AutoLeadingButton(),
         actions: [
@@ -91,9 +88,7 @@ class ShellPage extends StatelessWidget {
       width: 24,
       height: 24,
       colorFilter: ColorFilter.mode(
-        isActive
-            ? context.colorScheme.primary
-            : context.colorScheme.onSurfaceVariant,
+        isActive ? context.colorScheme.primary : context.colorScheme.onSurfaceVariant,
         BlendMode.srcIn,
       ),
     );
