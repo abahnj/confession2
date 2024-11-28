@@ -46,8 +46,12 @@ class AppRouter extends RootStackRouter {
                   path: '',
                 ),
                 AutoRoute(
-                  path: ':guideId',
+                  path: 'guide/:guideId',
                   page: GuideDetailListRoute.page,
+                ),
+                AutoRoute(
+                  path: 'guide/:guideId/details',
+                  page: GuideDetailsRoute.page,
                 ),
               ],
             ),

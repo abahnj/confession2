@@ -11,12 +11,13 @@
 import 'package:auto_route/auto_route.dart' as _i10;
 import 'package:confession/confession/confession_page.dart' as _i1;
 import 'package:confession/exam/exam_page.dart' as _i2;
+import 'package:confession/guide/domain/entities/guide.dart' as _i12;
 import 'package:confession/guide/presentation/ui/details_page/guide_detail_list.dart'
     as _i3;
 import 'package:confession/guide/presentation/ui/details_page/guide_details_page.dart'
     as _i4;
 import 'package:confession/guide/presentation/ui/guide_page.dart' as _i5;
-import 'package:confession/prayers/domain/entities/prayer.dart' as _i12;
+import 'package:confession/prayers/domain/entities/prayer.dart' as _i13;
 import 'package:confession/prayers/presentation/ui/details_page/prayer_details_page.dart'
     as _i6;
 import 'package:confession/prayers/presentation/ui/prayers_page.dart' as _i7;
@@ -76,6 +77,7 @@ class GuideDetailListRoute
             guideId: guideId,
             key: key,
           ),
+          rawPathParams: {'guideId': guideId},
           initialChildren: children,
         );
 
@@ -84,7 +86,10 @@ class GuideDetailListRoute
   static _i10.PageInfo page = _i10.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<GuideDetailListRouteArgs>();
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<GuideDetailListRouteArgs>(
+          orElse: () =>
+              GuideDetailListRouteArgs(guideId: pathParams.getInt('guideId')));
       return _i3.GuideDetailListPage(
         guideId: args.guideId,
         key: args.key,
@@ -111,10 +116,17 @@ class GuideDetailListRouteArgs {
 
 /// generated route for
 /// [_i4.GuideDetailsPage]
-class GuideDetailsRoute extends _i10.PageRouteInfo<void> {
-  const GuideDetailsRoute({List<_i10.PageRouteInfo>? children})
-      : super(
+class GuideDetailsRoute extends _i10.PageRouteInfo<GuideDetailsRouteArgs> {
+  GuideDetailsRoute({
+    required _i12.Guide guide,
+    _i11.Key? key,
+    List<_i10.PageRouteInfo>? children,
+  }) : super(
           GuideDetailsRoute.name,
+          args: GuideDetailsRouteArgs(
+            guide: guide,
+            key: key,
+          ),
           initialChildren: children,
         );
 
@@ -123,9 +135,29 @@ class GuideDetailsRoute extends _i10.PageRouteInfo<void> {
   static _i10.PageInfo page = _i10.PageInfo(
     name,
     builder: (data) {
-      return const _i4.GuideDetailsPage();
+      final args = data.argsAs<GuideDetailsRouteArgs>();
+      return _i4.GuideDetailsPage(
+        guide: args.guide,
+        key: args.key,
+      );
     },
   );
+}
+
+class GuideDetailsRouteArgs {
+  const GuideDetailsRouteArgs({
+    required this.guide,
+    this.key,
+  });
+
+  final _i12.Guide guide;
+
+  final _i11.Key? key;
+
+  @override
+  String toString() {
+    return 'GuideDetailsRouteArgs{guide: $guide, key: $key}';
+  }
 }
 
 /// generated route for
@@ -151,7 +183,7 @@ class GuideRoute extends _i10.PageRouteInfo<void> {
 /// [_i6.PrayerDetailsPage]
 class PrayerDetailsRoute extends _i10.PageRouteInfo<PrayerDetailsRouteArgs> {
   PrayerDetailsRoute({
-    required _i12.Prayer prayer,
+    required _i13.Prayer prayer,
     _i11.Key? key,
     List<_i10.PageRouteInfo>? children,
   }) : super(
@@ -183,7 +215,7 @@ class PrayerDetailsRouteArgs {
     this.key,
   });
 
-  final _i12.Prayer prayer;
+  final _i13.Prayer prayer;
 
   final _i11.Key? key;
 

@@ -45,7 +45,7 @@ class ConfessionListTile extends StatelessWidget {
           leading: _buildLeadingIcon(context),
           title: Text(
             title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.w500),
           ),
           subtitle: subtitle != null
               ? Text(

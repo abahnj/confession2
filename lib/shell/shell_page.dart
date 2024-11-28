@@ -3,7 +3,6 @@ import 'package:confession/gen/assets.gen.dart';
 import 'package:confession/l10n/l10n.dart';
 import 'package:confession/router/app_router.gr.dart';
 import 'package:confession/shared/utils.dart';
-import 'package:confession/shared/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -75,9 +74,7 @@ class ShellPage extends StatelessWidget {
       width: 24,
       height: 24,
       colorFilter: ColorFilter.mode(
-        isActive
-            ? context.colorScheme.primary
-            : context.colorScheme.onSurfaceVariant,
+        isActive ? context.colorScheme.primary : context.colorScheme.onSurfaceVariant,
         BlendMode.srcIn,
       ),
     );

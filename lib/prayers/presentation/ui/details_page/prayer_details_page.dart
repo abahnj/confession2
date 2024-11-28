@@ -17,7 +17,7 @@ class PrayerDetailsPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Center(
-            child: Card(
+            child: Card.filled(
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
