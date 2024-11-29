@@ -40,8 +40,6 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase> with _$ExaminationsD
 
   ExaminationFilter getCommandmentFilter(int commandmentId) => (table) => table.commandmentId.equals(commandmentId);
 
-  ExaminationFilter getActiveFilter() => (table) => table.count.isBiggerThanValue(_activeExaminationThreshold);
-
   // Filter combination
   ExaminationFilter _combineFilters(List<ExaminationFilter> filters) => (table) => switch (filters.length) {
         0 => const Constant(true),
@@ -68,6 +66,10 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase> with _$ExaminationsD
   }
 
   Future<int> resetExaminationsCount() async =>
-      (update(examinationsTable)..where((tbl) => tbl.count.isBiggerThanValue(0)))
+      (update(examinationsTable)..where((tbl) => tbl.count.isBiggerThanValue(_activeExaminationThreshold)))
+          .write(const ExaminationsTableCompanion(count: Value(0)));
+
+  Future<int> resetExaminationCount(int examinationId) async =>
+      (update(examinationsTable)..where((tbl) => tbl.id.equals(examinationId)))
           .write(const ExaminationsTableCompanion(count: Value(0)));
 }

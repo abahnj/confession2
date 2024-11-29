@@ -48,16 +48,13 @@ class $AssetsImagesGen {
   /// File path: assets/images/faq_alt.jpg
   AssetGenImage get faqAlt => const AssetGenImage('assets/images/faq_alt.jpg');
 
-  /// File path: assets/images/file.jpg
-  AssetGenImage get file => const AssetGenImage('assets/images/file.jpg');
-
   /// File path: assets/images/fulton_sheen.jpeg
   AssetGenImage get fultonSheen =>
       const AssetGenImage('assets/images/fulton_sheen.jpeg');
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [asSaidByPope, ccc, confession, faq, faqAlt, file, fultonSheen];
+      [asSaidByPope, ccc, confession, faq, faqAlt, fultonSheen];
 }
 
 class $AssetsVectorsGen {

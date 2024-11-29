@@ -14,36 +14,40 @@ class AppRouter extends RootStackRouter {
           fullMatch: true,
           children: [
             AutoRoute(
-              path: 'exam',
               page: const EmptyShellRoute('Examination'),
               initial: true,
               children: [
                 AutoRoute(
+                  page: CommandmentsRoute.page,
+                  title: (context, data) => 'Examination',
+                  path: 'exam',
+                  initial: true,
+                ),
+                AutoRoute(
                   page: ExaminationRoute.page,
                   title: (context, data) => 'Examination',
-                  path: '',
+                  path: 'exam/:commandmentId',
                 ),
               ],
             ),
             AutoRoute(
-              path: 'confession',
               page: const EmptyShellRoute('Confession'),
               children: [
                 AutoRoute(
                   page: ConfessionRoute.page,
                   title: (context, data) => 'Confession',
-                  path: '',
+                  path: 'confession',
                 ),
               ],
             ),
             AutoRoute(
-              path: 'guide',
               page: const EmptyShellRoute('Guide'),
               children: [
                 AutoRoute(
                   page: GuideRoute.page,
                   title: (context, data) => 'Guide',
-                  path: '',
+                  path: 'guide',
+                  initial: true,
                 ),
                 AutoRoute(
                   path: 'guide/:guideId',
@@ -56,13 +60,13 @@ class AppRouter extends RootStackRouter {
               ],
             ),
             AutoRoute(
-              path: 'prayers',
               page: const EmptyShellRoute('Prayers'),
               children: [
                 AutoRoute(
                   page: PrayersRoute.page,
                   title: (context, data) => 'Prayers',
-                  path: '',
+                  path: 'prayers',
+                  initial: true,
                 ),
                 AutoRoute(
                   path: 'details',

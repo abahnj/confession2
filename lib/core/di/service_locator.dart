@@ -1,4 +1,5 @@
 import 'package:confession/core/di/env_config.dart';
+import 'package:confession/core/di/modules/examination_module.dart';
 import 'package:confession/core/di/modules/module.dart';
 import 'package:confession/theme/di/theme_module.dart';
 import 'package:get_it/get_it.dart';
@@ -27,6 +28,7 @@ class ServiceLocator {
     ThemeModule().init();
     PrayersModule().init();
     GuidesModule().init();
+    ExaminationModule().init();
   }
 
   static Future<void> reset() async {

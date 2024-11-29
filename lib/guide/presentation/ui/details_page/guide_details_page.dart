@@ -11,18 +11,20 @@ class GuideDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: ConfessionAppBar(title: guide.title),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Center(
-            child: Card.filled(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  guide.text,
-                  style: Theme.of(context).textTheme.bodyLarge,
+      body: Scrollbar(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Center(
+              child: Card.filled(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    guide.text,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                 ),
               ),
             ),

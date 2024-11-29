@@ -1,4 +1,5 @@
 import 'package:confession/core/base/domain_model.dart';
+import 'package:confession/domain/enums/user_enums.dart';
 
 final class UserDomainModel extends DomainModel {
   const UserDomainModel({
@@ -11,23 +12,23 @@ final class UserDomainModel extends DomainModel {
   @override
   factory UserDomainModel.fromJson(Map<String, dynamic> json) {
     return UserDomainModel(
-      vocation: json['vocation'] as String,
-      age: json['age'] as String,
-      gender: json['gender'] as String,
+      vocation: Vocation.values.byName(json['vocation'] as String),
+      age: Age.values.byName(json['age'] as String),
+      gender: Gender.values.byName(json['gender'] as String),
       lastConfession: json['lastConfession'] as String,
     );
   }
 
-  final String vocation;
-  final String age;
-  final String gender;
+  final Vocation vocation;
+  final Age age;
+  final Gender gender;
   final String lastConfession;
 
   @override
   UserDomainModel copyWith({
-    String? vocation,
-    String? age,
-    String? gender,
+    Vocation? vocation,
+    Age? age,
+    Gender? gender,
     String? lastConfession,
   }) {
     return UserDomainModel(
@@ -41,9 +42,9 @@ final class UserDomainModel extends DomainModel {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'vocation': vocation,
-      'age': age,
-      'gender': gender,
+      'vocation': vocation.name,
+      'age': age.name,
+      'gender': gender.name,
       'lastConfession': lastConfession,
     };
   }

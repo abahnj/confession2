@@ -1,15 +1,14 @@
 import 'package:confession/core/base/mappers.dart';
 import 'package:confession/domain/dtos/models/user_domain_model.dart';
 import 'package:confession/domain/entities/user.dart';
-import 'package:confession/domain/enums/user_enums.dart';
 
 class UserMapper implements ViewDataMapper<User, UserDomainModel> {
   @override
   User toViewData(UserDomainModel model) {
     return User(
-      vocation: Vocation.values.byName(model.vocation),
-      age: Age.values.byName(model.age),
-      gender: Gender.values.byName(model.gender),
+      vocation: model.vocation,
+      age: model.age,
+      gender: model.gender,
       lastConfession: model.lastConfession,
     );
   }
@@ -17,9 +16,9 @@ class UserMapper implements ViewDataMapper<User, UserDomainModel> {
   @override
   UserDomainModel toDomainModel(User viewData) {
     return UserDomainModel(
-      vocation: viewData.vocation.name,
-      age: viewData.age.name,
-      gender: viewData.gender.name,
+      vocation: viewData.vocation,
+      age: viewData.age,
+      gender: viewData.gender,
       lastConfession: viewData.lastConfession,
     );
   }

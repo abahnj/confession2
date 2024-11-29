@@ -11,7 +11,7 @@ class ShellPage extends StatelessWidget {
 
   final List<NavigationItem> navigationItems = [
     NavigationItem(
-      route: const ExaminationRoute(),
+      route: const CommandmentsRoute(),
       icon: Assets.vectors.exam,
       labelResolver: (context) => context.l10n.examinationNavbarTitle,
     ),
