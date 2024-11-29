@@ -52,8 +52,9 @@ void main() {
     test('updateExamination should successfully update existing record',
         () async {
       // Arrange
-      final inserted =
-          await database.into(database.examinationsTable).insert(baseExamination);
+      final inserted = await database
+          .into(database.examinationsTable)
+          .insert(baseExamination);
       final updatedExamination = ExaminationsTableData(
         id: inserted,
         commandmentId: 1,
@@ -133,8 +134,8 @@ void main() {
 
     setUp(() async {
       await Future.wait(
-        testData
-            .map((exam) => database.into(database.examinationsTable).insert(exam)),
+        testData.map(
+            (exam) => database.into(database.examinationsTable).insert(exam),),
       );
     });
 
@@ -225,7 +226,8 @@ void main() {
       ];
 
       await Future.wait(
-        examinationsTable.map((e) => database.into(database.examinationsTable).insert(e)),
+        examinationsTable
+            .map((e) => database.into(database.examinationsTable).insert(e)),
       );
 
       // Act
@@ -274,7 +276,8 @@ void main() {
       ];
 
       await Future.wait(
-        examinationsTable.map((e) => database.into(database.examinationsTable).insert(e)),
+        examinationsTable
+            .map((e) => database.into(database.examinationsTable).insert(e)),
       );
 
       // Act
@@ -307,7 +310,8 @@ void main() {
       await dao.resetExaminationsCount();
 
       // Assert
-      final result = await database.select(database.examinationsTable).getSingle();
+      final result =
+          await database.select(database.examinationsTable).getSingle();
 
       expect(
         result,
@@ -367,8 +371,8 @@ void main() {
 
     setUp(() async {
       await Future.wait(
-        testExaminations
-            .map((exam) => database.into(database.examinationsTable).insert(exam)),
+        testExaminations.map(
+            (exam) => database.into(database.examinationsTable).insert(exam),),
       );
     });
 
@@ -493,7 +497,8 @@ void main() {
       count: const Value(0),
     );
 
-    test('getExaminations with no filters returns all examinationsTable', () async {
+    test('getExaminations with no filters returns all examinationsTable',
+        () async {
       // Arrange
       await database.into(database.examinationsTable).insert(testExamination);
 
@@ -554,9 +559,11 @@ void main() {
         stream,
         emitsInOrder([
           // After first insert
-          isA<List<ExaminationsTableData>>().having((list) => list.length, 'length', 1),
+          isA<List<ExaminationsTableData>>()
+              .having((list) => list.length, 'length', 1),
           // After second insert
-          isA<List<ExaminationsTableData>>().having((list) => list.length, 'length', 2),
+          isA<List<ExaminationsTableData>>()
+              .having((list) => list.length, 'length', 2),
         ]),
       );
 

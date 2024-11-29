@@ -6,7 +6,7 @@ abstract class ExaminationRepository {
 
   Future<void> resetExaminationCount(int examinationId);
 
-  Future<int> updateExamination(ExaminationsTableData examination);
+  Future<int> updateExamination(ExaminationsTableCompanion examination);
 
   Stream<List<ExaminationsTableData>> watchExaminationForUserAndCommandment({
     required UserDomainModel user,

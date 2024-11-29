@@ -5,8 +5,11 @@ import 'package:confession/exam/data/mappers/examination_mapper.dart';
 import 'package:confession/exam/domain/entities/examination.dart';
 import 'package:confession/exam/domain/repositories/examination_repository.dart';
 
-class GetExaminationsUsecase extends StreamViewDataParamUseCase<ExaminationsList, GetExaminationsParam> {
-  GetExaminationsUsecase({required ExaminationRepository repository, required ExaminationMapper examinationsMapper})
+class GetExaminationsUsecase
+    extends StreamViewDataParamUseCase<ExaminationsList, GetExaminationsParam> {
+  GetExaminationsUsecase(
+      {required ExaminationRepository repository,
+      required ExaminationMapper examinationsMapper,})
       : _repository = repository,
         _mapper = examinationsMapper;
 
@@ -26,7 +29,8 @@ class GetExaminationsUsecase extends StreamViewDataParamUseCase<ExaminationsList
           ),
           commandmentId: param.commandmentId,
         )
-        .map((examinations) => ExaminationsList(data: examinations.map(_mapper.toViewData).toList()));
+        .map((examinations) => ExaminationsList(
+            data: examinations.map(_mapper.toViewData).toList(),),);
   }
 }
 

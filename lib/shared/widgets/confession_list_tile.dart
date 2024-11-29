@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:confession/gen/assets.gen.dart';
 import 'package:confession/shared/utils.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +34,7 @@ class ConfessionListTile extends StatelessWidget {
       ),
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       child: GestureDetector(
-        onLongPressStart: (details) {
-          log('Long press started at ${details.localPosition}');
-        },
+        onLongPressStart: onLongPress,
         child: ListTile(
           onTap: onTap,
           contentPadding: _padding,

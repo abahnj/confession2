@@ -14,7 +14,8 @@ class SwitchThemeUseCase implements AsyncParamUseCase<SaveThemeParam> {
   final ThemeMapper _mapper;
 
   @override
-  Future<void> call(SaveThemeParam param) => _repository.saveThemeSettings(_mapper.toDomainModel(param.theme));
+  Future<void> call(SaveThemeParam param) =>
+      _repository.saveThemeSettings(_mapper.toDomainModel(param.theme));
 }
 
 class SaveThemeParam extends Param {

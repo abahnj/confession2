@@ -7,7 +7,8 @@ abstract class ViewDataMapper<V extends ViewData, M extends DomainModel> {
   M toDomainModel(V viewData);
 }
 
-abstract class ViewDataTableMapper<V extends ViewData, M extends DataClass, I extends Insertable<M>> {
+abstract class ViewDataTableMapper<V extends ViewData, M extends DataClass,
+    I extends Insertable<M>> {
   V toViewData(M model);
   I toInsertable(V viewData);
 }

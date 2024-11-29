@@ -11,10 +11,12 @@ class CommandmentsRepositoryImpl extends CommandmentsRepository {
 
   final CommandmentsDao _commandmentsDao;
   @override
-  Future<CommandmentsTableData> getCommandmentById(int id) => _commandmentsDao.getCommandmentById(id);
+  Future<CommandmentsTableData> getCommandmentById(int id) =>
+      _commandmentsDao.getCommandmentById(id);
 
   @override
-  Future<List<CommandmentsTableData>> getCommandmentsForUser(UserDomainModel user) {
+  Future<List<CommandmentsTableData>> getCommandmentsForUser(
+      UserDomainModel user,) {
     if (user.vocation == Vocation.religious) {
       return _commandmentsDao.getCommandmentsForReligious();
     } else if (user.age == Age.child) {

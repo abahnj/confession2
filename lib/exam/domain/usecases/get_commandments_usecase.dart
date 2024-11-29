@@ -5,8 +5,11 @@ import 'package:confession/exam/data/mappers/examination_mapper.dart';
 import 'package:confession/exam/domain/entities/commandment.dart';
 import 'package:confession/exam/domain/repositories/commandments_repository.dart';
 
-class GetCommandmentsUsecase extends AsyncViewDataParamUseCase<CommandmentList, GetCommandmentsParam> {
-  GetCommandmentsUsecase({required CommandmentsRepository repository, required CommandmentsMapper commandmentsMapper})
+class GetCommandmentsUsecase
+    extends AsyncViewDataParamUseCase<CommandmentList, GetCommandmentsParam> {
+  GetCommandmentsUsecase(
+      {required CommandmentsRepository repository,
+      required CommandmentsMapper commandmentsMapper,})
       : _repository = repository,
         _mapper = commandmentsMapper;
 
@@ -17,7 +20,11 @@ class GetCommandmentsUsecase extends AsyncViewDataParamUseCase<CommandmentList, 
   Future<CommandmentList> call(GetCommandmentsParam param) async {
     final user = param.user;
     final commandments = await _repository.getCommandmentsForUser(
-      UserDomainModel(vocation: user.vocation, age: user.age, gender: user.gender, lastConfession: user.lastConfession),
+      UserDomainModel(
+          vocation: user.vocation,
+          age: user.age,
+          gender: user.gender,
+          lastConfession: user.lastConfession,),
     );
 
     return CommandmentList(data: commandments.map(_mapper.toViewData).toList());

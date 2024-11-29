@@ -36,10 +36,13 @@ void main() {
   });
 
   group('GetThemeUseCase', () {
-    test('should get theme settings from repository and map to AppThemeMode', () async {
+    test('should get theme settings from repository and map to AppThemeMode',
+        () async {
       // Arrange
-      when(() => mockRepository.getThemeSettings()).thenAnswer((_) async => testThemeDomainModel);
-      when(() => mockMapper.toViewData(testThemeDomainModel)).thenReturn(testAppThemeMode);
+      when(() => mockRepository.getThemeSettings())
+          .thenAnswer((_) async => testThemeDomainModel);
+      when(() => mockMapper.toViewData(testThemeDomainModel))
+          .thenReturn(testAppThemeMode);
 
       // Act
       final result = await useCase(const NoParams());
@@ -67,7 +70,8 @@ void main() {
     test('should propagate mapper exceptions', () async {
       // Arrange
       final exception = Exception('Mapping error');
-      when(() => mockRepository.getThemeSettings()).thenAnswer((_) async => testThemeDomainModel);
+      when(() => mockRepository.getThemeSettings())
+          .thenAnswer((_) async => testThemeDomainModel);
       when(() => mockMapper.toViewData(any())).thenThrow(exception);
 
       // Act & Assert
@@ -82,7 +86,8 @@ void main() {
       test('should create use case with provided dependencies', () {
         // Assert
         expect(useCase, isNotNull);
-        expect(useCase, isA<AsyncViewDataParamUseCase<AppThemeMode, NoParams>>());
+        expect(
+            useCase, isA<AsyncViewDataParamUseCase<AppThemeMode, NoParams>>(),);
       });
     });
 
@@ -91,8 +96,10 @@ void main() {
       const emptyThemeModel = ThemeDomainModel.empty();
       const defaultThemeMode = AppThemeMode(themeMode: ThemeMode.system);
 
-      when(() => mockRepository.getThemeSettings()).thenAnswer((_) async => emptyThemeModel);
-      when(() => mockMapper.toViewData(emptyThemeModel)).thenReturn(defaultThemeMode);
+      when(() => mockRepository.getThemeSettings())
+          .thenAnswer((_) async => emptyThemeModel);
+      when(() => mockMapper.toViewData(emptyThemeModel))
+          .thenReturn(defaultThemeMode);
 
       // Act
       final result = await useCase(const NoParams());

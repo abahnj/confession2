@@ -4,7 +4,8 @@ import 'package:confession/exam/domain/entities/commandment.dart';
 import 'package:confession/exam/domain/entities/examination.dart';
 import 'package:drift/drift.dart';
 
-class ExaminationMapper extends ViewDataTableMapper<Examination, ExaminationsTableData, ExaminationsTableCompanion> {
+class ExaminationMapper extends ViewDataTableMapper<Examination,
+    ExaminationsTableData, ExaminationsTableCompanion> {
   @override
   Examination toViewData(ExaminationsTableData model) => Examination(
         id: model.id,
@@ -13,14 +14,16 @@ class ExaminationMapper extends ViewDataTableMapper<Examination, ExaminationsTab
       );
 
   @override
-  ExaminationsTableCompanion toInsertable(Examination viewData) => ExaminationsTableCompanion(
+  ExaminationsTableCompanion toInsertable(Examination viewData) =>
+      ExaminationsTableCompanion(
         id: Value(viewData.id),
         description: Value(viewData.examinationText),
         count: Value(viewData.count),
       );
 }
 
-class CommandmentsMapper extends ViewDataTableMapper<Commandment, CommandmentsTableData, CommandmentsTableCompanion> {
+class CommandmentsMapper extends ViewDataTableMapper<Commandment,
+    CommandmentsTableData, CommandmentsTableCompanion> {
   @override
   Commandment toViewData(CommandmentsTableData model) => Commandment(
         id: model.id,
@@ -29,7 +32,8 @@ class CommandmentsMapper extends ViewDataTableMapper<Commandment, CommandmentsTa
       );
 
   @override
-  CommandmentsTableCompanion toInsertable(Commandment viewData) => CommandmentsTableCompanion(
+  CommandmentsTableCompanion toInsertable(Commandment viewData) =>
+      CommandmentsTableCompanion(
         id: Value(viewData.id),
         commandment: Value(viewData.commandmentText),
       );

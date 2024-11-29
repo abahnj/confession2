@@ -17,9 +17,11 @@ class ExaminationRepositoryImpl extends ExaminationRepository {
         Age.child => _examinationsDao.getChildFilter(),
       };
 
-  ExaminationFilter _getCommandmentFilter(int commandmentId) => _examinationsDao.getCommandmentFilter(commandmentId);
+  ExaminationFilter _getCommandmentFilter(int commandmentId) =>
+      _examinationsDao.getCommandmentFilter(commandmentId);
 
-  ExaminationFilter _getVocationFilter(UserDomainModel user) => switch (user.vocation) {
+  ExaminationFilter _getVocationFilter(UserDomainModel user) =>
+      switch (user.vocation) {
         Vocation.priest => _examinationsDao.getPriestFilter(),
         Vocation.religious => _examinationsDao.getReligiousFilter(),
         Vocation.married => _examinationsDao.getMarriedFilter(),
@@ -27,13 +29,16 @@ class ExaminationRepositoryImpl extends ExaminationRepository {
       };
 
   @override
-  Future<void> resetAllExaminationsCount() => _examinationsDao.resetExaminationsCount();
+  Future<void> resetAllExaminationsCount() =>
+      _examinationsDao.resetExaminationsCount();
 
   @override
-  Future<void> resetExaminationCount(int examinationId) => _examinationsDao.resetExaminationCount(examinationId);
+  Future<void> resetExaminationCount(int examinationId) =>
+      _examinationsDao.resetExaminationCount(examinationId);
 
   @override
-  Future<int> updateExamination(ExaminationsTableData examination) => _examinationsDao.updateExamination(examination);
+  Future<int> updateExamination(ExaminationsTableCompanion examination) =>
+      _examinationsDao.updateExamination(examination);
 
   @override
   Stream<List<ExaminationsTableData>> watchExaminationForUserAndCommandment({

@@ -16,7 +16,8 @@ class PrayersDao extends DatabaseAccessor<AppDatabase> with _$PrayersDaoMixin {
       (select(prayersTable)..where((tbl) => tbl.id.equals(id))).getSingle();
 
   Future<InspirationsTableData> getInspirationForId(int id) =>
-      (select(inspirationsTable)..where((tbl) => tbl.id.equals(id))).getSingle();
+      (select(inspirationsTable)..where((tbl) => tbl.id.equals(id)))
+          .getSingle();
 
   Future<List<PrayersTableData>> searchPrayers(String query) {
     final searchTerm = '%${query.toLowerCase()}%';
@@ -33,7 +34,9 @@ class PrayersDao extends DatabaseAccessor<AppDatabase> with _$PrayersDaoMixin {
   Future<int> _getInspirationCount() async {
     final countExp = inspirationsTable.id.count();
 
-    return await (selectOnly(inspirationsTable)..addColumns([countExp])).map((row) => row.read(countExp)).getSingle() ??
+    return await (selectOnly(inspirationsTable)..addColumns([countExp]))
+            .map((row) => row.read(countExp))
+            .getSingle() ??
         0;
   }
 
@@ -50,6 +53,7 @@ class PrayersDao extends DatabaseAccessor<AppDatabase> with _$PrayersDaoMixin {
     final offset = random.nextInt(count);
 
     // Get random inspiration
-    return (select(inspirationsTable)..limit(1, offset: offset)).getSingleOrNull();
+    return (select(inspirationsTable)..limit(1, offset: offset))
+        .getSingleOrNull();
   }
 }

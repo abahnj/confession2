@@ -23,14 +23,15 @@ abstract class AsyncViewDataUseCase<Type extends ViewData> {
   Future<Type> call();
 }
 
-abstract class AsyncViewDataParamUseCase<Type extends ViewData, ParamType extends Param> {
+abstract class AsyncViewDataParamUseCase<Type extends ViewData,
+    ParamType extends Param> {
   Future<Type> call(ParamType param);
 }
 
-abstract class StreamViewDataParamUseCase<Type extends ViewData, ParamType extends Param> {
+abstract class StreamViewDataParamUseCase<Type extends ViewData,
+    ParamType extends Param> {
   Stream<Type> call(ParamType param);
 }
-
 
 abstract class Param extends Equatable {
   const Param();

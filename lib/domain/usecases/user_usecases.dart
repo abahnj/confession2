@@ -32,11 +32,13 @@ class SaveUserUseCase implements AsyncParamUseCase<SaveUserParam> {
   final UserMapper _mapper;
 
   @override
-  Future<void> call(SaveUserParam param) => _repository.saveUser(_mapper.toDomainModel(param.user));
+  Future<void> call(SaveUserParam param) =>
+      _repository.saveUser(_mapper.toDomainModel(param.user));
 }
 
 class DeleteUserUseCase implements AsyncUseCase {
-  const DeleteUserUseCase({required UserRepository userRepository}) : _repository = userRepository;
+  const DeleteUserUseCase({required UserRepository userRepository})
+      : _repository = userRepository;
   final UserRepository _repository;
 
   @override

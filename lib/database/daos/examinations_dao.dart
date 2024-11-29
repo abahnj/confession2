@@ -51,23 +51,29 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase> with _$ExaminationsD
       };
 
   // Query execution methods
-  Future<List<ExaminationsTableData>> getExaminations(List<ExaminationFilter> filters) {
+  Future<List<ExaminationsTableData>> getExaminations(
+    List<ExaminationFilter> filters,
+  ) {
     return (_baseQuery()..where((table) => _combineFilters(filters)(table))).get();
   }
 
-  Stream<List<ExaminationsTableData>> watchExaminations(List<ExaminationFilter> filters) {
+  Stream<List<ExaminationsTableData>> watchExaminations(
+    List<ExaminationFilter> filters,
+  ) {
     return (_baseQuery()..where((table) => _combineFilters(filters)(table))).watch();
   }
 
-  Future<int> updateExamination(ExaminationsTableData examination) {
-    return transaction(() async {
-      return into(examinationsTable).insertOnConflictUpdate(examination);
-    });
+  Future<int> updateExamination(ExaminationsTableCompanion examination) {
+    final id = examination.id.value;
+
+    return (update(examinationsTable)..where((tbl) => tbl.id.equals(id))).write(examination);
   }
 
-  Future<int> resetExaminationsCount() async =>
-      (update(examinationsTable)..where((tbl) => tbl.count.isBiggerThanValue(_activeExaminationThreshold)))
-          .write(const ExaminationsTableCompanion(count: Value(0)));
+  Future<int> resetExaminationsCount() async => (update(examinationsTable)
+        ..where(
+          (tbl) => tbl.count.isBiggerThanValue(_activeExaminationThreshold),
+        ))
+      .write(const ExaminationsTableCompanion(count: Value(0)));
 
   Future<int> resetExaminationCount(int examinationId) async =>
       (update(examinationsTable)..where((tbl) => tbl.id.equals(examinationId)))

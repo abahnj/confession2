@@ -9,8 +9,10 @@ class PrayersRepositoryImpl extends PrayersRepository {
 
   final PrayersDao _prayersDao;
   @override
-  Future<InspirationsTableData?> getRandomInspiration() async => _prayersDao.getRandomInspiration();
+  Future<InspirationsTableData?> getRandomInspiration() async =>
+      _prayersDao.getRandomInspiration();
 
   @override
-  Future<List<PrayersTableData>> getPrayers() async => _prayersDao.getAllPrayers();
+  Future<List<PrayersTableData>> getPrayers() async =>
+      _prayersDao.getAllPrayers();
 }

@@ -21,10 +21,14 @@ class CommandmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CommandmentsBloc(getCommandmentsUsecase: sl())
-        ..add(BlocEvent(argument: GetCommandmentsParam(user: context.read<UserBloc>().state))),
+        ..add(BlocEvent(
+            argument:
+                GetCommandmentsParam(user: context.read<UserBloc>().state),),),
       child: BlocListener<UserBloc, User>(
         listener: (context, state) {
-          context.read<CommandmentsBloc>().add(BlocEvent(argument: GetCommandmentsParam(user: state)));
+          context
+              .read<CommandmentsBloc>()
+              .add(BlocEvent(argument: GetCommandmentsParam(user: state)));
         },
         child: const CommandmentsConsumer(),
       ),
@@ -43,7 +47,8 @@ class CommandmentsConsumer extends StatelessWidget {
         child: BlocBuilder<CommandmentsBloc, BlocState<CommandmentList>>(
           builder: (context, state) => state.mapOrElse(
             orElse: () => const CommandmentsLoadingView(),
-            success: (commandments) => CommandmentsLoadedView(commandmentsList: commandments),
+            success: (commandments) =>
+                CommandmentsLoadedView(commandmentsList: commandments),
             error: () => const CommandmentsErrorView(),
           ),
         ),
@@ -70,9 +75,12 @@ class CommandmentsLoadedView extends StatelessWidget {
           (commandment) => ConfessionListTile(
             title: commandment.commandment,
             onTap: () {
-              context.pushRoute(ExaminationRoute(commandmentId: commandment.id));
+              context
+                  .pushRoute(ExaminationRoute(commandmentId: commandment.id));
             },
-            subtitle: commandment.commandmentText.isNotEmpty ? commandment.commandmentText : null,
+            subtitle: commandment.commandmentText.isNotEmpty
+                ? commandment.commandmentText
+                : null,
           ),
         ),
         const SizedBox(height: 16),

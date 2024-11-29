@@ -4,7 +4,8 @@ import 'package:confession/prayers/domain/entities/inspiration.dart';
 import 'package:confession/prayers/domain/entities/prayer.dart';
 import 'package:drift/drift.dart';
 
-class PrayersMapper extends ViewDataTableMapper<Prayer, PrayersTableData, PrayersTableCompanion> {
+class PrayersMapper extends ViewDataTableMapper<Prayer, PrayersTableData,
+    PrayersTableCompanion> {
   @override
   Prayer toViewData(PrayersTableData model) => Prayer(
         prayerName: model.prayerName,
@@ -18,7 +19,8 @@ class PrayersMapper extends ViewDataTableMapper<Prayer, PrayersTableData, Prayer
       );
 }
 
-class InspirationsMapper extends ViewDataTableMapper<Inspiration, InspirationsTableData, InspirationsTableCompanion> {
+class InspirationsMapper extends ViewDataTableMapper<Inspiration,
+    InspirationsTableData, InspirationsTableCompanion> {
   @override
   Inspiration toViewData(InspirationsTableData model) => Inspiration(
         author: model.author,
@@ -26,7 +28,8 @@ class InspirationsMapper extends ViewDataTableMapper<Inspiration, InspirationsTa
       );
 
   @override
-  InspirationsTableCompanion toInsertable(Inspiration viewData) => InspirationsTableCompanion(
+  InspirationsTableCompanion toInsertable(Inspiration viewData) =>
+      InspirationsTableCompanion(
         author: Value(viewData.author),
         quote: Value(viewData.quote),
       );

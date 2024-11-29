@@ -16,3 +16,12 @@ class EmptyViewData extends ViewData {
   @override
   List<Object> get props => [];
 }
+
+class PrimitiveViewData<T extends Object> extends ViewData {
+  const PrimitiveViewData({required this.data});
+
+  final T data;
+
+  @override
+  List<Object> get props => [data];
+}

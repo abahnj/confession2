@@ -23,7 +23,8 @@ class GuideDetailListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GuidesBloc(getGuidesUsecase: sl())..add(BlocEvent(argument: GuideParam(id: guideId))),
+      create: (context) => GuidesBloc(getGuidesUsecase: sl())
+        ..add(BlocEvent(argument: GuideParam(id: guideId))),
       child: const GuideDetailListConsumer(),
     );
   }

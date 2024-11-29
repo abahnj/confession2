@@ -11,6 +11,18 @@ class Examination extends ViewData {
   final String examinationText;
   final int count;
 
+  Examination copyWith({
+    int? id,
+    String? examinationText,
+    int? count,
+  }) {
+    return Examination(
+      id: id ?? this.id,
+      examinationText: examinationText ?? this.examinationText,
+      count: count ?? this.count,
+    );
+  }
+
   @override
   List<Object> get props => [examinationText, count, id];
 }

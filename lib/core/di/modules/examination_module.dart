@@ -8,6 +8,7 @@ import 'package:confession/exam/domain/repositories/commandments_repository.dart
 import 'package:confession/exam/domain/repositories/examination_repository.dart';
 import 'package:confession/exam/domain/usecases/get_commandments_usecase.dart';
 import 'package:confession/exam/domain/usecases/get_examinations_usecase.dart';
+import 'package:confession/exam/domain/usecases/update_examination_usecase.dart';
 
 class ExaminationModule extends Module {
   @override
@@ -27,7 +28,11 @@ class ExaminationModule extends Module {
       )
       ..registerCachedFactory(CommandmentsMapper.new)
       ..registerCachedFactory(ExaminationMapper.new)
-      ..registerCachedFactory(() => GetCommandmentsUsecase(repository: sl(), commandmentsMapper: sl()))
-      ..registerCachedFactory(() => GetExaminationsUsecase(repository: sl(), examinationsMapper: sl()));
+      ..registerCachedFactory(() =>
+          GetCommandmentsUsecase(repository: sl(), commandmentsMapper: sl()),)
+      ..registerCachedFactory(() =>
+          GetExaminationsUsecase(repository: sl(), examinationsMapper: sl()),)
+      ..registerCachedFactory(() =>
+          UpdateExaminationUsecase(repository: sl(), examinationsMapper: sl()),);
   }
 }

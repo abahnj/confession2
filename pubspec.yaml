@@ -33,6 +33,7 @@ dependencies:
   path_provider: ^2.1.5
   shared_preferences: ^2.3.3
 
+ # vector_graphics: any
 dev_dependencies:
   auto_route_generator: ^9.0.0
   bloc_test: ^9.1.7

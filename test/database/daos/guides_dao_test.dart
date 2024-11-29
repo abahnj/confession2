@@ -50,7 +50,8 @@ void main() {
 
       // Act
       await Future.wait(
-        testGuides.map((guide) => database.into(database.guidesTable).insert(guide)),
+        testGuides
+            .map((guide) => database.into(database.guidesTable).insert(guide)),
       );
       final results = await dao.getAllGuides();
 
@@ -75,7 +76,8 @@ void main() {
 
       // Act
       await Future.wait(
-        testGuides.map((guide) => database.into(database.guidesTable).insert(guide)),
+        testGuides
+            .map((guide) => database.into(database.guidesTable).insert(guide)),
       );
       final results = await dao.getAllGuides();
 
@@ -116,7 +118,8 @@ void main() {
       ];
 
       await Future.wait(
-        testGuides.map((guide) => database.into(database.guidesTable).insert(guide)),
+        testGuides
+            .map((guide) => database.into(database.guidesTable).insert(guide)),
       );
 
       // Act
@@ -169,7 +172,8 @@ void main() {
       ];
 
       await Future.wait(
-        testGuides.map((guide) => database.into(database.guidesTable).insert(guide)),
+        testGuides
+            .map((guide) => database.into(database.guidesTable).insert(guide)),
       );
 
       // Act
@@ -199,7 +203,8 @@ void main() {
 
       // Act
       await Future.wait(
-        testGuides.map((guide) => database.into(database.guidesTable).insert(guide)),
+        testGuides
+            .map((guide) => database.into(database.guidesTable).insert(guide)),
       );
 
       final allGuides = await dao.getAllGuides();
