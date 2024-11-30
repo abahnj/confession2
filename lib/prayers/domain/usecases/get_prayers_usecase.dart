@@ -4,10 +4,10 @@ import 'package:confession/prayers/domain/entities/prayer.dart';
 import 'package:confession/prayers/domain/repositories/prayers_repository.dart';
 
 class GetPrayersUsecase extends AsyncViewDataUseCase<PrayerList> {
-  GetPrayersUsecase(
-      {required PrayersRepository repository,
-      required PrayersMapper prayersMapper,})
-      : _repository = repository,
+  GetPrayersUsecase({
+    required PrayersRepository repository,
+    required PrayersMapper prayersMapper,
+  })  : _repository = repository,
         _mapper = prayersMapper;
 
   final PrayersRepository _repository;

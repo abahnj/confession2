@@ -7,15 +7,16 @@ import 'package:confession/core/di/service_locator.dart';
 import 'package:confession/exam/domain/entities/commandment.dart';
 import 'package:confession/exam/domain/entities/examination.dart';
 import 'package:confession/exam/domain/usecases/get_examinations_usecase.dart';
-import 'package:confession/exam/domain/usecases/update_examination_usecase.dart';
 import 'package:confession/exam/presentation/bloc/examinations_bloc.dart';
 import 'package:confession/exam/presentation/bloc/update_examination_bloc.dart';
+import 'package:confession/l10n/l10n.dart';
 import 'package:confession/presentation/bloc/user/user_bloc.dart';
+import 'package:confession/shared/utils.dart';
 import 'package:confession/shared/widgets/confession_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum MenuOptions { edit, delete, decrement, resetCount }
+enum MenuOptions { edit, delete, decrement, resetCount, resetText }
 
 class KeepAliveExaminationPage extends StatefulWidget {
   const KeepAliveExaminationPage({
@@ -26,10 +27,12 @@ class KeepAliveExaminationPage extends StatefulWidget {
   final Commandment commandment;
 
   @override
-  State<KeepAliveExaminationPage> createState() => _KeepAliveExaminationPageState();
+  State<KeepAliveExaminationPage> createState() =>
+      _KeepAliveExaminationPageState();
 }
 
-class _KeepAliveExaminationPageState extends State<KeepAliveExaminationPage> with AutomaticKeepAliveClientMixin {
+class _KeepAliveExaminationPageState extends State<KeepAliveExaminationPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -54,7 +57,8 @@ class _KeepAliveExaminationPageState extends State<KeepAliveExaminationPage> wit
             child: BlocBuilder<ExaminationsBloc, BlocState<ExaminationsList>>(
               builder: (context, state) => state.mapOrElse(
                 orElse: () => const ExaminationsLoadingView(),
-                success: (examinations) => ExaminationList(examinationsList: examinations),
+                success: (examinations) =>
+                    ExaminationList(examinationsList: examinations),
                 error: () => const ExaminationsErrorView(),
               ),
             ),
@@ -98,8 +102,163 @@ class ExaminationList extends StatelessWidget {
 
   final ExaminationsList examinationsList;
 
-  Future<MenuOptions?> _showPopupMenu(BuildContext context, LongPressStartDetails details) async {
-    final overlay = Overlay.of(context).context.findRenderObject()! as RenderBox;
+  Future<void> _showDeletedSnackbar({
+    required BuildContext context,
+    required String message,
+    required Examination examination,
+  }) async {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+        action: SnackBarAction(
+          label: context.l10n.snackbarActionUndo,
+          backgroundColor: context.colorScheme.secondary,
+          onPressed: () {
+            context.read<UpdateExaminationBloc>().add(
+                  BlocEvent(
+                    argument:
+                        DeleteExamination(examination: examination, undo: true),
+                  ),
+                );
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        ),
+      ),
+    );
+  }
+
+  Future<void> _handleMenuSelection(
+    BuildContext context,
+    MenuOptions? selected,
+    Examination examination,
+  ) async {
+    if (!context.mounted) return;
+
+    final bloc = context.read<UpdateExaminationBloc>();
+
+    if (selected == null) return;
+
+    switch (selected) {
+      case MenuOptions.decrement:
+        bloc.add(
+          BlocEvent(
+            argument: UpdateCount(
+              examination: examination.copyWith(
+                count: max(0, examination.count - 1),
+              ),
+            ),
+          ),
+        );
+      case MenuOptions.edit:
+        await _showEditDialog(context, examination);
+      case MenuOptions.delete:
+        await _showDeleteConfirmation(context, examination);
+      case MenuOptions.resetCount:
+        bloc.add(
+          BlocEvent(
+            argument: UpdateCount(examination: examination.copyWith(count: 0)),
+          ),
+        );
+      case MenuOptions.resetText:
+        bloc.add(
+          BlocEvent(
+            argument: ResetText(examination: examination),
+          ),
+        );
+    }
+  }
+
+  Future<void> _showEditDialog(
+      BuildContext context, Examination examination,) async {
+    final controller = TextEditingController(text: examination.examinationText);
+
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.l10n.examinationPopupMenuEdit),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            labelText: context.l10n.examinationPopupMenuEditLabel,
+            hintText: context.l10n.examinationPopupMenuEditHint,
+          ),
+          maxLines: null,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              context.l10n.examinationPopupMenuEditCancel,
+              style: TextStyle(color: context.colorScheme.onSurfaceVariant),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, controller.text),
+            child: Text(context.l10n.examinationPopupMenuEditSave),
+          ),
+        ],
+      ),
+    );
+
+    if (result != null &&
+        context.mounted &&
+        result != examination.examinationText) {
+      context.read<UpdateExaminationBloc>().add(
+            BlocEvent(
+              argument: EditExamination(
+                examination: examination.copyWith(examinationText: result),
+              ),
+            ),
+          );
+    }
+  }
+
+  Future<void> _showDeleteConfirmation(
+      BuildContext context, Examination examination,) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.l10n.examinationPopupMenuDeleteConfirmationTitle),
+        content:
+            Text(context.l10n.examinationPopupMenuDeleteConfirmationContent),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.l10n.confirmationActionNo),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(context.l10n.confirmationActionYes),
+          ),
+        ],
+      ),
+    );
+
+    if ((confirmed ?? false) && context.mounted) {
+      log('Deleting examination: $examination');
+
+      context.read<UpdateExaminationBloc>().add(
+            BlocEvent(
+              argument: DeleteExamination(examination: examination),
+            ),
+          );
+
+      await _showDeletedSnackbar(
+        context: context,
+        message: context.l10n.examinationPopupMenuDeleteConfirmationSnackbar,
+        examination: examination,
+      );
+    }
+  }
+
+  Future<MenuOptions?> _showPopupMenu({
+    required BuildContext context,
+    required LongPressStartDetails details,
+    required bool isCustom,
+  }) async {
+    final overlay =
+        Overlay.of(context).context.findRenderObject()! as RenderBox;
 
     return showMenu<MenuOptions?>(
       context: context,
@@ -110,21 +269,39 @@ class ExaminationList extends StatelessWidget {
         overlay.size.height - details.globalPosition.dy,
       ),
       items: <PopupMenuEntry<MenuOptions>>[
-        const PopupMenuItem<MenuOptions>(
+        PopupMenuItem<MenuOptions>(
           value: MenuOptions.decrement,
-          child: Text('decrementText'),
+          child: ListTile(
+            title: Text(context.l10n.examinationPopupMenuDecrement),
+            leading: const Icon(Icons.remove),
+          ),
         ),
-        const PopupMenuItem<MenuOptions>(
+        PopupMenuItem<MenuOptions>(
           value: MenuOptions.edit,
-          child: Text('editText'),
+          child: ListTile(
+            title: Text(context.l10n.examinationPopupMenuEdit),
+            leading: const Icon(Icons.edit),
+          ),
         ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.delete,
-          child: Text('deleteText'),
-        ),
-        const PopupMenuItem<MenuOptions>(
+        PopupMenuItem<MenuOptions>(
           value: MenuOptions.resetCount,
-          child: Text('resetText'),
+          child: ListTile(
+            title: Text(context.l10n.examinationPopupMenuResetCount),
+            leading: const Icon(Icons.refresh),
+          ),
+        ),
+        if (isCustom)
+          PopupMenuItem<MenuOptions>(
+            value: MenuOptions.resetText,
+            child: ListTile(
+                title: Text(context.l10n.examinationPopupMenuResetText),
+                leading: const Icon(Icons.refresh),),
+          ),
+        PopupMenuItem<MenuOptions>(
+          value: MenuOptions.delete,
+          child: ListTile(
+              title: Text(context.l10n.examinationPopupMenuDelete),
+              leading: const Icon(Icons.delete),),
         ),
       ],
     );
@@ -142,40 +319,23 @@ class ExaminationList extends StatelessWidget {
             examination.count.toString(),
             style: Theme.of(context).textTheme.titleLarge,
           ),
+          isCustom: examination.isCustom,
           onTap: () => context.read<UpdateExaminationBloc>().add(
                 BlocEvent(
-                  argument: UpdateExaminationParam(
-                    examination: examination.copyWith(count: examination.count + 1),
+                  argument: UpdateCount(
+                    examination:
+                        examination.copyWith(count: examination.count + 1),
                   ),
                 ),
               ),
           onLongPress: (details) async {
-            final selected = await _showPopupMenu(context, details);
+            final selected = await _showPopupMenu(
+              context: context,
+              details: details,
+              isCustom: examination.isCustom,
+            );
             if (context.mounted) {
-              switch (selected) {
-                case MenuOptions.decrement:
-                  context.read<UpdateExaminationBloc>().add(
-                        BlocEvent(
-                          argument: UpdateExaminationParam(
-                            examination: examination.copyWith(count: max(0, examination.count - 1)),
-                          ),
-                        ),
-                      );
-                case MenuOptions.edit:
-                  log('Edit');
-                case MenuOptions.delete:
-                  log('Delete');
-                case MenuOptions.resetCount:
-                  context.read<UpdateExaminationBloc>().add(
-                        BlocEvent(
-                          argument: UpdateExaminationParam(
-                            examination: examination.copyWith(count: 0),
-                          ),
-                        ),
-                      );
-                case _:
-                  log('No action');
-              }
+              await _handleMenuSelection(context, selected, examination);
             }
           },
         );

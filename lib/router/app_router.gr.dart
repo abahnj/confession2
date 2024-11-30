@@ -13,7 +13,6 @@ import 'package:confession/confession/confession_page.dart' as _i2;
 import 'package:confession/exam/presentation/ui/commandments_page.dart' as _i1;
 import 'package:confession/exam/presentation/ui/examination_page/examination_page.dart'
     as _i3;
-import 'package:confession/exam/presentation/ui/prayers_page.dart' as _i8;
 import 'package:confession/guide/domain/entities/guide.dart' as _i13;
 import 'package:confession/guide/presentation/ui/details_page/guide_detail_list.dart'
     as _i4;
@@ -23,6 +22,7 @@ import 'package:confession/guide/presentation/ui/guide_page.dart' as _i6;
 import 'package:confession/prayers/domain/entities/prayer.dart' as _i14;
 import 'package:confession/prayers/presentation/ui/details_page/prayer_details_page.dart'
     as _i7;
+import 'package:confession/prayers/presentation/ui/prayers_page.dart' as _i8;
 import 'package:confession/settings/settings_page.dart' as _i9;
 import 'package:confession/shell/shell_page.dart' as _i10;
 import 'package:flutter/material.dart' as _i12;

@@ -13,7 +13,8 @@ class CommandmentsDao extends DatabaseAccessor<AppDatabase>
       select(commandmentsTable).get();
 
   Future<int> insertCommandment(
-          Insertable<CommandmentsTableData> commandment,) =>
+    Insertable<CommandmentsTableData> commandment,
+  ) =>
       into(commandmentsTable).insert(commandment);
 
   Future<List<CommandmentsTableData>> getCommandmentsForChildren() =>

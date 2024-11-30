@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:confession/core/di/service_locator.dart';
+import 'package:confession/database/daos/daos.dart';
 import 'package:confession/l10n/l10n.dart';
 import 'package:confession/settings/widgets/app_theme_dialog.dart';
 import 'package:confession/settings/widgets/profile_view.dart';
@@ -86,9 +88,41 @@ class SettingsPage extends StatelessWidget {
                     onTap: () => _showSnackBar(context),
                   ),
                   ListTile(
-                    title:
-                        Text('Reset App', style: context.textTheme.titleMedium),
-                    onTap: () => _showSnackBar(context),
+                    title: Text('Restore Deleted Examinations',
+                        style: context.textTheme.titleMedium,),
+                    onTap: () => _showDialog(
+                      context,
+                      AlertDialog(
+                        title: const Text('Reset Examinations'),
+                        content: const Text(
+                          'Are you sure you want to restore all deleted examinations?',
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => context.maybePop(),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              final count = await sl
+                                  .get<ExaminationsDao>()
+                                  .restoreDeletedExaminations();
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content:
+                                        Text('Restored $count examinations'),
+                                    duration: const Duration(seconds: 2),
+                                  ),
+                                );
+                                await context.maybePop();
+                              }
+                            },
+                            child: const Text('Restore'),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),

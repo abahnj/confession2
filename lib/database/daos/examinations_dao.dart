@@ -11,13 +11,15 @@ extension ExaminationQueryExtension on Expression<bool> {
 }
 
 @DriftAccessor(tables: [ExaminationsTable])
-class ExaminationsDao extends DatabaseAccessor<AppDatabase> with _$ExaminationsDaoMixin {
+class ExaminationsDao extends DatabaseAccessor<AppDatabase>
+    with _$ExaminationsDaoMixin {
   ExaminationsDao(super.db);
 
   static const _activeExaminationThreshold = 0;
 
   // Base query
-  SimpleSelectStatement<ExaminationsTable, ExaminationsTableData> _baseQuery() => select(examinationsTable);
+  SimpleSelectStatement<ExaminationsTable, ExaminationsTableData>
+      _baseQuery() => select(examinationsTable);
 
   // Filter expressions
   ExaminationFilter getTeenFilter() => (table) => table.teen.equals(true);
@@ -36,38 +38,97 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase> with _$ExaminationsD
 
   ExaminationFilter getPriestFilter() => (table) => table.priest.equals(true);
 
-  ExaminationFilter getReligiousFilter() => (table) => table.religious.equals(true);
+  ExaminationFilter getReligiousFilter() =>
+      (table) => table.religious.equals(true);
 
-  ExaminationFilter getCommandmentFilter(int commandmentId) => (table) => table.commandmentId.equals(commandmentId);
+  ExaminationFilter isNotDeleted() => (table) => table.isDeleted.isNull();
+
+  ExaminationFilter getCommandmentFilter(int commandmentId) =>
+      (table) => table.commandmentId.equals(commandmentId);
 
   // Filter combination
-  ExaminationFilter _combineFilters(List<ExaminationFilter> filters) => (table) => switch (filters.length) {
-        0 => const Constant(true),
-        1 => filters.first(table),
-        _ => filters.fold(
-            filters.first(table),
-            (acc, filter) => acc.and(filter(table)),
-          ),
-      };
+  ExaminationFilter _combineFilters(List<ExaminationFilter> filters) =>
+      (table) => switch (filters.length) {
+            0 => const Constant(true),
+            1 => filters.first(table),
+            _ => filters.fold(
+                filters.first(table),
+                (acc, filter) => acc.and(filter(table)),
+              ),
+          };
 
   // Query execution methods
   Future<List<ExaminationsTableData>> getExaminations(
     List<ExaminationFilter> filters,
   ) {
-    return (_baseQuery()..where((table) => _combineFilters(filters)(table))).get();
+    return (_baseQuery()
+          ..where(
+              (table) => _combineFilters([isNotDeleted(), ...filters])(table),))
+        .get();
   }
 
   Stream<List<ExaminationsTableData>> watchExaminations(
     List<ExaminationFilter> filters,
   ) {
-    return (_baseQuery()..where((table) => _combineFilters(filters)(table))).watch();
+    return (_baseQuery()
+          ..where(
+              (table) => _combineFilters([isNotDeleted(), ...filters])(table),))
+        .watch();
   }
 
   Future<int> updateExamination(ExaminationsTableCompanion examination) {
     final id = examination.id.value;
 
-    return (update(examinationsTable)..where((tbl) => tbl.id.equals(id))).write(examination);
+    return (update(examinationsTable)..where((tbl) => tbl.id.equals(id)))
+        .write(examination);
   }
+
+  Future<int> deleteExamination(int examinationId) =>
+      (update(examinationsTable)..where((tbl) => tbl.id.equals(examinationId)))
+          .write(const ExaminationsTableCompanion(isDeleted: Value(true)));
+
+  Future<int> undoDeleteExamination(int examinationId) =>
+      (update(examinationsTable)..where((tbl) => tbl.id.equals(examinationId)))
+          .write(const ExaminationsTableCompanion(isDeleted: Value(null)));
+
+  Future<int> restoreDeletedExaminations() =>
+      (update(examinationsTable)..where((tbl) => tbl.isDeleted.equals(true)))
+          .write(const ExaminationsTableCompanion(isDeleted: Value(null)));
+
+  Future<int> incrementExaminationCount(int examinationId) async {
+    return (update(examinationsTable)
+          ..where((tbl) => tbl.id.equals(examinationId)))
+        .write(
+      ExaminationsTableCompanion.custom(
+          count: examinationsTable.count + const Constant(1),),
+    );
+  }
+
+  Future<int> saveDefaultExaminationText(int examinationId) async =>
+      (update(examinationsTable)
+            ..where(
+                (tbl) => tbl.id.equals(examinationId) & tbl.customId.isNull(),))
+          .write(
+        ExaminationsTableCompanion.custom(
+          customId: examinationsTable.description,
+        ),
+      );
+
+  Future<int> resetExaminationText(int examinationId) async =>
+      transaction(() async {
+        await (update(examinationsTable)
+              ..where((tbl) => tbl.id.equals(examinationId)))
+            .write(
+          ExaminationsTableCompanion.custom(
+              description: examinationsTable.customId,),
+        );
+
+        return (update(examinationsTable)
+              ..where((tbl) => tbl.id.equals(examinationId)))
+            .write(
+          const ExaminationsTableCompanion(customId: Value(null)),
+        );
+      });
 
   Future<int> resetExaminationsCount() async => (update(examinationsTable)
         ..where(

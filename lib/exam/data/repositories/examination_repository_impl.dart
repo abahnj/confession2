@@ -53,4 +53,23 @@ class ExaminationRepositoryImpl extends ExaminationRepository {
 
     return _examinationsDao.watchExaminations(filters);
   }
+
+  @override
+  Future<int> deleteExamination(
+          {required int examinationId, bool undo = false,}) =>
+      undo
+          ? _examinationsDao.undoDeleteExamination(examinationId)
+          : _examinationsDao.deleteExamination(examinationId);
+
+  @override
+  Future<int> incrementExaminationCount(int examinationId) =>
+      _examinationsDao.incrementExaminationCount(examinationId);
+
+  @override
+  Future<int> saveDefaultExaminationText(int examinationId) =>
+      _examinationsDao.saveDefaultExaminationText(examinationId);
+
+  @override
+  Future<int> resetExaminationText(int examinationId) =>
+      _examinationsDao.resetExaminationText(examinationId);
 }

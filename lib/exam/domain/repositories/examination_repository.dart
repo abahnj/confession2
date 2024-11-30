@@ -8,6 +8,15 @@ abstract class ExaminationRepository {
 
   Future<int> updateExamination(ExaminationsTableCompanion examination);
 
+  Future<int> saveDefaultExaminationText(int examinationId);
+
+  Future<int> resetExaminationText(int examinationId);
+
+  Future<int> deleteExamination(
+      {required int examinationId, bool undo = false,});
+
+  Future<int> incrementExaminationCount(int examinationId);
+
   Stream<List<ExaminationsTableData>> watchExaminationForUserAndCommandment({
     required UserDomainModel user,
     required int commandmentId,

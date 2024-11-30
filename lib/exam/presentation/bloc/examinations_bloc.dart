@@ -17,8 +17,10 @@ class ExaminationsBloc
   final GetExaminationsUsecase _getExaminationsUsecase;
 
   @override
-  Future<void> handleEvent(BlocEvent<GetExaminationsParam> event,
-      Emitter<BlocState<ExaminationsList>> emit,) async {
+  Future<void> handleEvent(
+    BlocEvent<GetExaminationsParam> event,
+    Emitter<BlocState<ExaminationsList>> emit,
+  ) async {
     await emit.forEach(
       _getExaminationsUsecase(event.argument),
       onData: (examinations) => BlocState.success(data: examinations),

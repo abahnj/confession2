@@ -21,9 +21,12 @@ class CommandmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CommandmentsBloc(getCommandmentsUsecase: sl())
-        ..add(BlocEvent(
+        ..add(
+          BlocEvent(
             argument:
-                GetCommandmentsParam(user: context.read<UserBloc>().state),),),
+                GetCommandmentsParam(user: context.read<UserBloc>().state),
+          ),
+        ),
       child: BlocListener<UserBloc, User>(
         listener: (context, state) {
           context

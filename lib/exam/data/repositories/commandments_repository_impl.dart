@@ -16,7 +16,8 @@ class CommandmentsRepositoryImpl extends CommandmentsRepository {
 
   @override
   Future<List<CommandmentsTableData>> getCommandmentsForUser(
-      UserDomainModel user,) {
+    UserDomainModel user,
+  ) {
     if (user.vocation == Vocation.religious) {
       return _commandmentsDao.getCommandmentsForReligious();
     } else if (user.age == Age.child) {

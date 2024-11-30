@@ -52,7 +52,6 @@ class DotsIndicator extends AnimatedWidget {
         height: dotSize * maxZoom,
         child: Center(
           child: AnimatedContainer(
-            
             duration: duration,
             curve: curve,
             width: dotSize * zoom,

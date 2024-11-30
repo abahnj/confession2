@@ -135,7 +135,8 @@ void main() {
     setUp(() async {
       await Future.wait(
         testData.map(
-            (exam) => database.into(database.examinationsTable).insert(exam),),
+          (exam) => database.into(database.examinationsTable).insert(exam),
+        ),
       );
     });
 
@@ -372,7 +373,8 @@ void main() {
     setUp(() async {
       await Future.wait(
         testExaminations.map(
-            (exam) => database.into(database.examinationsTable).insert(exam),),
+          (exam) => database.into(database.examinationsTable).insert(exam),
+        ),
       );
     });
 

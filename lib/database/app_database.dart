@@ -1,5 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:developer';
+
 import 'package:confession/core/errors/database_exception.dart';
 import 'package:confession/data/datasources/local/database_source.dart';
 import 'package:confession/database/daos/daos.dart';
@@ -22,29 +24,13 @@ part 'app_database.g.dart';
   daos: [CommandmentsDao, ExaminationsDao, PrayersDao, GuidesDao],
 )
 class AppDatabase extends _$AppDatabase {
-  factory AppDatabase.instance({
-    required DatabaseSource databaseSource,
-    QueryExecutor? executor,
-  }) {
-    return _instance ??= AppDatabase._init(
-      databaseSource: databaseSource,
-      executor: executor,
-    );
-  }
-
-  AppDatabase._init({
+  AppDatabase({
     required DatabaseSource databaseSource,
     QueryExecutor? executor,
   })  : _databaseSource = databaseSource,
         super(executor ?? _openConnection(databaseSource));
 
   final DatabaseSource _databaseSource;
-  static AppDatabase? _instance;
-
-  static Future<void> resetInstance() async {
-    await _instance?.close();
-    _instance = null;
-  }
 
   @override
   int get schemaVersion => AppDatabaseConfig.schemaVersion;
@@ -72,7 +58,8 @@ class AppDatabase extends _$AppDatabase {
   Future<void> deleteDatabase() async {
     final file = await _databaseSource.getDatabaseFile();
     if (file.existsSync()) {
-      await file.delete();
+      log('Deleting database at ${file.path}');
+      file.deleteSync();
     }
   }
 

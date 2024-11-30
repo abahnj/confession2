@@ -5,26 +5,28 @@ class Examination extends ViewData {
     required this.id,
     required this.examinationText,
     required this.count,
+    required this.isCustom,
   });
 
   final int id;
   final String examinationText;
   final int count;
+  final bool isCustom;
 
   Examination copyWith({
-    int? id,
     String? examinationText,
     int? count,
   }) {
     return Examination(
-      id: id ?? this.id,
+      id: id,
       examinationText: examinationText ?? this.examinationText,
       count: count ?? this.count,
+      isCustom: isCustom,
     );
   }
 
   @override
-  List<Object> get props => [examinationText, count, id];
+  List<Object> get props => [examinationText, count, id, isCustom];
 }
 
 class ExaminationsList extends ViewDataList<Examination> implements ViewData {

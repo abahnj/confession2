@@ -38,13 +38,20 @@ class ExaminationPage extends StatelessWidget {
             ),
         ),
         BlocProvider(
-          create: (context) => UpdateExaminationBloc(updateExaminationUsecase: sl()),
+          create: (context) => UpdateExaminationBloc(
+            updateExaminationUsecase: sl(),
+            editExaminationUsecase: sl(),
+            resetExaminationUsecase: sl(),
+            deleteExaminationUsecase: sl(),
+          ),
         ),
       ],
       child: BlocListener<UserBloc, User>(
         listenWhen: (previous, current) => previous != current,
         listener: (context, state) {
-          context.read<CommandmentsBloc>().add(BlocEvent(argument: GetCommandmentsParam(user: state)));
+          context
+              .read<CommandmentsBloc>()
+              .add(BlocEvent(argument: GetCommandmentsParam(user: state)));
         },
         child: ExaminationConsumer(initialCommandmentId: commandmentId),
       ),
@@ -128,7 +135,6 @@ class _ExaminationPageViewState extends State<ExaminationPageView> {
               itemCount: widget.commandmentsList.data.length,
               selectedColor: Theme.of(context).colorScheme.secondary,
               color: Theme.of(context).colorScheme.onSurfaceVariant,
-              
             ),
           ),
         ),

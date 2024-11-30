@@ -7,10 +7,10 @@ import 'package:confession/exam/domain/repositories/examination_repository.dart'
 
 class GetExaminationsUsecase
     extends StreamViewDataParamUseCase<ExaminationsList, GetExaminationsParam> {
-  GetExaminationsUsecase(
-      {required ExaminationRepository repository,
-      required ExaminationMapper examinationsMapper,})
-      : _repository = repository,
+  GetExaminationsUsecase({
+    required ExaminationRepository repository,
+    required ExaminationMapper examinationsMapper,
+  })  : _repository = repository,
         _mapper = examinationsMapper;
 
   final ExaminationRepository _repository;
@@ -29,8 +29,11 @@ class GetExaminationsUsecase
           ),
           commandmentId: param.commandmentId,
         )
-        .map((examinations) => ExaminationsList(
-            data: examinations.map(_mapper.toViewData).toList(),),);
+        .map(
+          (examinations) => ExaminationsList(
+            data: examinations.map(_mapper.toViewData).toList(),
+          ),
+        );
   }
 }
 

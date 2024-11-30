@@ -87,7 +87,9 @@ void main() {
         // Assert
         expect(useCase, isNotNull);
         expect(
-            useCase, isA<AsyncViewDataParamUseCase<AppThemeMode, NoParams>>(),);
+          useCase,
+          isA<AsyncViewDataParamUseCase<AppThemeMode, NoParams>>(),
+        );
       });
     });
 

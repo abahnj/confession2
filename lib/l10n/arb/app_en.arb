@@ -65,35 +65,119 @@
     "description": "Settings gender male"
   },
   "settingsGenderFemale": "Female",
-    "@settingsGenderFemale": {
-        "description": "Settings gender female"
-    },
-    "settingsAgeAdult": "Adult",
-    "@settingsAgeAdult": {
-        "description": "Settings age adult"
-    },
-    "settingsAgeChild": "Child",
-    "@settingsAgeChild": {
-        "description": "Settings age child"
-    },
-    "settingsAgeTeen": "Teen",
-    "@settingsAgeTeen": {
-        "description": "Settings age teen"
-    },
-    "settingsVocationSingle": "Single",
-    "@settingsVocationSingle": {
-        "description": "Settings vocation single"
-    },
-    "settingsVocationMarried": "Married",
-    "@settingsVocationMarried": {
-        "description": "Settings vocation married"
-    },
-    "settingsVocationReligious": "Religious",
-    "@settingsVocationReligious": {
-        "description": "Settings vocation religious"
-    },
-    "settingsVocationPriest": "Priest",
-    "@settingsVocationPriest": {
-        "description": "Settings vocation priest"
-    }
+  "@settingsGenderFemale": {
+    "description": "Settings gender female"
+  },
+  "settingsAgeAdult": "Adult",
+  "@settingsAgeAdult": {
+    "description": "Settings age adult"
+  },
+  "settingsAgeChild": "Child",
+  "@settingsAgeChild": {
+    "description": "Settings age child"
+  },
+  "settingsAgeTeen": "Teen",
+  "@settingsAgeTeen": {
+    "description": "Settings age teen"
+  },
+  "settingsVocationSingle": "Single",
+  "@settingsVocationSingle": {
+    "description": "Settings vocation single"
+  },
+  "settingsVocationMarried": "Married",
+  "@settingsVocationMarried": {
+    "description": "Settings vocation married"
+  },
+  "settingsVocationReligious": "Religious",
+  "@settingsVocationReligious": {
+    "description": "Settings vocation religious"
+  },
+  "settingsVocationPriest": "Priest",
+  "@settingsVocationPriest": {
+    "description": "Settings vocation priest"
+  },
+  "examinationPopupMenuDecrement": "Decrement",
+  "@examinationPopupMenuDecrement": {
+    "description": "Examination popup menu decrement"
+  },
+  "examinationPopupMenuEdit": "Edit",
+  "@examinationPopupMenuEdit": {
+    "description": "Examination popup menu edit"
+  },
+  "examinationPopupMenuEditLabel": "Examination text",
+  "@examinationPopupMenuEditLabel": {
+    "description": "Examination popup menu edit label"
+  },
+  "examinationPopupMenuEditHint": "Enter the examination text",
+  "@examinationPopupMenuEditHint": {
+    "description": "Examination popup menu edit hint"
+  },
+  "examinationPopupMenuEditSave": "Save",
+  "@examinationPopupMenuEditSave": {
+    "description": "Examination popup menu edit confirmation"
+  },
+  "examinationPopupMenuEditCancel": "Cancel",
+  "@examinationPopupMenuEditCancel": {
+    "description": "Examination popup menu edit cancel"
+  },
+  "examinationPopupMenuEditConfirmationSnackbar": "The examination has been updated",
+  "@examinationPopupMenuEditConfirmationSnackbar": {
+    "description": "Examination popup menu edit confirmation snackbar"
+  },
+  "examinationPopupMenuResetCount": "Reset Count",
+  "@examinationPopupMenuResetCount": {
+    "description": "Examination popup menu reset"
+  },
+  "confirmationActionYes": "Yes",
+  "@confirmationActionYes": {
+    "description": "Confirmation action yes"
+  },
+  "confirmationActionNo": "No",
+  "@confirmationActionNo": {
+    "description": "Confirmation action no"
+  },
+  "examinationPopupMenuResetText": "Reset Text",
+  "@examinationPopupMenuResetText": {
+    "description": "Examination popup menu reset confirmation"
+  },
+  "examinationPopupMenuResetConfirmationTitle": "Reset examination",
+  "@examinationPopupMenuResetConfirmationTitle": {
+    "description": "Examination popup menu reset confirmation title"
+  },
+  "examinationPopupMenuResetConfirmationContent": "Are you sure you want to reset the examination to its default entry?",
+  "@examinationPopupMenuResetConfirmationContent": {
+    "description": "Examination popup menu reset confirmation content"
+  },
+  "examinationPopupMenuResetConfirmationSnackbar": "The examination has been reset",
+  "@examinationPopupMenuResetConfirmationSnackbar": {
+    "description": "Examination popup menu reset confirmation snackbar"
+  },
+  "snackbarActionUndo": "Undo",
+  "@snackbarActionUndo": {
+    "description": "Snackbar action undo"
+  },
+  "examinationPopupMenuResetConfirmationSnackbarActionMessage": "The examination has been restored",
+  "@examinationPopupMenuResetConfirmationSnackbarActionMessage": {
+    "description": "Examination popup menu reset confirmation snackbar action message"
+  },
+  "examinationPopupMenuDelete": "Delete",
+  "@examinationPopupMenuDelete": {
+    "description": "Examination popup menu delete"
+  },
+  "examinationPopupMenuDeleteConfirmation": "Delete",
+  "@examinationPopupMenuDeleteConfirmation": {
+    "description": "Examination popup menu delete confirmation"
+  },
+  "examinationPopupMenuDeleteConfirmationTitle": "Delete examination",
+  "@examinationPopupMenuDeleteConfirmationTitle": {
+    "description": "Examination popup menu delete confirmation title"
+  },
+  "examinationPopupMenuDeleteConfirmationContent": "Are you sure you want to delete the examination?",
+  "@examinationPopupMenuDeleteConfirmationContent": {
+    "description": "Examination popup menu delete confirmation content"
+  },
+  "examinationPopupMenuDeleteConfirmationSnackbar": "The examination has been deleted",
+  "@examinationPopupMenuDeleteConfirmationSnackbar": {
+    "description": "Examination popup menu delete confirmation snackbar"
+  }
 }

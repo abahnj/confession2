@@ -445,12 +445,21 @@ class $ExaminationsTableTable extends ExaminationsTable
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("CHILD" IN (0, 1))'));
+  static const VerificationMeta _isDeletedMeta =
+      const VerificationMeta('isDeleted');
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+      'IS_DELETED', aliasedName, true,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("IS_DELETED" IN (0, 1))'));
   static const VerificationMeta _customIdMeta =
       const VerificationMeta('customId');
   @override
-  late final GeneratedColumn<int> customId = GeneratedColumn<int>(
+  late final GeneratedColumn<String> customId = GeneratedColumn<String>(
       'CUSTOM_ID', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
   @override
@@ -483,6 +492,7 @@ class $ExaminationsTableTable extends ExaminationsTable
         female,
         male,
         child,
+        isDeleted,
         customId,
         description,
         activeText,
@@ -564,6 +574,10 @@ class $ExaminationsTableTable extends ExaminationsTable
     } else if (isInserting) {
       context.missing(_childMeta);
     }
+    if (data.containsKey('IS_DELETED')) {
+      context.handle(_isDeletedMeta,
+          isDeleted.isAcceptableOrUnknown(data['IS_DELETED']!, _isDeletedMeta));
+    }
     if (data.containsKey('CUSTOM_ID')) {
       context.handle(_customIdMeta,
           customId.isAcceptableOrUnknown(data['CUSTOM_ID']!, _customIdMeta));
@@ -619,8 +633,10 @@ class $ExaminationsTableTable extends ExaminationsTable
           .read(DriftSqlType.bool, data['${effectivePrefix}MALE'])!,
       child: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}CHILD'])!,
+      isDeleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}IS_DELETED']),
       customId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}CUSTOM_ID']),
+          .read(DriftSqlType.string, data['${effectivePrefix}CUSTOM_ID']),
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}DESCRIPTION'])!,
       activeText: attachedDatabase.typeMapping.read(
@@ -649,7 +665,8 @@ class ExaminationsTableData extends DataClass
   final bool female;
   final bool male;
   final bool child;
-  final int? customId;
+  final bool? isDeleted;
+  final String? customId;
   final String description;
   final String activeText;
   final int count;
@@ -665,6 +682,7 @@ class ExaminationsTableData extends DataClass
       required this.female,
       required this.male,
       required this.child,
+      this.isDeleted,
       this.customId,
       required this.description,
       required this.activeText,
@@ -683,8 +701,11 @@ class ExaminationsTableData extends DataClass
     map['FEMALE'] = Variable<bool>(female);
     map['MALE'] = Variable<bool>(male);
     map['CHILD'] = Variable<bool>(child);
+    if (!nullToAbsent || isDeleted != null) {
+      map['IS_DELETED'] = Variable<bool>(isDeleted);
+    }
     if (!nullToAbsent || customId != null) {
-      map['CUSTOM_ID'] = Variable<int>(customId);
+      map['CUSTOM_ID'] = Variable<String>(customId);
     }
     map['DESCRIPTION'] = Variable<String>(description);
     map['DESCRIPTION_ACTIVE'] = Variable<String>(activeText);
@@ -705,6 +726,9 @@ class ExaminationsTableData extends DataClass
       female: Value(female),
       male: Value(male),
       child: Value(child),
+      isDeleted: isDeleted == null && nullToAbsent
+          ? const Value.absent()
+          : Value(isDeleted),
       customId: customId == null && nullToAbsent
           ? const Value.absent()
           : Value(customId),
@@ -729,7 +753,8 @@ class ExaminationsTableData extends DataClass
       female: serializer.fromJson<bool>(json['female']),
       male: serializer.fromJson<bool>(json['male']),
       child: serializer.fromJson<bool>(json['child']),
-      customId: serializer.fromJson<int?>(json['customId']),
+      isDeleted: serializer.fromJson<bool?>(json['isDeleted']),
+      customId: serializer.fromJson<String?>(json['customId']),
       description: serializer.fromJson<String>(json['description']),
       activeText: serializer.fromJson<String>(json['activeText']),
       count: serializer.fromJson<int>(json['count']),
@@ -750,7 +775,8 @@ class ExaminationsTableData extends DataClass
       'female': serializer.toJson<bool>(female),
       'male': serializer.toJson<bool>(male),
       'child': serializer.toJson<bool>(child),
-      'customId': serializer.toJson<int?>(customId),
+      'isDeleted': serializer.toJson<bool?>(isDeleted),
+      'customId': serializer.toJson<String?>(customId),
       'description': serializer.toJson<String>(description),
       'activeText': serializer.toJson<String>(activeText),
       'count': serializer.toJson<int>(count),
@@ -769,7 +795,8 @@ class ExaminationsTableData extends DataClass
           bool? female,
           bool? male,
           bool? child,
-          Value<int?> customId = const Value.absent(),
+          Value<bool?> isDeleted = const Value.absent(),
+          Value<String?> customId = const Value.absent(),
           String? description,
           String? activeText,
           int? count}) =>
@@ -785,6 +812,7 @@ class ExaminationsTableData extends DataClass
         female: female ?? this.female,
         male: male ?? this.male,
         child: child ?? this.child,
+        isDeleted: isDeleted.present ? isDeleted.value : this.isDeleted,
         customId: customId.present ? customId.value : this.customId,
         description: description ?? this.description,
         activeText: activeText ?? this.activeText,
@@ -805,6 +833,7 @@ class ExaminationsTableData extends DataClass
       female: data.female.present ? data.female.value : this.female,
       male: data.male.present ? data.male.value : this.male,
       child: data.child.present ? data.child.value : this.child,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
       customId: data.customId.present ? data.customId.value : this.customId,
       description:
           data.description.present ? data.description.value : this.description,
@@ -828,6 +857,7 @@ class ExaminationsTableData extends DataClass
           ..write('female: $female, ')
           ..write('male: $male, ')
           ..write('child: $child, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('customId: $customId, ')
           ..write('description: $description, ')
           ..write('activeText: $activeText, ')
@@ -849,6 +879,7 @@ class ExaminationsTableData extends DataClass
       female,
       male,
       child,
+      isDeleted,
       customId,
       description,
       activeText,
@@ -868,6 +899,7 @@ class ExaminationsTableData extends DataClass
           other.female == this.female &&
           other.male == this.male &&
           other.child == this.child &&
+          other.isDeleted == this.isDeleted &&
           other.customId == this.customId &&
           other.description == this.description &&
           other.activeText == this.activeText &&
@@ -887,7 +919,8 @@ class ExaminationsTableCompanion
   final Value<bool> female;
   final Value<bool> male;
   final Value<bool> child;
-  final Value<int?> customId;
+  final Value<bool?> isDeleted;
+  final Value<String?> customId;
   final Value<String> description;
   final Value<String> activeText;
   final Value<int> count;
@@ -903,6 +936,7 @@ class ExaminationsTableCompanion
     this.female = const Value.absent(),
     this.male = const Value.absent(),
     this.child = const Value.absent(),
+    this.isDeleted = const Value.absent(),
     this.customId = const Value.absent(),
     this.description = const Value.absent(),
     this.activeText = const Value.absent(),
@@ -920,6 +954,7 @@ class ExaminationsTableCompanion
     required bool female,
     required bool male,
     required bool child,
+    this.isDeleted = const Value.absent(),
     this.customId = const Value.absent(),
     required String description,
     required String activeText,
@@ -948,7 +983,8 @@ class ExaminationsTableCompanion
     Expression<bool>? female,
     Expression<bool>? male,
     Expression<bool>? child,
-    Expression<int>? customId,
+    Expression<bool>? isDeleted,
+    Expression<String>? customId,
     Expression<String>? description,
     Expression<String>? activeText,
     Expression<int>? count,
@@ -965,6 +1001,7 @@ class ExaminationsTableCompanion
       if (female != null) 'FEMALE': female,
       if (male != null) 'MALE': male,
       if (child != null) 'CHILD': child,
+      if (isDeleted != null) 'IS_DELETED': isDeleted,
       if (customId != null) 'CUSTOM_ID': customId,
       if (description != null) 'DESCRIPTION': description,
       if (activeText != null) 'DESCRIPTION_ACTIVE': activeText,
@@ -984,7 +1021,8 @@ class ExaminationsTableCompanion
       Value<bool>? female,
       Value<bool>? male,
       Value<bool>? child,
-      Value<int?>? customId,
+      Value<bool?>? isDeleted,
+      Value<String?>? customId,
       Value<String>? description,
       Value<String>? activeText,
       Value<int>? count}) {
@@ -1000,6 +1038,7 @@ class ExaminationsTableCompanion
       female: female ?? this.female,
       male: male ?? this.male,
       child: child ?? this.child,
+      isDeleted: isDeleted ?? this.isDeleted,
       customId: customId ?? this.customId,
       description: description ?? this.description,
       activeText: activeText ?? this.activeText,
@@ -1043,8 +1082,11 @@ class ExaminationsTableCompanion
     if (child.present) {
       map['CHILD'] = Variable<bool>(child.value);
     }
+    if (isDeleted.present) {
+      map['IS_DELETED'] = Variable<bool>(isDeleted.value);
+    }
     if (customId.present) {
-      map['CUSTOM_ID'] = Variable<int>(customId.value);
+      map['CUSTOM_ID'] = Variable<String>(customId.value);
     }
     if (description.present) {
       map['DESCRIPTION'] = Variable<String>(description.value);
@@ -1072,6 +1114,7 @@ class ExaminationsTableCompanion
           ..write('female: $female, ')
           ..write('male: $male, ')
           ..write('child: $child, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('customId: $customId, ')
           ..write('description: $description, ')
           ..write('activeText: $activeText, ')
@@ -2057,7 +2100,8 @@ typedef $$ExaminationsTableTableCreateCompanionBuilder
   required bool female,
   required bool male,
   required bool child,
-  Value<int?> customId,
+  Value<bool?> isDeleted,
+  Value<String?> customId,
   required String description,
   required String activeText,
   Value<int> count,
@@ -2075,7 +2119,8 @@ typedef $$ExaminationsTableTableUpdateCompanionBuilder
   Value<bool> female,
   Value<bool> male,
   Value<bool> child,
-  Value<int?> customId,
+  Value<bool?> isDeleted,
+  Value<String?> customId,
   Value<String> description,
   Value<String> activeText,
   Value<int> count,
@@ -2123,7 +2168,10 @@ class $$ExaminationsTableTableFilterComposer
   ColumnFilters<bool> get child => $composableBuilder(
       column: $table.child, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get customId => $composableBuilder(
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get customId => $composableBuilder(
       column: $table.customId, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get description => $composableBuilder(
@@ -2179,7 +2227,10 @@ class $$ExaminationsTableTableOrderingComposer
   ColumnOrderings<bool> get child => $composableBuilder(
       column: $table.child, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get customId => $composableBuilder(
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get customId => $composableBuilder(
       column: $table.customId, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get description => $composableBuilder(
@@ -2234,7 +2285,10 @@ class $$ExaminationsTableTableAnnotationComposer
   GeneratedColumn<bool> get child =>
       $composableBuilder(column: $table.child, builder: (column) => column);
 
-  GeneratedColumn<int> get customId =>
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  GeneratedColumn<String> get customId =>
       $composableBuilder(column: $table.customId, builder: (column) => column);
 
   GeneratedColumn<String> get description => $composableBuilder(
@@ -2287,7 +2341,8 @@ class $$ExaminationsTableTableTableManager extends RootTableManager<
             Value<bool> female = const Value.absent(),
             Value<bool> male = const Value.absent(),
             Value<bool> child = const Value.absent(),
-            Value<int?> customId = const Value.absent(),
+            Value<bool?> isDeleted = const Value.absent(),
+            Value<String?> customId = const Value.absent(),
             Value<String> description = const Value.absent(),
             Value<String> activeText = const Value.absent(),
             Value<int> count = const Value.absent(),
@@ -2304,6 +2359,7 @@ class $$ExaminationsTableTableTableManager extends RootTableManager<
             female: female,
             male: male,
             child: child,
+            isDeleted: isDeleted,
             customId: customId,
             description: description,
             activeText: activeText,
@@ -2321,7 +2377,8 @@ class $$ExaminationsTableTableTableManager extends RootTableManager<
             required bool female,
             required bool male,
             required bool child,
-            Value<int?> customId = const Value.absent(),
+            Value<bool?> isDeleted = const Value.absent(),
+            Value<String?> customId = const Value.absent(),
             required String description,
             required String activeText,
             Value<int> count = const Value.absent(),
@@ -2338,6 +2395,7 @@ class $$ExaminationsTableTableTableManager extends RootTableManager<
             female: female,
             male: male,
             child: child,
+            isDeleted: isDeleted,
             customId: customId,
             description: description,
             activeText: activeText,

@@ -16,7 +16,7 @@ class DatabaseModule extends Module {
         ),
       )
       ..registerLazySingleton<AppDatabase>(
-        () => AppDatabase.instance(databaseSource: sl()),
+        () => AppDatabase(databaseSource: sl()),
       );
   }
 }

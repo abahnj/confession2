@@ -11,6 +11,7 @@ class ExaminationMapper extends ViewDataTableMapper<Examination,
         id: model.id,
         examinationText: model.description,
         count: model.count,
+        isCustom: model.customId != null,
       );
 
   @override

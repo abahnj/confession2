@@ -17,8 +17,10 @@ class CommandmentsBloc
   final GetCommandmentsUsecase _getCommandmentsUsecase;
 
   @override
-  Future<void> handleEvent(BlocEvent<GetCommandmentsParam> event,
-      Emitter<BlocState<CommandmentList>> emit,) async {
+  Future<void> handleEvent(
+    BlocEvent<GetCommandmentsParam> event,
+    Emitter<BlocState<CommandmentList>> emit,
+  ) async {
     emit(const BlocState.loading());
     try {
       final commandments = await _getCommandmentsUsecase(event.argument);

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class ConfessionListTile extends StatelessWidget {
   const ConfessionListTile({
     required this.title,
+    this.isCustom = false,
     super.key,
     this.onTap,
     this.subtitle,
@@ -17,6 +18,7 @@ class ConfessionListTile extends StatelessWidget {
   final String title;
   final String? subtitle;
   final Widget? trailing;
+  final bool isCustom;
 
   static const _padding = EdgeInsets.symmetric(horizontal: 20, vertical: 10);
   static const _borderRadius = 16.0;
@@ -71,13 +73,27 @@ class ConfessionListTile extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.only(right: 12),
-        child: Assets.vectors.cross.svg(
-          colorFilter: ColorFilter.mode(
-            context.colorScheme.primary,
-            BlendMode.srcIn,
+        child: SizedBox.square(
+          dimension: _iconSize,
+          child: Stack(
+            children: [
+              Assets.vectors.cross.svg(
+                colorFilter: ColorFilter.mode(
+                  context.colorScheme.primary,
+                  BlendMode.srcIn,
+                ),
+              ),
+              if (isCustom)
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Icon(
+                    Icons.circle,
+                    color: context.colorScheme.secondary,
+                    size: 8,
+                  ),
+                ),
+            ],
           ),
-          height: _iconSize,
-          width: _iconSize,
         ),
       ),
     );

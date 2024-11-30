@@ -18,7 +18,9 @@ class PrayersBloc extends ModuleBloc<BlocEvent<NoParams>, PrayerList> {
 
   @override
   Future<void> handleEvent(
-      BlocEvent<NoParams> event, Emitter<BlocState<PrayerList>> emit,) async {
+    BlocEvent<NoParams> event,
+    Emitter<BlocState<PrayerList>> emit,
+  ) async {
     emit(const BlocState.loading());
     try {
       final prayers = await _getPrayersUsecase();

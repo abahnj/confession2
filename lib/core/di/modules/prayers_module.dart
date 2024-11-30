@@ -18,6 +18,7 @@ class PrayersModule extends Module {
       )
       ..registerCachedFactory(PrayersMapper.new)
       ..registerCachedFactory(
-          () => GetPrayersUsecase(repository: sl(), prayersMapper: sl()),);
+        () => GetPrayersUsecase(repository: sl(), prayersMapper: sl()),
+      );
   }
 }

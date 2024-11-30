@@ -23,7 +23,9 @@ class ExaminationsTable extends Table {
 
   BoolColumn get child => boolean().named('CHILD')();
 
-  IntColumn get customId => integer().named('CUSTOM_ID').nullable()();
+  BoolColumn get isDeleted => boolean().named('IS_DELETED').nullable()();
+
+  TextColumn get customId => text().named('CUSTOM_ID').nullable()();
 
   TextColumn get description => text().named('DESCRIPTION')();
 
