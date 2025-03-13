@@ -43,6 +43,9 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase>
 
   ExaminationFilter isNotDeleted() => (table) => table.isDeleted.isNull();
 
+  ExaminationFilter isActiveExamination() =>
+      (table) => table.count.isBiggerThanValue(_activeExaminationThreshold);
+
   ExaminationFilter getCommandmentFilter(int commandmentId) =>
       (table) => table.commandmentId.equals(commandmentId);
 
@@ -58,21 +61,25 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase>
           };
 
   // Query execution methods
-  Future<List<ExaminationsTableData>> getExaminations(
-    List<ExaminationFilter> filters,
-  ) {
-    return (_baseQuery()
-          ..where(
-              (table) => _combineFilters([isNotDeleted(), ...filters])(table),))
-        .get();
-  }
 
   Stream<List<ExaminationsTableData>> watchExaminations(
     List<ExaminationFilter> filters,
   ) {
     return (_baseQuery()
           ..where(
-              (table) => _combineFilters([isNotDeleted(), ...filters])(table),))
+            (table) => _combineFilters([isNotDeleted(), ...filters])(table),
+          ))
+        .watch();
+  }
+
+  Stream<List<ExaminationsTableData>> watchActiveExaminations() {
+    return (_baseQuery()
+          ..where(
+            (table) => _combineFilters([
+              isNotDeleted(),
+              isActiveExamination(),
+            ])(table),
+          ))
         .watch();
   }
 
@@ -100,35 +107,39 @@ class ExaminationsDao extends DatabaseAccessor<AppDatabase>
           ..where((tbl) => tbl.id.equals(examinationId)))
         .write(
       ExaminationsTableCompanion.custom(
-          count: examinationsTable.count + const Constant(1),),
+        count: examinationsTable.count + const Constant(1),
+      ),
     );
   }
 
   Future<int> saveDefaultExaminationText(int examinationId) async =>
       (update(examinationsTable)
             ..where(
-                (tbl) => tbl.id.equals(examinationId) & tbl.customId.isNull(),))
+              (tbl) => tbl.id.equals(examinationId) & tbl.customId.isNull(),
+            ))
           .write(
         ExaminationsTableCompanion.custom(
           customId: examinationsTable.description,
         ),
       );
 
-  Future<int> resetExaminationText(int examinationId) async =>
-      transaction(() async {
-        await (update(examinationsTable)
-              ..where((tbl) => tbl.id.equals(examinationId)))
-            .write(
-          ExaminationsTableCompanion.custom(
-              description: examinationsTable.customId,),
-        );
+  Future<int> resetExaminationText(int examinationId) async => transaction(
+        () async => transaction(() async {
+          await (update(examinationsTable)
+                ..where((tbl) => tbl.id.equals(examinationId)))
+              .write(
+            ExaminationsTableCompanion.custom(
+              description: examinationsTable.customId,
+            ),
+          );
 
-        return (update(examinationsTable)
-              ..where((tbl) => tbl.id.equals(examinationId)))
-            .write(
-          const ExaminationsTableCompanion(customId: Value(null)),
-        );
-      });
+          return (update(examinationsTable)
+                ..where((tbl) => tbl.id.equals(examinationId)))
+              .write(
+            const ExaminationsTableCompanion(customId: Value(null)),
+          );
+        }),
+      );
 
   Future<int> resetExaminationsCount() async => (update(examinationsTable)
         ..where(

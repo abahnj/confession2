@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('DatabaseConfig', () {
     test('has correct schema version', () {
-      expect(AppDatabaseConfig.schemaVersion, 4);
+      expect(AppDatabaseConfig.schemaVersion, 5);
     });
 
     test('has correct database name', () {

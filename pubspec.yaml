@@ -1,14 +1,17 @@
 name: confession
 description: Confession App 2.0
-version: 2.0.0+1
+version: 2.0.0+19
+versionName: 2.0.0
+versionCode: 19
 publish_to: none
 
 environment:
   sdk: ^3.5.0
 
 dependencies:
-  auto_route: ^9.2.2
-  bloc: ^8.1.4
+  auto_route: ^10.0.1
+  bloc: ^9.0.0
+  device_info_plus: ^11.1.1
   drift: ^2.21.0
   drift_flutter: ^0.2.1
   equatable: ^2.0.7
@@ -20,7 +23,7 @@ dependencies:
   flex_color_scheme: ^8.0.1
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.6
+  flutter_bloc: ^9.1.0
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^2.0.15
@@ -34,14 +37,14 @@ dependencies:
   shared_preferences: ^2.3.3
 
 dev_dependencies:
-  auto_route_generator: ^9.0.0
-  bloc_test: ^9.1.7
+  auto_route_generator: ^10.0.1
+  bloc_test: ^10.0.0
   build_runner: ^2.4.13
   drift_dev: ^2.21.2
   flutter_gen_runner: ^5.8.0
   flutter_test:
     sdk: flutter
-  very_good_analysis: ^6.0.0
+  very_good_analysis: ^7.0.0
 
 flutter:
   uses-material-design: true

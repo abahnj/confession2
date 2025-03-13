@@ -30,7 +30,7 @@ class ConfessionListTile extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Card(
-      color: Theme.of(context).colorScheme.tertiary.withOpacity(.2),
+      color: Theme.of(context).colorScheme.tertiary.withValues(alpha: .2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_borderRadius),
       ),

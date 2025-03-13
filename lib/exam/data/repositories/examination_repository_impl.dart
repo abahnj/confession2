@@ -55,8 +55,10 @@ class ExaminationRepositoryImpl extends ExaminationRepository {
   }
 
   @override
-  Future<int> deleteExamination(
-          {required int examinationId, bool undo = false,}) =>
+  Future<int> deleteExamination({
+    required int examinationId,
+    bool undo = false,
+  }) =>
       undo
           ? _examinationsDao.undoDeleteExamination(examinationId)
           : _examinationsDao.deleteExamination(examinationId);
@@ -72,4 +74,8 @@ class ExaminationRepositoryImpl extends ExaminationRepository {
   @override
   Future<int> resetExaminationText(int examinationId) =>
       _examinationsDao.resetExaminationText(examinationId);
+
+  @override
+  Stream<List<ExaminationsTableData>> watchActiveExaminations() =>
+      _examinationsDao.watchActiveExaminations();
 }

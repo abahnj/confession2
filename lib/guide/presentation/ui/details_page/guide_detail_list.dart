@@ -5,6 +5,7 @@ import 'package:confession/core/di/service_locator.dart';
 import 'package:confession/guide/domain/entities/guide.dart';
 import 'package:confession/guide/presentation/bloc/guides_bloc.dart';
 import 'package:confession/guide/usecases/get_guides_usecase.dart';
+import 'package:confession/l10n/l10n.dart';
 import 'package:confession/router/app_router.gr.dart';
 import 'package:confession/shared/widgets/app_bar.dart';
 import 'package:confession/shared/widgets/confession_list_tile.dart';
@@ -23,8 +24,7 @@ class GuideDetailListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GuidesBloc(getGuidesUsecase: sl())
-        ..add(BlocEvent(argument: GuideParam(id: guideId))),
+      create: (context) => GuidesBloc(getGuidesUsecase: sl())..add(BlocEvent(argument: GuideParam(id: guideId))),
       child: const GuideDetailListConsumer(),
     );
   }
@@ -78,20 +78,48 @@ class GuideDetailListSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ConfessionAppBar(),
-      body: ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        itemCount: guideList.data.length,
-        itemBuilder: (context, index) {
-          final guide = guideList.data[index];
-          return ConfessionListTile(
-            title: guide.title,
-            onTap: () {
-              context.router.push(GuideDetailsRoute(guide: guide));
-            },
-          );
-        },
+      appBar: ConfessionAppBar(title: context.l10n.guidesNavbarTitle),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: FittedBox(
+              child: Text(
+                _getGuideTitle(
+                  context.topRoute.params.getInt('guideId', 0),
+                ),
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              itemCount: guideList.data.length,
+              itemBuilder: (context, index) {
+                final guide = guideList.data[index];
+                return ConfessionListTile(
+                  title: guide.title,
+                  onTap: () {
+                    context.router.push(GuideDetailsRoute(guide: guide));
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  String _getGuideTitle(int guideId) {
+    return switch (guideId) {
+      1 => 'Catholic Confession - FAQ',
+      2 => 'Popes on Confession',
+      3 => 'Frequenct Confession - Fulton Sheen',
+      4 => 'Cathechism of the Catholic Church',
+      5 => 'How to make a good confession',
+      _ => 'Unknown',
+    };
   }
 }

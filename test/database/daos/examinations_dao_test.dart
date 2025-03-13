@@ -15,11 +15,8 @@ void main() {
 
   // Helper to create a fresh database
   setUp(() async {
-    // Reset the singleton instance first
-    await AppDatabase.resetInstance();
-
     mockDatabaseSource = _MockDatabaseSource();
-    database = AppDatabase.instance(
+    database = AppDatabase(
       databaseSource: mockDatabaseSource,
       executor: NativeDatabase.memory(),
     );
@@ -29,7 +26,6 @@ void main() {
   tearDown(() async {
     // Close and reset the instance
     await database.close();
-    await AppDatabase.resetInstance();
   });
 
   group('ExaminationsDao - Basic CRUD Operations', () {
@@ -49,12 +45,9 @@ void main() {
       count: const Value(0),
     );
 
-    test('updateExamination should successfully update existing record',
-        () async {
+    test('updateExamination should successfully update existing record', () async {
       // Arrange
-      final inserted = await database
-          .into(database.examinationsTable)
-          .insert(baseExamination);
+      final inserted = await database.into(database.examinationsTable).insert(baseExamination);
       final updatedExamination = ExaminationsTableData(
         id: inserted,
         commandmentId: 1,
@@ -70,14 +63,14 @@ void main() {
         female: false,
         male: true,
         count: 1,
-      );
+      ).toCompanion(false);
 
       // Act
       final result = await dao.updateExamination(updatedExamination);
 
       // Assert
       expect(result, 1);
-      final updated = await dao.getExaminations([]);
+      final updated = await dao.watchExaminations([]).first;
       expect(updated.first.activeText, 'Updated text');
       expect(updated.first.count, 1);
     });
@@ -141,50 +134,49 @@ void main() {
     });
 
     test('getAdultFilter returns only adult records', () async {
-      final results = await dao.getExaminations([dao.getAdultFilter()]);
+      final results = await dao.watchExaminations([dao.getAdultFilter()]).first;
       expect(results.length, 1);
       expect(results.first.activeText, 'Adult married');
     });
 
     test('getTeenFilter returns only teen records', () async {
-      final results = await dao.getExaminations([dao.getTeenFilter()]);
+      final results = await dao.watchExaminations([dao.getTeenFilter()]).first;
       expect(results.length, 1);
       expect(results.first.activeText, 'Teen single priest');
     });
 
     test('getChildFilter returns only child records', () async {
-      final results = await dao.getExaminations([dao.getChildFilter()]);
+      final results = await dao.watchExaminations([dao.getChildFilter()]).first;
       expect(results.length, 1);
       expect(results.first.activeText, 'Child');
     });
 
     test('getMaleFilter returns only male records', () async {
-      final results = await dao.getExaminations([dao.getMaleFilter()]);
+      final results = await dao.watchExaminations([dao.getMaleFilter()]).first;
       expect(results.length, 1);
       expect(results.first.activeText, 'Teen single priest');
     });
 
     test('getPriestFilter returns only priest records', () async {
-      final results = await dao.getExaminations([dao.getPriestFilter()]);
+      final results = await dao.watchExaminations([dao.getPriestFilter()]).first;
       expect(results.length, 1);
       expect(results.first.activeText, 'Teen single priest');
     });
 
     test('getFemaleFilter returns only female records', () async {
-      final results = await dao.getExaminations([dao.getFemaleFilter()]);
+      final results = await dao.watchExaminations([dao.getFemaleFilter()]).first;
       expect(results.length, 2);
       expect(results.map((e) => e.female).every((isFemale) => isFemale), true);
     });
 
     test('getActiveFilter returns records with count > 0', () async {
-      final results = await dao.getExaminations([dao.getActiveFilter()]);
+      final results = await dao.watchExaminations([dao.isActiveExamination()]).first;
       expect(results.length, 2);
       expect(results.every((exam) => exam.count > 0), true);
     });
 
-    test('getCommandmentFilter returns records for specific commandment',
-        () async {
-      final results = await dao.getExaminations([dao.getCommandmentFilter(2)]);
+    test('getCommandmentFilter returns records for specific commandment', () async {
+      final results = await dao.watchExaminations([dao.getCommandmentFilter(2)]).first;
       expect(results.length, 1);
       expect(results.first.commandmentId, 2);
     });
@@ -227,17 +219,15 @@ void main() {
       ];
 
       await Future.wait(
-        examinationsTable
-            .map((e) => database.into(database.examinationsTable).insert(e)),
+        examinationsTable.map((e) => database.into(database.examinationsTable).insert(e)),
       );
 
       // Act
       await dao.resetExaminationsCount();
 
       // Assert
-      final results = await (database.select(database.examinationsTable)
-            ..where((tbl) => tbl.count.isBiggerThanValue(0)))
-          .get();
+      final results =
+          await (database.select(database.examinationsTable)..where((tbl) => tbl.count.isBiggerThanValue(0))).get();
       expect(results, isEmpty);
     });
 
@@ -277,8 +267,7 @@ void main() {
       ];
 
       await Future.wait(
-        examinationsTable
-            .map((e) => database.into(database.examinationsTable).insert(e)),
+        examinationsTable.map((e) => database.into(database.examinationsTable).insert(e)),
       );
 
       // Act
@@ -311,8 +300,7 @@ void main() {
       await dao.resetExaminationsCount();
 
       // Assert
-      final result =
-          await database.select(database.examinationsTable).getSingle();
+      final result = await database.select(database.examinationsTable).getSingle();
 
       expect(
         result,
@@ -379,11 +367,11 @@ void main() {
     });
 
     test('combines multiple filters with AND logic', () async {
-      final results = await dao.getExaminations([
+      final results = await dao.watchExaminations([
         dao.getAdultFilter(),
         dao.getReligiousFilter(),
         dao.getMaleFilter(),
-      ]);
+      ]).first;
 
       expect(results.length, 1);
       expect(results.first.adult, true);
@@ -392,7 +380,7 @@ void main() {
     });
 
     test('empty filter list returns all records', () async {
-      final results = await dao.getExaminations([]);
+      final results = await dao.watchExaminations([]).first;
       expect(results.length, testExaminations.length);
     });
   });
@@ -431,8 +419,7 @@ void main() {
       await expectation;
     });
 
-    test('watchExaminations with filters emits only matching records',
-        () async {
+    test('watchExaminations with filters emits only matching records', () async {
       final adultExam = ExaminationsTableCompanion.insert(
         commandmentId: 1,
         adult: true,
@@ -499,13 +486,12 @@ void main() {
       count: const Value(0),
     );
 
-    test('getExaminations with no filters returns all examinationsTable',
-        () async {
+    test('getExaminations with no filters returns all examinationsTable', () async {
       // Arrange
       await database.into(database.examinationsTable).insert(testExamination);
 
       // Act
-      final results = await dao.getExaminations([]);
+      final results = await dao.watchExaminations([]).first;
 
       // Assert
       expect(results.length, 1);
@@ -525,10 +511,10 @@ void main() {
       );
 
       // Act
-      final results = await dao.getExaminations([
+      final results = await dao.watchExaminations([
         dao.getAdultFilter(),
         dao.getMaleFilter(),
-      ]);
+      ]).first;
 
       // Assert
       expect(results.length, 1);
@@ -561,11 +547,9 @@ void main() {
         stream,
         emitsInOrder([
           // After first insert
-          isA<List<ExaminationsTableData>>()
-              .having((list) => list.length, 'length', 1),
+          isA<List<ExaminationsTableData>>().having((list) => list.length, 'length', 1),
           // After second insert
-          isA<List<ExaminationsTableData>>()
-              .having((list) => list.length, 'length', 2),
+          isA<List<ExaminationsTableData>>().having((list) => list.length, 'length', 2),
         ]),
       );
 
@@ -596,11 +580,11 @@ void main() {
       );
 
       // Act
-      final results = await dao.getExaminations([
+      final results = await dao.watchExaminations([
         dao.getAdultFilter(),
         dao.getMaleFilter(),
         dao.getSingleFilter(),
-      ]);
+      ]).first;
 
       // Assert
       expect(results.length, 1);
@@ -627,9 +611,8 @@ void main() {
       );
 
       // Act
-      final singleResults = await dao.getExaminations([dao.getSingleFilter()]);
-      final marriedResults =
-          await dao.getExaminations([dao.getMarriedFilter()]);
+      final singleResults = await dao.watchExaminations([dao.getSingleFilter()]).first;
+      final marriedResults = await dao.watchExaminations([dao.getMarriedFilter()]).first;
 
       // Assert
       expect(singleResults.length, 1);

@@ -41,7 +41,9 @@ class ExaminationModule extends Module {
       )
       ..registerCachedFactory(
         () => UpdateCountExaminationUsecase(
-            repository: sl(), examinationsMapper: sl(),),
+          repository: sl(),
+          examinationsMapper: sl(),
+        ),
       )
       ..registerCachedFactory(
         () =>

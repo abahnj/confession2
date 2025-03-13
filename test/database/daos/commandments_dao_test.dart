@@ -14,9 +14,8 @@ void main() {
   late _MockDatabaseSource mockDatabaseSource;
 
   setUp(() async {
-    await AppDatabase.resetInstance();
     mockDatabaseSource = _MockDatabaseSource();
-    database = AppDatabase.instance(
+    database = AppDatabase(
       databaseSource: mockDatabaseSource,
       executor: NativeDatabase.memory(),
     );
@@ -25,7 +24,6 @@ void main() {
 
   tearDown(() async {
     await database.close();
-    await AppDatabase.resetInstance();
   });
 
   final commandment = CommandmentsTableCompanion.insert(

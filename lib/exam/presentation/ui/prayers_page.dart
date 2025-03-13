@@ -22,8 +22,7 @@ class PrayersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          PrayersBloc(getPrayersUsecase: sl())..add(const BlocEvent.noParam()),
+      create: (context) => PrayersBloc(getPrayersUsecase: sl())..add(const BlocEvent.noParam()),
       child: const PrayersConsumer(),
     );
   }
@@ -148,25 +147,19 @@ class DisplayableErrorWidget extends StatelessWidget {
 
   Future<void> showError(BuildContext context) async {
     await showDialog<void>(
-      barrierColor: Theme.of(context).dialogTheme.barrierColor?.withOpacity(.5),
+      barrierColor: Theme.of(context).dialogTheme.barrierColor?.withValues(alpha: .5),
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: Text(
           'Error info',
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
               Text(
                 error?.toString() ?? '',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface),
               ),
               if (stackTrace != null)
                 Padding(
@@ -275,10 +268,9 @@ class ErrorContent extends StatelessWidget {
                     DefaultTextStyle.merge(
                       textAlign: TextAlign.start,
                       style: theme.textTheme.bodyLarge?.copyWith(
-                        color: theme.colorScheme.onSurface.withOpacity(0.7),
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
-                      child: subtitle ??
-                          const Text('notifications.error.subTitle'),
+                      child: subtitle ?? const Text('notifications.error.subTitle'),
                     ),
                   ],
                 ),
@@ -334,7 +326,7 @@ class Footer extends StatelessWidget {
             BoxShadow(
               offset: const Offset(0, 2.75),
               blurRadius: 8,
-              color: context.colorScheme.shadow.withOpacity(0.2),
+              color: context.colorScheme.shadow.withValues(alpha:  0.2),
             ),
         ],
       ),

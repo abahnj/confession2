@@ -3,6 +3,7 @@ import 'package:confession/core/di/service_locator.dart';
 import 'package:confession/database/daos/daos.dart';
 import 'package:confession/l10n/l10n.dart';
 import 'package:confession/settings/widgets/app_theme_dialog.dart';
+import 'package:confession/settings/widgets/feedback_dialog.dart';
 import 'package:confession/settings/widgets/profile_view.dart';
 import 'package:confession/shared/utils.dart';
 import 'package:confession/theme/domain/entities/theme.dart';
@@ -14,15 +15,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
-  void _showSnackBar(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Feature not implemented yet'),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
-
   void _showDialog(BuildContext context, Widget dialog) {
     showAdaptiveDialog<void>(
       context: context,
@@ -33,8 +25,8 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final surfaceVariantTextTheme = context.textTheme.labelMedium
-        ?.copyWith(color: context.colorScheme.onSurfaceVariant);
+    final surfaceVariantTextTheme =
+        context.textTheme.labelMedium?.copyWith(color: context.colorScheme.onSurfaceVariant);
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n.settingsAppBarTitle),
@@ -76,20 +68,12 @@ class SettingsPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  
                   ListTile(
                     title: Text(
-                      'Send Feedback',
+                      'Restore Deleted Examinations',
                       style: context.textTheme.titleMedium,
                     ),
-                    subtitle: Text(
-                      'Report technical issues or suggest new features',
-                      style: surfaceVariantTextTheme,
-                    ),
-                    onTap: () => _showSnackBar(context),
-                  ),
-                  ListTile(
-                    title: Text('Restore Deleted Examinations',
-                        style: context.textTheme.titleMedium,),
                     onTap: () => _showDialog(
                       context,
                       AlertDialog(
@@ -104,14 +88,11 @@ class SettingsPage extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () async {
-                              final count = await sl
-                                  .get<ExaminationsDao>()
-                                  .restoreDeletedExaminations();
+                              final count = await sl.get<ExaminationsDao>().restoreDeletedExaminations();
                               if (context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content:
-                                        Text('Restored $count examinations'),
+                                    content: Text('Restored $count examinations'),
                                     duration: const Duration(seconds: 2),
                                   ),
                                 );
@@ -123,6 +104,17 @@ class SettingsPage extends StatelessWidget {
                         ],
                       ),
                     ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Send Feedback',
+                      style: context.textTheme.titleMedium,
+                    ),
+                    subtitle: Text(
+                      'Report technical issues or suggest new features',
+                      style: surfaceVariantTextTheme,
+                    ),
+                    onTap: () => _showDialog(context, const FeedbackDialog()),
                   ),
                 ],
               ),

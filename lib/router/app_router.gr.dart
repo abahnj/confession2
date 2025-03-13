@@ -9,7 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i11;
-import 'package:confession/confession/confession_page.dart' as _i2;
+import 'package:confession/confession/presentation/ui/confession_page.dart' as _i2;
 import 'package:confession/exam/presentation/ui/commandments_page.dart' as _i1;
 import 'package:confession/exam/presentation/ui/examination_page/examination_page.dart'
     as _i3;

@@ -64,8 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '852942704392',
     projectId: 'confession-flutter',
     storageBucket: 'confession-flutter.firebasestorage.app',
-    iosClientId:
-        '852942704392-pjfi6kurmqpgvadd6olec015fu96367t.apps.googleusercontent.com',
+    iosClientId: '852942704392-pjfi6kurmqpgvadd6olec015fu96367t.apps.googleusercontent.com',
     iosBundleId: 'com.norvera.confession',
   );
 

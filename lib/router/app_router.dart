@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:confession/l10n/l10n.dart';
 import 'package:confession/router/app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen|Page,Route')
@@ -19,13 +20,13 @@ class AppRouter extends RootStackRouter {
               children: [
                 AutoRoute(
                   page: CommandmentsRoute.page,
-                  title: (context, data) => 'Examination',
+                  title: (context, data) => context.l10n.examinationNavbarTitle,
                   path: 'exam',
                   initial: true,
                 ),
                 AutoRoute(
                   page: ExaminationRoute.page,
-                  title: (context, data) => 'Examination',
+                  title: (context, data) => context.l10n.examinationNavbarTitle,
                   path: 'exam/:commandmentId',
                 ),
               ],
@@ -35,7 +36,7 @@ class AppRouter extends RootStackRouter {
               children: [
                 AutoRoute(
                   page: ConfessionRoute.page,
-                  title: (context, data) => 'Confession',
+                  title: (context, data) => context.l10n.confessionNavbarTitle,
                   path: 'confession',
                 ),
               ],
@@ -45,15 +46,17 @@ class AppRouter extends RootStackRouter {
               children: [
                 AutoRoute(
                   page: GuideRoute.page,
-                  title: (context, data) => 'Guide',
+                  title: (context, data) => context.l10n.guidesNavbarTitle,
                   path: 'guide',
                   initial: true,
                 ),
                 AutoRoute(
+                  title: (context, data) => context.l10n.guidesNavbarTitle,
                   path: 'guide/:guideId',
                   page: GuideDetailListRoute.page,
                 ),
                 AutoRoute(
+                  title: (context, data) => context.l10n.guidesNavbarTitle,
                   path: 'guide/:guideId/details',
                   page: GuideDetailsRoute.page,
                 ),
@@ -64,7 +67,7 @@ class AppRouter extends RootStackRouter {
               children: [
                 AutoRoute(
                   page: PrayersRoute.page,
-                  title: (context, data) => 'Prayers',
+                  title: (context, data) => context.l10n.prayersNavbarTitle,
                   path: 'prayers',
                   initial: true,
                 ),

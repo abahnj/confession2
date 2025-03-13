@@ -45,9 +45,8 @@ void main() {
 
     when(() => mockExecutor.close()).thenAnswer((_) async => {});
 
-    await AppDatabase.resetInstance();
 
-    database = AppDatabase.instance(
+    database = AppDatabase(
       databaseSource: mockDatabaseSource,
       executor: mockExecutor,
     );
@@ -55,7 +54,6 @@ void main() {
 
   tearDown(() async {
     await database.close();
-    await AppDatabase.resetInstance();
   });
 
   group('AppDatabase', () {
@@ -71,8 +69,7 @@ void main() {
 
     test('initializes new database when file does not exist', () async {
       final databaseSource = TestDatabaseSource(MemoryFileSystem());
-      await AppDatabase.resetInstance();
-      final db = AppDatabase.instance(databaseSource: databaseSource);
+      final db = AppDatabase(databaseSource: databaseSource);
 
       // Force database initialization
       await db.into(db.prayersTable).insert(
@@ -102,8 +99,7 @@ void main() {
         AppDatabaseConfig.defaultAssetPath,
       );
 
-      await AppDatabase.resetInstance();
-      final db = AppDatabase.instance(databaseSource: databaseSource);
+      final db = AppDatabase(databaseSource: databaseSource);
 
       // Force initialization
       await db.into(db.prayersTable).insert(
@@ -130,8 +126,7 @@ void main() {
       // Mock a file system error by using a custom DatabaseSource
       final errorDatabaseSource = ErrorSimulatingDatabaseSource();
 
-      await AppDatabase.resetInstance();
-      final db = AppDatabase.instance(databaseSource: errorDatabaseSource);
+      final db = AppDatabase(databaseSource: errorDatabaseSource);
 
       expect(
         () => db.select(db.commandmentsTable).get(),

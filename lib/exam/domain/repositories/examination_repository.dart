@@ -12,8 +12,10 @@ abstract class ExaminationRepository {
 
   Future<int> resetExaminationText(int examinationId);
 
-  Future<int> deleteExamination(
-      {required int examinationId, bool undo = false,});
+  Future<int> deleteExamination({
+    required int examinationId,
+    bool undo = false,
+  });
 
   Future<int> incrementExaminationCount(int examinationId);
 
@@ -21,4 +23,6 @@ abstract class ExaminationRepository {
     required UserDomainModel user,
     required int commandmentId,
   });
+
+  Stream<List<ExaminationsTableData>> watchActiveExaminations();
 }

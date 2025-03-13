@@ -36,8 +36,7 @@ void main() {
       const domainModel = ThemeDomainModel(themeMode: 'dark');
 
       when(() => mockMapper.toDomainModel(themeMode)).thenReturn(domainModel);
-      when(() => mockRepository.saveThemeSettings(any()))
-          .thenAnswer((_) => Future.value());
+      when(() => mockRepository.saveThemeSettings(any())).thenAnswer((_) => Future.value());
 
       // Act
       await useCase(const SaveThemeParam(theme: themeMode));
@@ -106,24 +105,20 @@ void main() {
     group('initialization', () {
       test('should create use case with provided dependencies', () {
         expect(useCase, isNotNull);
-        expect(useCase, isA<AsyncViewDataParamUseCase<void, SaveThemeParam>>());
+        expect(useCase, isA<AsyncParamUseCase<SaveThemeParam>>());
       });
     });
 
     test('should handle all theme modes correctly', () async {
       // Test all possible theme modes
-      final themeModes = ThemeMode.values
-          .map((value) => AppThemeMode(themeMode: value))
-          .toList();
+      final themeModes = ThemeMode.values.map((value) => AppThemeMode(themeMode: value)).toList();
 
       for (final themeMode in themeModes) {
         // Arrange
-        final domainModel =
-            ThemeDomainModel(themeMode: themeMode.toString().split('.').last);
+        final domainModel = ThemeDomainModel(themeMode: themeMode.toString().split('.').last);
 
         when(() => mockMapper.toDomainModel(themeMode)).thenReturn(domainModel);
-        when(() => mockRepository.saveThemeSettings(any()))
-            .thenAnswer((_) => Future.value());
+        when(() => mockRepository.saveThemeSettings(any())).thenAnswer((_) => Future.value());
 
         // Act
         await useCase(SaveThemeParam(theme: themeMode));

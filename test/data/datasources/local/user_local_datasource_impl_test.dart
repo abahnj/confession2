@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:confession/data/datasources/local/user_local_datasource_impl.dart';
 import 'package:confession/domain/datasources/local_storage_datasource.dart';
 import 'package:confession/domain/dtos/models/user_domain_model.dart';
+import 'package:confession/domain/enums/user_enums.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -39,7 +40,7 @@ void main() {
 
   test('should return UserDomainModel when there is user data', () async {
     const userJson =
-        '{"age": "123", "vocation": "vocation", "gender": "gender", "lastConfession": "lastConfession"}';
+        '{"age": "adult", "vocation": "married", "gender": "female", "lastConfession": "lastConfession"}';
     when(() => mockLocalStorageDataSource.get('user'))
         .thenAnswer((_) async => userJson);
     final result = await userLocalDataSource.read();
@@ -51,9 +52,9 @@ void main() {
 
   test('should write user data to local storage', () async {
     const user = UserDomainModel(
-      age: '25',
-      vocation: 'vocation',
-      gender: 'gender',
+      age: Age.adult,
+      vocation: Vocation.married,
+      gender: Gender.female,
       lastConfession: 'lastConfession',
     );
 

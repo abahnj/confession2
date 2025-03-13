@@ -31,26 +31,34 @@ class UpdateExaminationBloc
   final ResetExaminationUsecase _resetExaminationUsecase;
   final DeleteExaminationUsecase _deleteExaminationUsecase;
 
-  Future<void> _onUpdateCount(UpdateCount event,
-      Emitter<BlocState<PrimitiveViewData<int>>> emit,) async {
+  Future<void> _onUpdateCount(
+    UpdateCount event,
+    Emitter<BlocState<PrimitiveViewData<int>>> emit,
+  ) async {
     final updateCount = await _updateExaminationUsecase(event);
     emit(BlocState.success(data: updateCount));
   }
 
-  Future<void> _onEditExamination(EditExamination event,
-      Emitter<BlocState<PrimitiveViewData<int>>> emit,) async {
+  Future<void> _onEditExamination(
+    EditExamination event,
+    Emitter<BlocState<PrimitiveViewData<int>>> emit,
+  ) async {
     final editExamination = await _editExaminationUsecase(event);
     emit(BlocState.success(data: editExamination));
   }
 
   Future<void> _onResetText(
-      ResetText event, Emitter<BlocState<PrimitiveViewData<int>>> emit,) async {
+    ResetText event,
+    Emitter<BlocState<PrimitiveViewData<int>>> emit,
+  ) async {
     final resetText = await _resetExaminationUsecase(event);
     emit(BlocState.success(data: resetText));
   }
 
-  Future<void> _onDeleteExamination(DeleteExamination event,
-      Emitter<BlocState<PrimitiveViewData<int>>> emit,) async {
+  Future<void> _onDeleteExamination(
+    DeleteExamination event,
+    Emitter<BlocState<PrimitiveViewData<int>>> emit,
+  ) async {
     final deleteExamination = await _deleteExaminationUsecase(event);
     emit(BlocState.success(data: deleteExamination));
   }

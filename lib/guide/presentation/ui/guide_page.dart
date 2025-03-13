@@ -81,7 +81,7 @@ class GuideCard extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Colors.black.withOpacity(0.6),
+                    Colors.black.withValues(alpha:  0.6),
                   ],
                 ),
               ),
@@ -143,9 +143,9 @@ class VintageEffect extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  const Color(0xFF2C3E50).withOpacity(0.6),
-                  const Color(0xFF3498DB).withOpacity(0.4),
-                  Colors.black.withOpacity(0.4),
+                  const Color(0xFF2C3E50).withValues( alpha: .6),
+                  const Color(0xFF3498DB).withValues(alpha: 0.4),
+                  Colors.black.withValues(alpha: 0.4),
                 ],
                 stops: const [0.3, 0.6, 1.0],
               ),

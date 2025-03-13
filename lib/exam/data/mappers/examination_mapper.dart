@@ -10,6 +10,7 @@ class ExaminationMapper extends ViewDataTableMapper<Examination,
   Examination toViewData(ExaminationsTableData model) => Examination(
         id: model.id,
         examinationText: model.description,
+        activeText: model.activeText,
         count: model.count,
         isCustom: model.customId != null,
       );

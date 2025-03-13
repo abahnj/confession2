@@ -33,6 +33,10 @@ abstract class StreamViewDataParamUseCase<Type extends ViewData,
   Stream<Type> call(ParamType param);
 }
 
+abstract class StreamViewDataUseCase<Type extends ViewData> {
+  Stream<Type> call();
+}
+
 abstract class Param extends Equatable {
   const Param();
 }

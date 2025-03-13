@@ -55,6 +55,20 @@ class AppDatabase extends _$AppDatabase {
     });
   }
 
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onCreate: (Migrator m) async {
+        await m.createAll();
+      },
+      onUpgrade: (Migrator m, int from, int to) async {
+        if (from < 5) {
+          await m.addColumn(examinationsTable, examinationsTable.isDeleted);
+        }
+      },
+    );
+  }
+
   Future<void> deleteDatabase() async {
     final file = await _databaseSource.getDatabaseFile();
     if (file.existsSync()) {
@@ -69,8 +83,7 @@ class AppDatabase extends _$AppDatabase {
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final extension = p.extension(file.path);
       final nameWithoutExtension = p.basenameWithoutExtension(file.path);
-      final backupPath =
-          '${p.dirname(file.path)}/backup_${timestamp}_$nameWithoutExtension$extension';
+      final backupPath = '${p.dirname(file.path)}/backup_${timestamp}_$nameWithoutExtension$extension';
 
       await file.copy(backupPath);
     } catch (e) {

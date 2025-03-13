@@ -117,28 +117,32 @@ class _ExaminationPageViewState extends State<ExaminationPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        PageView.builder(
-          controller: _pageController,
-          itemCount: widget.commandmentsList.data.length,
-          itemBuilder: (context, index) => KeepAliveExaminationPage(
-            commandment: widget.commandmentsList.data[index],
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: DotsIndicator(
-              controller: _pageController,
-              itemCount: widget.commandmentsList.data.length,
-              selectedColor: Theme.of(context).colorScheme.secondary,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: Stack(
+        children: [
+          PageView.builder(
+            controller: _pageController,
+            itemCount: widget.commandmentsList.data.length,
+            itemBuilder: (context, index) => KeepAliveExaminationPage(
+              commandment: widget.commandmentsList.data[index],
             ),
           ),
-        ),
-      ],
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: DotsIndicator(
+                controller: _pageController,
+                itemCount: widget.commandmentsList.data.length,
+                selectedColor: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

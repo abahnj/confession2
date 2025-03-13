@@ -18,14 +18,8 @@ class $AssetsDatabaseGen {
   /// File path: assets/database/confession.db
   String get confession => 'assets/database/confession.db';
 
-  /// File path: assets/database/confessioninternal2.db
-  String get confessioninternal2 => 'assets/database/confessioninternal2.db';
-
-  /// File path: assets/database/confessionold.db
-  String get confessionold => 'assets/database/confessionold.db';
-
   /// List of all assets
-  List<String> get values => [confession, confessioninternal2, confessionold];
+  List<String> get values => [confession];
 }
 
 class $AssetsImagesGen {

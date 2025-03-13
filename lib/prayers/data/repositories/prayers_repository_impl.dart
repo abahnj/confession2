@@ -15,4 +15,8 @@ class PrayersRepositoryImpl extends PrayersRepository {
   @override
   Future<List<PrayersTableData>> getPrayers() async =>
       _prayersDao.getAllPrayers();
+
+  @override
+  Future<PrayersTableData> getPrayerById(int id) =>
+      _prayersDao.getPrayerForId(id);
 }
