@@ -1,21 +1,25 @@
 import 'dart:developer';
 
+import 'package:confession/confession/presentation/ui/confession_page.dart';
 import 'package:confession/exam/presentation/ui/commandments_page.dart';
 import 'package:confession/exam/presentation/ui/examination_page/examination_page.dart';
-import 'package:confession/confession/presentation/ui/confession_page.dart';
+import 'package:confession/guide/domain/entities/guide.dart';
 import 'package:confession/guide/presentation/ui/details_page/guide_detail_list.dart';
 import 'package:confession/guide/presentation/ui/details_page/guide_details_page.dart';
 import 'package:confession/guide/presentation/ui/guide_page.dart';
-import 'package:confession/l10n/l10n.dart';
 import 'package:confession/prayers/presentation/ui/details_page/prayer_details_page.dart';
 import 'package:confession/prayers/presentation/ui/prayers_page.dart';
 import 'package:confession/settings/settings_page.dart';
-import 'package:confession/shell/shell_page.dart';
+import 'package:confession/shell/shell_page_wrapper.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final navigationKey = GlobalKey<NavigatorState>();
+final _shellNavigatorExamKey = GlobalKey<NavigatorState>(debugLabel: 'shellExam');
+final _shellNavigatorConfessionKey = GlobalKey<NavigatorState>(debugLabel: 'shellConfession');
+final _shellNavigatorGuideKey = GlobalKey<NavigatorState>(debugLabel: 'shellGuide');
+final _shellNavigatorPrayersKey = GlobalKey<NavigatorState>(debugLabel: 'shellPrayers');
 
 // This class handles the app's navigation structure
 class AppRouter {
@@ -27,78 +31,34 @@ class AppRouter {
     debugLogDiagnostics: true,
     observers: [AppRouteObserver()],
     routes: [
-      ShellRoute(
-        builder: (context, state, child) {
-          return ShellPageWrapper(child: child);
+      // Stateful shell route with nested branches for each tab
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return ShellPageWrapper(navigationShell: navigationShell);
         },
-        routes: [
-          // Examination routes
-          GoRoute(
-            path: '/exam',
-            name: 'examination',
-            pageBuilder: (context, state) => NoTransitionPage(
-              child: CommandmentsPage(),
-              name: 'Examination',
-            ),
+        branches: [
+          // Examination branch
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorExamKey,
             routes: [
               GoRoute(
-                path: ':commandmentId',
-                name: 'examination_detail',
-                pageBuilder: (context, state) {
-                  final commandmentId = state.pathParameters['commandmentId'] ?? '';
-                  return NoTransitionPage(
-                    child: ExaminationPage(
-                      commandmentId: int.tryParse(commandmentId) ?? 0,
-                    ),
-                    name: 'Examination Detail',
-                  );
-                },
-              ),
-            ],
-          ),
-          
-          // Confession routes
-          GoRoute(
-            path: '/confession',
-            name: 'confession',
-            pageBuilder: (context, state) => NoTransitionPage(
-              child: ConfessionPage(),
-              name: 'Confession',
-            ),
-          ),
-          
-          // Guide routes
-          GoRoute(
-            path: '/guide',
-            name: 'guide',
-            pageBuilder: (context, state) => NoTransitionPage(
-              child: GuidePage(),
-              name: 'Guide',
-            ),
-            routes: [
-              GoRoute(
-                path: ':guideId',
-                name: 'guide_detail_list',
-                pageBuilder: (context, state) {
-                  final guideId = state.pathParameters['guideId'] ?? '';
-                  return NoTransitionPage(
-                    child: GuideDetailList(
-                      guideId: int.tryParse(guideId) ?? 0,
-                    ),
-                    name: 'Guide Detail List',
-                  );
-                },
+                path: '/exam',
+                name: 'examination',
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: CommandmentsPage(),
+                  name: 'Examination',
+                ),
                 routes: [
                   GoRoute(
-                    path: 'details',
-                    name: 'guide_details',
+                    path: ':commandmentId',
+                    name: 'examination_detail',
                     pageBuilder: (context, state) {
-                      final guideId = state.pathParameters['guideId'] ?? '';
+                      final commandmentId = state.pathParameters['commandmentId'] ?? '';
                       return NoTransitionPage(
-                        child: GuideDetailsPage(
-                          guideId: int.tryParse(guideId) ?? 0,
+                        child: ExaminationPage(
+                          commandmentId: int.tryParse(commandmentId) ?? 0,
                         ),
-                        name: 'Guide Details',
+                        name: 'Examination Detail',
                       );
                     },
                   ),
@@ -107,24 +67,91 @@ class AppRouter {
             ],
           ),
           
-          // Prayers routes
-          GoRoute(
-            path: '/prayers',
-            name: 'prayers',
-            pageBuilder: (context, state) => NoTransitionPage(
-              child: PrayersPage(),
-              name: 'Prayers',
-            ),
+          // Confession branch
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorConfessionKey,
             routes: [
               GoRoute(
-                path: 'details',
-                name: 'prayer_details',
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: PrayerDetailsPage(),
-                    name: 'Prayer Details',
-                  );
-                },
+                path: '/confession',
+                name: 'confession',
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: ConfessionPage(),
+                  name: 'Confession',
+                ),
+              ),
+            ],
+          ),
+          
+          // Guide branch
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorGuideKey,
+            routes: [
+              GoRoute(
+                path: '/guide',
+                name: 'guide',
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: GuidePage(),
+                  name: 'Guide',
+                ),
+                routes: [
+                  GoRoute(
+                    path: ':guideId',
+                    name: 'guide_detail_list',
+                    pageBuilder: (context, state) {
+                      final guideId = state.pathParameters['guideId'] ?? '';
+                      return NoTransitionPage(
+                        child: GuideDetailListPage(
+                          guideId: int.tryParse(guideId) ?? 0,
+                        ),
+                        name: 'Guide Detail List',
+                      );
+                    },
+                    routes: [
+                      GoRoute(
+                        path: 'details',
+                        name: 'guide_details',
+                        pageBuilder: (context, state) {
+                          final guideId = state.pathParameters['guideId'] ?? '';
+                          final guide = state.extra as Guide?;
+                          return NoTransitionPage(
+                            child: GuideDetailsPage(
+                              guideId: int.tryParse(guideId) ?? 0,
+                              guide: guide,
+                            ),
+                            name: 'Guide Details',
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          
+          // Prayers branch
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorPrayersKey,
+            routes: [
+              GoRoute(
+                path: '/prayers',
+                name: 'prayers',
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: PrayersPage(),
+                  name: 'Prayers',
+                ),
+                routes: [
+                  GoRoute(
+                    path: 'details',
+                    name: 'prayer_details',
+                    pageBuilder: (context, state) {
+                      return const NoTransitionPage(
+                        child: PrayerDetailsPage(),
+                        name: 'Prayer Details',
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),

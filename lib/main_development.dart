@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 void main() {
   bootstrap(
     // Change to true to test go_router implementation
-    useGoRouter: false,
+    useGoRouter: true,
   ).then((_) async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
