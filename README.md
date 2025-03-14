@@ -10,6 +10,34 @@ A Very Good Project created by Very Good CLI.
 
 ---
 
+## Auto Route to Go Router Migration
+
+This branch explores migrating from Auto Route to Go Router for navigation.
+
+### Why Go Router?
+
+- Official Flutter navigation solution with built-in deep linking
+- Simpler API with less boilerplate
+- No code generation step required
+- Better support for web and platform features
+
+### Changes
+
+1. Added Go Router implementation in `lib/router/go_router.dart`
+2. Created shell page wrapper in `lib/shell/shell_page_wrapper.dart`
+3. Alternative app entry point in `lib/app/view/app_go_router.dart`
+
+### Testing
+
+To test this migration:
+
+```bash
+# Run with the go_router implementation
+flutter run -t lib/main_development.dart
+```
+
+---
+
 ## Getting Started 🚀
 
 This project contains 3 flavors:

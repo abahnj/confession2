@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:confession/app/app.dart';
+import 'package:confession/app/view/app_go_router.dart' as go_router_app;
 import 'package:confession/core/di/service_locator.dart';
 import 'package:confession/database/app_database.dart';
 import 'package:flutter/widgets.dart';
@@ -36,7 +38,7 @@ class AppBlocObserver extends BlocObserver {
   }
 }
 
-Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+Future<void> bootstrap({bool useGoRouter = false}) async {
   Bloc.observer = const AppBlocObserver();
 
   // Add cross-flavor configuration here
@@ -56,5 +58,5 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   //log('items in database: $allItems');
 
-  runApp(await builder());
+  runApp(useGoRouter ? const go_router_app.App() : const App());
 }
