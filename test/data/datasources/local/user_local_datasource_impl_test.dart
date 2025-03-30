@@ -31,11 +31,16 @@ void main() {
     verify(() => mockLocalStorageDataSource.remove('user')).called(1);
   });
 
-  test('should throw when there is no user data', () async {
+  test('should return default when there is no user data', () async {
     when(() => mockLocalStorageDataSource.get('user'))
         .thenAnswer((_) async => null);
 
-    expect(() => userLocalDataSource.read(), throwsA(isA<Exception>()));
+    final result = await userLocalDataSource.read();
+
+    expect(
+      result,
+      const UserDomainModel.defaultModel(),
+    );
   });
 
   test('should return UserDomainModel when there is user data', () async {

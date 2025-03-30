@@ -15,6 +15,8 @@ void main() {
 
   setUp(() async {
     mockDatabaseSource = _MockDatabaseSource();
+    AppDatabase.reset();
+
     database = AppDatabase(
       databaseSource: mockDatabaseSource,
       executor: NativeDatabase.memory(),

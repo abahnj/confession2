@@ -16,6 +16,8 @@ void main() {
   // Helper to create a fresh database
   setUp(() async {
     mockDatabaseSource = _MockDatabaseSource();
+    AppDatabase.reset();
+
     database = AppDatabase(
       databaseSource: mockDatabaseSource,
       executor: NativeDatabase.memory(),
@@ -45,9 +47,12 @@ void main() {
       count: const Value(0),
     );
 
-    test('updateExamination should successfully update existing record', () async {
+    test('updateExamination should successfully update existing record',
+        () async {
       // Arrange
-      final inserted = await database.into(database.examinationsTable).insert(baseExamination);
+      final inserted = await database
+          .into(database.examinationsTable)
+          .insert(baseExamination);
       final updatedExamination = ExaminationsTableData(
         id: inserted,
         commandmentId: 1,
@@ -158,25 +163,30 @@ void main() {
     });
 
     test('getPriestFilter returns only priest records', () async {
-      final results = await dao.watchExaminations([dao.getPriestFilter()]).first;
+      final results =
+          await dao.watchExaminations([dao.getPriestFilter()]).first;
       expect(results.length, 1);
       expect(results.first.activeText, 'Teen single priest');
     });
 
     test('getFemaleFilter returns only female records', () async {
-      final results = await dao.watchExaminations([dao.getFemaleFilter()]).first;
+      final results =
+          await dao.watchExaminations([dao.getFemaleFilter()]).first;
       expect(results.length, 2);
       expect(results.map((e) => e.female).every((isFemale) => isFemale), true);
     });
 
     test('getActiveFilter returns records with count > 0', () async {
-      final results = await dao.watchExaminations([dao.isActiveExamination()]).first;
+      final results =
+          await dao.watchExaminations([dao.isActiveExamination()]).first;
       expect(results.length, 2);
       expect(results.every((exam) => exam.count > 0), true);
     });
 
-    test('getCommandmentFilter returns records for specific commandment', () async {
-      final results = await dao.watchExaminations([dao.getCommandmentFilter(2)]).first;
+    test('getCommandmentFilter returns records for specific commandment',
+        () async {
+      final results =
+          await dao.watchExaminations([dao.getCommandmentFilter(2)]).first;
       expect(results.length, 1);
       expect(results.first.commandmentId, 2);
     });
@@ -219,15 +229,17 @@ void main() {
       ];
 
       await Future.wait(
-        examinationsTable.map((e) => database.into(database.examinationsTable).insert(e)),
+        examinationsTable
+            .map((e) => database.into(database.examinationsTable).insert(e)),
       );
 
       // Act
       await dao.resetExaminationsCount();
 
       // Assert
-      final results =
-          await (database.select(database.examinationsTable)..where((tbl) => tbl.count.isBiggerThanValue(0))).get();
+      final results = await (database.select(database.examinationsTable)
+            ..where((tbl) => tbl.count.isBiggerThanValue(0)))
+          .get();
       expect(results, isEmpty);
     });
 
@@ -267,7 +279,8 @@ void main() {
       ];
 
       await Future.wait(
-        examinationsTable.map((e) => database.into(database.examinationsTable).insert(e)),
+        examinationsTable
+            .map((e) => database.into(database.examinationsTable).insert(e)),
       );
 
       // Act
@@ -300,7 +313,8 @@ void main() {
       await dao.resetExaminationsCount();
 
       // Assert
-      final result = await database.select(database.examinationsTable).getSingle();
+      final result =
+          await database.select(database.examinationsTable).getSingle();
 
       expect(
         result,
@@ -419,7 +433,8 @@ void main() {
       await expectation;
     });
 
-    test('watchExaminations with filters emits only matching records', () async {
+    test('watchExaminations with filters emits only matching records',
+        () async {
       final adultExam = ExaminationsTableCompanion.insert(
         commandmentId: 1,
         adult: true,
@@ -486,7 +501,8 @@ void main() {
       count: const Value(0),
     );
 
-    test('getExaminations with no filters returns all examinationsTable', () async {
+    test('getExaminations with no filters returns all examinationsTable',
+        () async {
       // Arrange
       await database.into(database.examinationsTable).insert(testExamination);
 
@@ -547,9 +563,11 @@ void main() {
         stream,
         emitsInOrder([
           // After first insert
-          isA<List<ExaminationsTableData>>().having((list) => list.length, 'length', 1),
+          isA<List<ExaminationsTableData>>()
+              .having((list) => list.length, 'length', 1),
           // After second insert
-          isA<List<ExaminationsTableData>>().having((list) => list.length, 'length', 2),
+          isA<List<ExaminationsTableData>>()
+              .having((list) => list.length, 'length', 2),
         ]),
       );
 
@@ -611,8 +629,10 @@ void main() {
       );
 
       // Act
-      final singleResults = await dao.watchExaminations([dao.getSingleFilter()]).first;
-      final marriedResults = await dao.watchExaminations([dao.getMarriedFilter()]).first;
+      final singleResults =
+          await dao.watchExaminations([dao.getSingleFilter()]).first;
+      final marriedResults =
+          await dao.watchExaminations([dao.getMarriedFilter()]).first;
 
       // Assert
       expect(singleResults.length, 1);
