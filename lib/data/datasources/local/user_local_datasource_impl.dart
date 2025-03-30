@@ -18,7 +18,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     final json = await _localStorage.get(_userKey);
 
     if (json == null) {
-      throw Exception('User not found');
+      return const UserDomainModel.defaultModel();
     }
 
     final jsonMap = jsonDecode(json) as Map<String, dynamic>;

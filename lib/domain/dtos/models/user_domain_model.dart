@@ -9,6 +9,12 @@ final class UserDomainModel extends DomainModel {
     required this.lastConfession,
   });
 
+  const UserDomainModel.defaultModel()
+      : vocation = Vocation.single,
+        age = Age.adult,
+        gender = Gender.female,
+        lastConfession = '';
+
   @override
   factory UserDomainModel.fromJson(Map<String, dynamic> json) {
     return UserDomainModel(

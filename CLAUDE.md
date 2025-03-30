@@ -2,7 +2,7 @@
 
 ## Commands
 - Build: `flutter build [apk|ios] --flavor [development|staging|production]`
-- Test: `flutter test` or `./fluttertest.sh` (runs with coverage)
+- Test:  `./fluttertest.sh` (runs with coverage)
 - Single test: `flutter test test/path/to/test_file.dart`
 - Lint: `flutter analyze`
 - Generate code: `flutter pub run build_runner build --delete-conflicting-outputs`

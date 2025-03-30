@@ -24,13 +24,40 @@ part 'app_database.g.dart';
   daos: [CommandmentsDao, ExaminationsDao, PrayersDao, GuidesDao],
 )
 class AppDatabase extends _$AppDatabase {
-  AppDatabase({
+  // Factory constructor that enforces singleton pattern
+  factory AppDatabase({
+    required DatabaseSource databaseSource,
+    QueryExecutor? executor,
+  }) {
+    if (_instance == null) {
+      _instance = AppDatabase._internal(
+        databaseSource: databaseSource,
+        executor: executor,
+      );
+    } else {
+      log('Warning: AppDatabase instance already exists. New parameters will be ignored.');
+    }
+    return _instance!;
+  }
+
+  // Private constructor used for initialization
+  AppDatabase._internal({
     required DatabaseSource databaseSource,
     QueryExecutor? executor,
   })  : _databaseSource = databaseSource,
         super(executor ?? _openConnection(databaseSource));
+  static AppDatabase? _instance;
 
   final DatabaseSource _databaseSource;
+
+  static AppDatabase get instance {
+    if (_instance == null) {
+      throw StateError(
+        'AppDatabase has not been initialized. Call AppDatabase constructor first.',
+      );
+    }
+    return _instance!;
+  }
 
   @override
   int get schemaVersion => AppDatabaseConfig.schemaVersion;
@@ -83,7 +110,8 @@ class AppDatabase extends _$AppDatabase {
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final extension = p.extension(file.path);
       final nameWithoutExtension = p.basenameWithoutExtension(file.path);
-      final backupPath = '${p.dirname(file.path)}/backup_${timestamp}_$nameWithoutExtension$extension';
+      final backupPath =
+          '${p.dirname(file.path)}/backup_${timestamp}_$nameWithoutExtension$extension';
 
       await file.copy(backupPath);
     } catch (e) {
@@ -94,5 +122,13 @@ class AppDatabase extends _$AppDatabase {
   Future<bool> isDatabaseInitialized() async {
     final file = await _databaseSource.getDatabaseFile();
     return file.existsSync();
+  }
+
+  // Method to reset the singleton (useful for testing)
+  static void reset() {
+    if (_instance != null) {
+      _instance!.close();
+      _instance = null;
+    }
   }
 }
