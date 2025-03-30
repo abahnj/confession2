@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/core/base/bloc/bloc_event.dart';
 import 'package:confession/domain/entities/user.dart';
 import 'package:confession/domain/enums/user_enums.dart';
@@ -6,6 +5,7 @@ import 'package:confession/l10n/l10n.dart';
 import 'package:confession/presentation/bloc/user/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class AgeDialog extends StatelessWidget {
   const AgeDialog({required this.user, super.key});
@@ -32,7 +32,7 @@ class AgeDialog extends StatelessWidget {
                     argument: UpdateUser(user.copyWith(age: Age.adult)),
                   ),
                 );
-            context.maybePop();
+            context.pop();
           },
         ),
         RadioListTile(
@@ -43,7 +43,7 @@ class AgeDialog extends StatelessWidget {
             context.read<UserBloc>().add(
                   BlocEvent(argument: UpdateUser(user.copyWith(age: Age.teen))),
                 );
-            context.maybePop();
+            context.pop();
           },
         ),
         RadioListTile(
@@ -56,7 +56,7 @@ class AgeDialog extends StatelessWidget {
                     argument: UpdateUser(user.copyWith(age: Age.child)),
                   ),
                 );
-            context.maybePop();
+            context.pop();
           },
         ),
       ],

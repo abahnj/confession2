@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/core/base/bloc/bloc_event.dart';
 import 'package:confession/core/base/bloc/bloc_state.dart';
 import 'package:confession/core/di/service_locator.dart';
@@ -7,13 +6,13 @@ import 'package:confession/exam/domain/entities/commandment.dart';
 import 'package:confession/exam/domain/usecases/get_commandments_usecase.dart';
 import 'package:confession/exam/presentation/bloc/commandments_bloc.dart';
 import 'package:confession/presentation/bloc/user/user_bloc.dart';
-import 'package:confession/router/app_router.gr.dart';
+import 'package:confession/router/nav_paths.dart';
 import 'package:confession/shared/widgets/app_bar.dart';
 import 'package:confession/shared/widgets/confession_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-@RoutePage()
 class CommandmentsPage extends StatelessWidget {
   const CommandmentsPage({super.key});
 
@@ -78,8 +77,7 @@ class CommandmentsLoadedView extends StatelessWidget {
           (commandment) => ConfessionListTile(
             title: commandment.commandment,
             onTap: () {
-              context
-                  .pushRoute(ExaminationRoute(commandmentId: commandment.id));
+              context.push(NavPath.examinationDetailPath(commandment.id));
             },
             subtitle: commandment.commandmentText.isNotEmpty
                 ? commandment.commandmentText

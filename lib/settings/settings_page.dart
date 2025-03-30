@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/core/di/service_locator.dart';
 import 'package:confession/database/daos/daos.dart';
 import 'package:confession/l10n/l10n.dart';
@@ -10,8 +9,8 @@ import 'package:confession/theme/domain/entities/theme.dart';
 import 'package:confession/theme/presentation/bloc/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-@RoutePage()
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
@@ -83,7 +82,7 @@ class SettingsPage extends StatelessWidget {
                         ),
                         actions: <Widget>[
                           TextButton(
-                            onPressed: () => context.maybePop(),
+                            onPressed: () => context.pop(),
                             child: const Text('Cancel'),
                           ),
                           TextButton(
@@ -96,7 +95,7 @@ class SettingsPage extends StatelessWidget {
                                     duration: const Duration(seconds: 2),
                                   ),
                                 );
-                                await context.maybePop();
+                                context.pop();
                               }
                             },
                             child: const Text('Restore'),

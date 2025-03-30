@@ -32,50 +32,55 @@ class _NavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: navigationShell.currentIndex,
-      onTap: (index) {
-        // Only navigate if the selected tab is different
-        if (index != navigationShell.currentIndex) {
-          navigationShell.goBranch(
-            index,
-            // This is a root navigation, so we want to initialize the branch
-            initialLocation: index == navigationShell.currentIndex,
-          );
-        }
-      },
+      onTap: (int index) => _onTap(context, index),
       items: _buildNavigationItems(context, navigationShell.currentIndex),
     );
   }
 
   List<BottomNavigationBarItem> _buildNavigationItems(
-    BuildContext context, 
+    BuildContext context,
     int currentIndex,
   ) {
     return [
       _buildNavigationItem(
-        context, 
-        Assets.vectors.exam, 
+        context,
+        Assets.vectors.exam,
         context.l10n.examinationNavbarTitle,
         currentIndex == 0,
       ),
       _buildNavigationItem(
-        context, 
-        Assets.vectors.confession, 
+        context,
+        Assets.vectors.confession,
         context.l10n.confessionNavbarTitle,
         currentIndex == 1,
       ),
       _buildNavigationItem(
-        context, 
-        Assets.vectors.guides, 
+        context,
+        Assets.vectors.guides,
         context.l10n.guidesNavbarTitle,
         currentIndex == 2,
       ),
       _buildNavigationItem(
-        context, 
-        Assets.vectors.prayer, 
+        context,
+        Assets.vectors.prayer,
         context.l10n.prayersNavbarTitle,
         currentIndex == 3,
       ),
     ];
+  }
+
+  void _onTap(BuildContext context, int index) {
+    // When navigating to a new branch, it's recommended to use the goBranch
+    // method, as doing so makes sure the last navigation state of the
+    // Navigator for the branch is restored.
+    navigationShell.goBranch(
+      index,
+      // A common pattern when using bottom navigation bars is to support
+      // navigating to the initial location when tapping the item that is
+      // already active. This example demonstrates how to support this behavior,
+      // using the initialLocation parameter of goBranch.
+      initialLocation: index == navigationShell.currentIndex,
+    );
   }
 
   BottomNavigationBarItem _buildNavigationItem(

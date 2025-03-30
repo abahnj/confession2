@@ -1,62 +1,53 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
-import 'package:confession/app/app.dart';
-import 'package:confession/app/view/app_go_router.dart' as go_router_app;
 import 'package:confession/core/di/service_locator.dart';
+import 'package:confession/core/errors/app_exception.dart';
+import 'package:confession/core/errors/error_handler.dart';
 import 'package:confession/database/app_database.dart';
+import 'package:confession/error_reporting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 
-class AppBlocObserver extends BlocObserver {
-  const AppBlocObserver();
-
-  @override
-  void onCreate(BlocBase<dynamic> bloc) {
-    log('onCreate(${bloc.runtimeType})');
-    super.onCreate(bloc);
-  }
-
-  @override
-  void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
-    super.onChange(bloc, change);
-    //log('onChange(${bloc.runtimeType}, $change)');
-  }
-
-  @override
-  void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
-    log('onError(${bloc.runtimeType}, $error, $stackTrace)');
-    super.onError(bloc, error, stackTrace);
-  }
-
-  @override
-  void onClose(BlocBase<dynamic> bloc) {
-    log('onClosed(${bloc.runtimeType})');
-    super.onClose(bloc);
-  }
-}
-
-Future<void> bootstrap({bool useGoRouter = false}) async {
-  Bloc.observer = const AppBlocObserver();
+Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+  // Setup error handling as early as possible
+  configureErrorReporting();
 
   // Add cross-flavor configuration here
-
   WidgetsFlutterBinding.ensureInitialized();
-  Intl.systemLocale = await findSystemLocale();
+  
+  try {
+    Intl.systemLocale = await findSystemLocale();
+  } catch (e, st) {
+    await ErrorHandler.instance.handleException(
+      UnexpectedException(
+        message: 'Error setting system locale', 
+        error: e,
+        stackTrace: st,
+      ), 
+      st,
+    );
+  }
 
-  //Initialize dependencies
+  // Initialize dependencies
   ServiceLocator.init();
 
-  final database = sl.get<AppDatabase>();
+  try {
+    final database = sl.get<AppDatabase>();
+    final prayersDao = database.prayersDao;
+    final inspirationCount = await prayersDao.getRandomInspiration();
+    log('inspiration count: $inspirationCount');
+  } catch (e, st) {
+    final exception = e is AppException
+        ? e
+        : DatabaseException(
+            message: 'Database initialization error',
+            error: e,
+            stackTrace: st,
+          );
+    await ErrorHandler.instance.handleException(exception, st);
+  }
 
-  final prayersDao = database.prayersDao;
-
-  final inspirationCount = await prayersDao.getRandomInspiration();
-  log('inspiration count: $inspirationCount');
-
-  //log('items in database: $allItems');
-
-  runApp(useGoRouter ? const go_router_app.App() : const App());
+  runApp(await builder());
 }

@@ -1,10 +1,9 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/gen/assets.gen.dart';
-import 'package:confession/router/app_router.gr.dart';
+import 'package:confession/router/nav_paths.dart';
 import 'package:confession/shared/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-@RoutePage()
 class GuidePage extends StatelessWidget {
   const GuidePage({super.key});
 
@@ -61,7 +60,7 @@ class GuideCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: () => context.pushRoute(GuideDetailListRoute(guideId: guideId)),
+        onTap: () => context.push(NavPath.guideDetailListPath(guideId)),
         child: Card(
           child: DecoratedBox(
             decoration: BoxDecoration(

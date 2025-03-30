@@ -1,9 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/prayers/domain/entities/prayer.dart';
 import 'package:confession/shared/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
-
-@RoutePage()
 class PrayerDetailsPage extends StatelessWidget {
   const PrayerDetailsPage({required this.prayer, super.key});
 

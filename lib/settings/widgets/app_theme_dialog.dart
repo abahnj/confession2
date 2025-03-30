@@ -1,8 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/l10n/l10n.dart';
 import 'package:confession/theme/presentation/bloc/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class AppThemeDialog extends StatelessWidget {
   const AppThemeDialog({required this.userThemeMode, super.key});
@@ -22,7 +22,7 @@ class AppThemeDialog extends StatelessWidget {
           groupValue: userThemeMode,
           onChanged: (_) {
             context.read<ThemeCubit>().setThemeMode(ThemeMode.system);
-            context.maybePop();
+            context.pop();
           },
         ),
         RadioListTile<ThemeMode>(
@@ -31,7 +31,7 @@ class AppThemeDialog extends StatelessWidget {
           groupValue: userThemeMode,
           onChanged: (_) {
             context.read<ThemeCubit>().setThemeMode(ThemeMode.dark);
-            context.maybePop();
+            context.pop();
           },
         ),
         RadioListTile<ThemeMode>(
@@ -40,7 +40,7 @@ class AppThemeDialog extends StatelessWidget {
           groupValue: userThemeMode,
           onChanged: (_) {
             context.read<ThemeCubit>().setThemeMode(ThemeMode.light);
-            context.maybePop();
+            context.pop();
           },
         ),
       ],

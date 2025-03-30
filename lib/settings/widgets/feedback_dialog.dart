@@ -1,7 +1,7 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/shared/utils.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 enum FeedbackType { bug, feature, other }
 
@@ -108,7 +108,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                   duration: Duration(seconds: 2),
                 ),
               );
-              await context.maybePop();
+              context.pop();
             }
           },
           child: const Text('Submit'),

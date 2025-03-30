@@ -1,30 +1,27 @@
 import 'dart:developer';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
-class AppRouteObserver extends AutoRouterObserver {
+class AppRouteObserver extends NavigatorObserver {
   @override
-  void didPush(Route<Object?> route, Route<Object?>? previousRoute) {
-    log('New route pushed: ${route.data?.breadcrumbs.map((e) => e.path).join(' > ')}');
-  }
-
-  // only override to observer tab routes
-  @override
-  void didInitTabRoute(TabPageRoute route, TabPageRoute? previousRoute) {
-    log('Tab route visited: ${route.name}');
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    log('New route pushed: ${route.settings.name}');
   }
 
   @override
-  void didChangeTabRoute(TabPageRoute route, TabPageRoute previousRoute) {
-    FirebaseCrashlytics.instance.log('route changed to ${route.name}');
-
-    log('Tab route re-visited: ${route.name}');
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    log('Route popped: ${route.settings.name}');
   }
 
   @override
-  void didPop(Route<Object?> route, Route<Object?>? previousRoute) {
-    log('Route popped: ${route.data?.path}');
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
+    log('Route replaced: ${newRoute?.settings.name}');
+  }
+
+  @override
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    FirebaseCrashlytics.instance.log('Route removed: ${route.settings.name}');
+    log('Route removed: ${route.settings.name}');
   }
 }

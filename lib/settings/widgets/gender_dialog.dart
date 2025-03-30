@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/core/base/bloc/bloc_event.dart';
 import 'package:confession/domain/entities/user.dart';
 import 'package:confession/domain/enums/user_enums.dart';
@@ -6,6 +5,7 @@ import 'package:confession/l10n/l10n.dart';
 import 'package:confession/presentation/bloc/user/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class GenderDialog extends StatelessWidget {
   const GenderDialog({required this.user, super.key});
@@ -29,7 +29,7 @@ class GenderDialog extends StatelessWidget {
                     argument: UpdateUser(user.copyWith(gender: Gender.male)),
                   ),
                 );
-            context.maybePop();
+            context.pop();
           },
         ),
         RadioListTile(
@@ -42,7 +42,7 @@ class GenderDialog extends StatelessWidget {
                     argument: UpdateUser(user.copyWith(gender: Gender.female)),
                   ),
                 );
-            context.maybePop();
+            context.pop();
           },
         ),
       ],

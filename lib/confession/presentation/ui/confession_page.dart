@@ -1,11 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/confession/presentation/ui/widgets/confession_finish_card.dart';
 import 'package:confession/confession/presentation/ui/widgets/confession_list_card.dart';
 import 'package:confession/confession/presentation/ui/widgets/confession_prep_card.dart';
 import 'package:confession/shared/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
-
-@RoutePage()
 class ConfessionPage extends StatefulWidget {
   const ConfessionPage({super.key});
 

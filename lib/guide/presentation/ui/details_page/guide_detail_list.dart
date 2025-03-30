@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/core/base/bloc/bloc_event.dart';
 import 'package:confession/core/base/bloc/bloc_state.dart';
 import 'package:confession/core/di/service_locator.dart';
@@ -6,16 +5,16 @@ import 'package:confession/guide/domain/entities/guide.dart';
 import 'package:confession/guide/presentation/bloc/guides_bloc.dart';
 import 'package:confession/guide/usecases/get_guides_usecase.dart';
 import 'package:confession/l10n/l10n.dart';
-import 'package:confession/router/app_router.gr.dart';
+import 'package:confession/router/nav_paths.dart';
 import 'package:confession/shared/widgets/app_bar.dart';
 import 'package:confession/shared/widgets/confession_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-@RoutePage()
 class GuideDetailListPage extends StatelessWidget {
   const GuideDetailListPage({
-    @PathParam('guideId') required this.guideId,
+    required this.guideId,
     super.key,
   });
 
@@ -24,7 +23,8 @@ class GuideDetailListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GuidesBloc(getGuidesUsecase: sl())..add(BlocEvent(argument: GuideParam(id: guideId))),
+      create: (context) => GuidesBloc(getGuidesUsecase: sl())
+        ..add(BlocEvent(argument: GuideParam(id: guideId))),
       child: const GuideDetailListConsumer(),
     );
   }
@@ -77,6 +77,10 @@ class GuideDetailListSuccess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final guideId = int.tryParse(
+          GoRouterState.of(context).pathParameters['guideId'] ?? '',
+        ) ??
+        0;
     return Scaffold(
       appBar: ConfessionAppBar(title: context.l10n.guidesNavbarTitle),
       body: Column(
@@ -85,9 +89,7 @@ class GuideDetailListSuccess extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: FittedBox(
               child: Text(
-                _getGuideTitle(
-                  context.topRoute.params.getInt('guideId', 0),
-                ),
+                _getGuideTitle(guideId),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
@@ -101,7 +103,10 @@ class GuideDetailListSuccess extends StatelessWidget {
                 return ConfessionListTile(
                   title: guide.title,
                   onTap: () {
-                    context.router.push(GuideDetailsRoute(guide: guide));
+                    context.push(
+                      NavPath.guideDetailsPath(guideId),
+                      extra: guide,
+                    );
                   },
                 );
               },

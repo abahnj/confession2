@@ -1,7 +1,6 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:confession/gen/fonts.gen.dart';
-import 'package:confession/router/app_router.gr.dart';
+import 'package:confession/router/nav_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ConfessionAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ConfessionAppBar({super.key, this.title});
@@ -13,22 +12,25 @@ class ConfessionAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: FittedBox(
         child: Text(
-          title ?? context.topRoute.title(context),
-          style: Theme.of(context)
-              .textTheme
-              .headlineMedium
-              ?.copyWith(fontFamily: FontFamily.robotoMono),
+          title ?? _getAppBarTitle(context),
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
         ),
       ),
-      leading: const AutoLeadingButton(),
       actions: [
         IconButton(
           icon: const Icon(Icons.settings_rounded),
-          onPressed: () => context.pushRoute(const SettingsRoute()),
+          onPressed: () => context.push(NavPath.settings.path),
         ),
       ],
     );
   }
+
+  String _getAppBarTitle(BuildContext context) =>
+      GoRouterState.of(context).name?.split('/').last.toUpperCase() ?? '';
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);

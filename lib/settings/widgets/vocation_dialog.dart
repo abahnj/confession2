@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/core/base/bloc/bloc_event.dart';
 import 'package:confession/domain/entities/user.dart';
 import 'package:confession/domain/enums/user_enums.dart';
@@ -6,6 +5,7 @@ import 'package:confession/l10n/l10n.dart';
 import 'package:confession/presentation/bloc/user/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class VocationDialog extends StatelessWidget {
   const VocationDialog({required this.user, super.key});
@@ -30,7 +30,7 @@ class VocationDialog extends StatelessWidget {
                         UpdateUser(user.copyWith(vocation: Vocation.single)),
                   ),
                 );
-            context.maybePop();
+            context.pop();
           },
         ),
         RadioListTile(
@@ -44,7 +44,7 @@ class VocationDialog extends StatelessWidget {
                         UpdateUser(user.copyWith(vocation: Vocation.married)),
                   ),
                 );
-            context.maybePop();
+            context.pop();
           },
         ),
         RadioListTile(
@@ -58,7 +58,7 @@ class VocationDialog extends StatelessWidget {
                         UpdateUser(user.copyWith(vocation: Vocation.religious)),
                   ),
                 );
-            context.maybePop();
+            context.pop();
           },
         ),
         RadioListTile(
@@ -72,7 +72,7 @@ class VocationDialog extends StatelessWidget {
                         UpdateUser(user.copyWith(vocation: Vocation.priest)),
                   ),
                 );
-            context.maybePop();
+            context.pop();
           },
         ),
       ],

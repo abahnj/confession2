@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/core/base/bloc/bloc_event.dart';
 import 'package:confession/core/base/bloc/bloc_state.dart';
 import 'package:confession/core/di/service_locator.dart';
@@ -14,10 +13,9 @@ import 'package:confession/shared/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@RoutePage()
 class ExaminationPage extends StatelessWidget {
   const ExaminationPage({
-    @PathParam('commandmentId') required this.commandmentId,
+    required this.commandmentId,
     super.key,
   });
 

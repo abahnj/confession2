@@ -9,7 +9,6 @@ environment:
   sdk: ^3.5.0
 
 dependencies:
-  auto_route: ^10.0.1
   bloc: ^9.0.0
   device_info_plus: ^11.1.1
   drift: ^2.21.0
@@ -38,7 +37,6 @@ dependencies:
   shared_preferences: ^2.3.3
 
 dev_dependencies:
-  auto_route_generator: ^10.0.1
   bloc_test: ^10.0.0
   build_runner: ^2.4.13
   drift_dev: ^2.21.2

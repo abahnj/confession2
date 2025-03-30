@@ -1,7 +1,7 @@
+import 'package:confession/error_reporting.dart';
 import 'package:confession/l10n/l10n.dart';
 import 'package:confession/presentation/providers/user_provider.dart';
-import 'package:confession/router/app_router.dart';
-import 'package:confession/router/observers/app_route_observer.dart';
+import 'package:confession/router/go_router.dart';
 import 'package:confession/shared/app_theme.dart';
 import 'package:confession/theme/domain/entities/theme.dart';
 import 'package:confession/theme/presentation/bloc/theme_cubit.dart';
@@ -19,16 +19,17 @@ class App extends StatelessWidget {
       child: BlocBuilder<ThemeCubit, AppThemeMode>(
         builder: (context, state) {
           return MaterialApp.router(
-            // routerDelegate: _appRouter.delegate(),
-            // routeInformationParser: _appRouter.defaultRouteParser(),
-            routerConfig: _appRouter.config(
-              navigatorObservers: () => [AppRouteObserver()],
-            ),
+            routerConfig: _appRouter.router,
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
             themeMode: state.themeMode,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
+            builder: (context, child) {
+              return ErrorHandlerProvider(
+                child: child ?? const SizedBox.shrink(),
+              );
+            },
           );
         },
       ),

@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/confession/presentation/bloc/examination_of_conscience_bloc.dart';
 import 'package:confession/confession/presentation/bloc/finish_confession_bloc.dart';
 import 'package:confession/confession/presentation/bloc/random_inspiration_bloc.dart';
@@ -10,10 +9,11 @@ import 'package:confession/core/di/service_locator.dart';
 import 'package:confession/prayers/domain/entities/inspiration.dart';
 import 'package:confession/prayers/domain/entities/prayer.dart';
 import 'package:confession/presentation/bloc/user/user_bloc.dart';
-import 'package:confession/router/app_router.gr.dart';
+import 'package:confession/router/nav_paths.dart';
 import 'package:confession/shared/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ConfessionFinishCard extends StatelessWidget {
   const ConfessionFinishCard({required this.pageController, super.key});
@@ -146,7 +146,7 @@ class FinishExaminationButtons extends StatelessWidget {
         state.maybeMap(
           success: (_) {
             context.read<UserBloc>().add(const BlocEvent(argument: LoadUser()));
-            context.router.push(ShellRoute());
+            context.go(NavPath.examination.path);
           },
         );
       },

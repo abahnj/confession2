@@ -1,21 +1,22 @@
 import 'dart:developer';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:confession/core/base/bloc/bloc_event.dart';
 import 'package:confession/core/base/bloc/bloc_state.dart';
 import 'package:confession/core/di/service_locator.dart';
+import 'package:confession/core/errors/app_exception.dart';
 import 'package:confession/prayers/domain/entities/prayer.dart';
 import 'package:confession/prayers/presentation/bloc/prayers_bloc.dart';
-import 'package:confession/router/app_router.gr.dart';
+import 'package:confession/router/nav_paths.dart';
 import 'package:confession/shared/utils.dart';
 import 'package:confession/shared/widgets/app_bar.dart';
 import 'package:confession/shared/widgets/confession_list_tile.dart';
+import 'package:confession/shared/widgets/error_display.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-@RoutePage()
 class PrayersPage extends StatelessWidget {
   const PrayersPage({super.key});
 
@@ -73,7 +74,7 @@ class PrayersLoadedView extends StatelessWidget {
               (prayer) => ConfessionListTile(
                 title: prayer.prayerName,
                 onTap: () {
-                  context.pushRoute(PrayerDetailsRoute(prayer: prayer));
+                  context.push(NavPath.prayerDetails.path, extra: prayer);
                 },
               ),
             ),
@@ -88,7 +89,7 @@ class PrayersLoadedView extends StatelessWidget {
               (prayer) => ConfessionListTile(
                 title: prayer.prayerName,
                 onTap: () {
-                  context.pushRoute(PrayerDetailsRoute(prayer: prayer));
+                  context.push(NavPath.prayerDetails.path, extra: prayer);
                 },
               ),
             ),
@@ -103,7 +104,21 @@ class PrayersErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(height: 200, width: 200, color: Colors.red);
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Center(
+        child: ErrorDisplay(
+          exception: const FeatureException(
+            message: 'Failed to load prayers',
+            featureCode: 'PRAYERS',
+          ),
+          onRetry: () {
+            context.read<PrayersBloc>().add(const BlocEvent.noParam());
+          },
+          displayType: ErrorDisplayType.page,
+        ),
+      ),
+    );
   }
 }
 
