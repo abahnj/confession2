@@ -8,6 +8,7 @@ class PrayersMapper extends ViewDataTableMapper<Prayer, PrayersTableData,
     PrayersTableCompanion> {
   @override
   Prayer toViewData(PrayersTableData model) => Prayer(
+        id: model.id,
         prayerName: model.prayerName,
         text: model.prayerText,
       );

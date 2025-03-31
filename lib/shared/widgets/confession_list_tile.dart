@@ -11,6 +11,7 @@ class ConfessionListTile extends StatelessWidget {
     this.subtitle,
     this.trailing,
     this.onLongPress,
+    this.selected = false,
   });
 
   final VoidCallback? onTap;
@@ -19,6 +20,7 @@ class ConfessionListTile extends StatelessWidget {
   final String? subtitle;
   final Widget? trailing;
   final bool isCustom;
+  final bool selected;
 
   static const _padding = EdgeInsets.symmetric(horizontal: 20, vertical: 10);
   static const _borderRadius = 16.0;
@@ -28,11 +30,17 @@ class ConfessionListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final backgroundColor = selected
+        ? Theme.of(context).colorScheme.primaryContainer
+        : Theme.of(context).colorScheme.tertiary.withValues(alpha: .2);
 
     return Card(
-      color: Theme.of(context).colorScheme.tertiary.withValues(alpha: .2),
+      color: backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_borderRadius),
+        side: selected
+            ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 2)
+            : BorderSide.none,
       ),
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       child: GestureDetector(
@@ -43,7 +51,9 @@ class ConfessionListTile extends StatelessWidget {
           leading: _buildLeadingIcon(context),
           title: Text(
             title,
-            style: const TextStyle(fontWeight: FontWeight.w500),
+            style: TextStyle(
+              fontWeight: selected ? FontWeight.bold : FontWeight.w500,
+            ),
           ),
           subtitle: subtitle != null
               ? Text(
@@ -53,7 +63,7 @@ class ConfessionListTile extends StatelessWidget {
               : null,
           trailing: trailing ??
               Icon(
-                Icons.keyboard_arrow_right,
+                selected ? Icons.check : Icons.keyboard_arrow_right,
                 color: theme.iconTheme.color,
                 size: _arrowSize,
               ),

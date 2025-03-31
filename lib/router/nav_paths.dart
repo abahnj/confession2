@@ -29,7 +29,7 @@ enum NavPath {
     name: 'Prayers',
   ),
   prayerDetails._(
-    path: '/prayers/details',
+    path: '/prayers/:prayerId',
     name: 'Prayer Details',
   ),
   settings._(
@@ -47,4 +47,6 @@ enum NavPath {
   static String guideDetailListPath(int guideId) => '/guide/$guideId';
 
   static String guideDetailsPath(int guideId) => '/guide/$guideId/details';
+  
+  static String prayerDetailsPath(int prayerId) => '/prayers/$prayerId';
 }

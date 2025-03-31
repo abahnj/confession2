@@ -26,10 +26,12 @@ void main() {
     const testPrayers = PrayerList(
       data: [
         Prayer(
+          id: 1,
           prayerName: 'Test Prayer 1',
           text: 'Prayer text 1',
         ),
         Prayer(
+          id: 2,
           prayerName: 'Test Prayer 2',
           text: 'Prayer text 2',
         ),

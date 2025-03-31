@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ConfessionAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const ConfessionAppBar({super.key, this.title});
+  const ConfessionAppBar({super.key, this.title, this.leading});
 
   final String? title;
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      leading: leading,
       title: FittedBox(
         child: Text(
           title ?? _getAppBarTitle(context),

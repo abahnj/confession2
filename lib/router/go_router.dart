@@ -6,8 +6,7 @@ import 'package:confession/guide/presentation/ui/details_page/guide_detail_list.
 import 'package:confession/guide/presentation/ui/details_page/guide_details_page.dart';
 import 'package:confession/guide/presentation/ui/guide_page.dart';
 import 'package:confession/prayers/domain/entities/prayer.dart';
-import 'package:confession/prayers/presentation/ui/details_page/prayer_details_page.dart';
-import 'package:confession/prayers/presentation/ui/prayers_page.dart';
+import 'package:confession/prayers/presentation/ui/responsive_prayers_page.dart';
 import 'package:confession/router/nav_paths.dart';
 import 'package:confession/router/observers/app_route_observer.dart';
 import 'package:confession/settings/settings_page.dart';
@@ -123,7 +122,7 @@ class AppRouter {
             ],
           ),
 
-          // Prayers branch
+          // Prayers branch - using responsive layout
           StatefulShellBranch(
             navigatorKey: _shellNavigatorPrayersKey,
             routes: [
@@ -131,16 +130,22 @@ class AppRouter {
                 path: NavPath.prayers.path,
                 name: NavPath.prayers.path,
                 pageBuilder: (context, state) => NoTransitionPage(
-                  child: const PrayersPage(),
+                  child: const ResponsivePrayersPage(),
                   name: NavPath.prayers.name,
                 ),
                 routes: [
                   GoRoute(
-                    path: 'details',
+                    path: ':prayerId',
                     name: NavPath.prayerDetails.path,
                     builder: (context, state) {
-                      final prayer = state.extra! as Prayer;
-                      return PrayerDetailsPage(prayer: prayer);
+                      final prayerId = int.tryParse(state.pathParameters['prayerId'] ?? '') ?? 0;
+                      // If we have the prayer object in extra, use it
+                      // otherwise, the controller will load it from the ID
+                      final prayer = state.extra as Prayer?;
+                      return ResponsivePrayersPage(
+                        selectedPrayerId: prayerId,
+                        selectedPrayer: prayer,
+                      );
                     },
                   ),
                 ],
